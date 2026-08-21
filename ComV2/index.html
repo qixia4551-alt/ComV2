@@ -1332,7 +1332,13 @@
             class="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10">
             <i class="fas fa-chevron-right text-2xl"></i>
         </button>
-        <img id="imagePreviewFull" class="max-w-full max-h-full object-contain" onclick="event.stopPropagation()" alt="生成结果大图预览">
+        <div id="imagePreviewWrapper" class="relative max-w-full max-h-full" onclick="event.stopPropagation()">
+            <img id="imagePreviewFull" class="max-w-full max-h-full object-contain" alt="生成结果大图预览">
+            <!-- Magnifier lens -->
+            <div id="magnifierLens" class="hidden absolute rounded-full border-2 border-cyan-400 pointer-events-none z-50 overflow-hidden" style="width: 240px; height: 240px; box-shadow: 0 0 25px rgba(0, 212, 255, 0.6), inset 0 0 40px rgba(0, 212, 255, 0.15);">
+                <img id="magnifierImage" src="" alt="" style="position: absolute; max-width: none; max-height: none;">
+            </div>
+        </div>
         <!-- Loading / error overlay -->
         <div id="previewLoading" class="absolute inset-0 hidden items-center justify-center pointer-events-none">
             <div class="flex flex-col items-center text-slate-200">
@@ -4423,6 +4429,8 @@
         showPreviewAt(idx);
         document.getElementById('imagePreviewModal').classList.remove('hidden');
         document.getElementById('imagePreviewModal').classList.add('flex');
+        // Initialize magnifier events when opening preview
+        setTimeout(() => initMagnifierEvents(), 100);
     }
 
     function showPreviewAt(index) {
@@ -4466,6 +4474,11 @@
 
         // Refresh the movable prompt-info box if it is open
         if (state.infoBoxOpen) updateInfoBox();
+        
+        // Reset magnifier state when changing images
+        magnifierEnabled = false;
+        hideMagnifier();
+        magnifierZoom = 2.5;
     }
 
     // ---- Movable prompt-info box (shows this image's prompt / time / params) ----
@@ -4536,6 +4549,111 @@
     function closeImagePreview() {
         document.getElementById('imagePreviewModal').classList.add('hidden');
         document.getElementById('imagePreviewModal').classList.remove('flex');
+        // Hide magnifier when closing preview
+        hideMagnifier();
+    }
+
+    // ============================================================
+    // Image Magnifier (Loupe) Functionality
+    // ============================================================
+    let magnifierEnabled = false;
+    let magnifierZoom = 2.5;
+
+    function getMagnifierElements() {
+        return {
+            lens: document.getElementById('magnifierLens'),
+            magImg: document.getElementById('magnifierImage'),
+            previewImg: document.getElementById('imagePreviewFull'),
+            wrapper: document.getElementById('imagePreviewWrapper')
+        };
+    }
+
+    function showMagnifier() {
+        if (!magnifierEnabled) return;
+        const els = getMagnifierElements();
+        if (els.lens) els.lens.classList.remove('hidden');
+    }
+
+    function hideMagnifier() {
+        const els = getMagnifierElements();
+        if (els.lens) els.lens.classList.add('hidden');
+    }
+
+    function toggleMagnifier() {
+        magnifierEnabled = !magnifierEnabled;
+        const els = getMagnifierElements();
+        if (!els.lens || !els.previewImg) return;
+        
+        if (magnifierEnabled) {
+            els.magImg.src = els.previewImg.src;
+            showMagnifier();
+        } else {
+            hideMagnifier();
+        }
+    }
+
+    function updateMagnifier(e) {
+        const els = getMagnifierElements();
+        if (!magnifierEnabled || !els.lens || els.lens.classList.contains('hidden')) return;
+        if (!els.wrapper || !els.previewImg) return;
+
+        const rect = els.wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Position the lens centered on cursor
+        const lensSize = 240;
+        const lensX = x - lensSize / 2;
+        const lensY = y - lensSize / 2;
+
+        els.lens.style.left = lensX + 'px';
+        els.lens.style.top = lensY + 'px';
+
+        // Calculate zoomed image position
+        const imgRect = els.previewImg.getBoundingClientRect();
+        if (imgRect.width === 0 || imgRect.height === 0) return;
+        
+        const scaleX = els.previewImg.naturalWidth / imgRect.width;
+        const scaleY = els.previewImg.naturalHeight / imgRect.height;
+
+        const zoomedX = -x * (magnifierZoom - 1) * scaleX + lensSize / 2;
+        const zoomedY = -y * (magnifierZoom - 1) * scaleY + lensSize / 2;
+
+        els.magImg.style.width = (imgRect.width * magnifierZoom * scaleX) + 'px';
+        els.magImg.style.height = (imgRect.height * magnifierZoom * scaleY) + 'px';
+        els.magImg.style.left = zoomedX + 'px';
+        els.magImg.style.top = zoomedY + 'px';
+    }
+
+    // Mouse events for magnifier - attach when modal opens
+    function initMagnifierEvents() {
+        const els = getMagnifierElements();
+        if (!els.wrapper) return;
+        
+        // Remove existing listeners to avoid duplicates
+        const newWrapper = els.wrapper.cloneNode(true);
+        els.wrapper.parentNode.replaceChild(newWrapper, els.wrapper);
+        
+        // Re-get elements after replacement
+        const newEls = getMagnifierElements();
+        
+        newWrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMagnifier();
+        });
+
+        newWrapper.addEventListener('mousemove', (e) => {
+            updateMagnifier(e);
+        });
+
+        newWrapper.addEventListener('wheel', (e) => {
+            if (!magnifierEnabled) return;
+            e.preventDefault();
+            // Adjust zoom level with scroll wheel
+            const delta = e.deltaY > 0 ? -0.2 : 0.2;
+            magnifierZoom = Math.max(1.5, Math.min(5.0, magnifierZoom + delta));
+            updateMagnifier(e);
+        }, { passive: false });
     }
 
     // Keyboard navigation for the lightbox
