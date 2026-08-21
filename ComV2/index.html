@@ -452,6 +452,10 @@
                                     <i class="fas fa-plus-circle text-green-400 mr-2"></i>正向提示词
                                 </label>
                                 <div class="flex gap-2">
+                                    <button onclick="openRandomModal('positive')"
+                                        class="px-3 py-1.5 text-xs bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg transition-all btn-hover">
+                                        <i class="fas fa-dice mr-1"></i>随机
+                                    </button>
                                     <button onclick="clearAllPrompt()"
                                         class="px-3 py-1.5 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg transition-all btn-hover">
                                         <i class="fas fa-eraser mr-1"></i>清除全部
@@ -716,6 +720,10 @@
                                     <i class="fas fa-plus-circle text-green-400 mr-2"></i>正向提示词
                                 </label>
                                 <div class="flex gap-2">
+                                    <button onclick="openRandomModal('k2positive')"
+                                        class="px-3 py-1.5 text-xs bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg transition-all btn-hover">
+                                        <i class="fas fa-dice mr-1"></i>随机
+                                    </button>
                                     <button onclick="k2ClearPrompt()"
                                         class="px-3 py-1.5 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg transition-all btn-hover">
                                         <i class="fas fa-eraser mr-1"></i>清除
@@ -1192,6 +1200,63 @@
             <!-- Tag Grid -->
             <div id="tagGrid" class="flex-1 overflow-y-auto p-4 scrollbar-thin">
                 <!-- Tags filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Random Prompt Modal -->
+    <div id="randomModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center p-4 pointer-events-none">
+        <div id="randomModalContent" class="relative glass neon-border rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col panel-enter pointer-events-auto shadow-2xl">
+            <div class="flex items-center justify-between p-4 border-b border-slate-700/50 modal-drag-handle" id="randomModalHeader">
+                <h3 class="font-semibold text-lg">
+                    <i class="fas fa-dice text-purple-400 mr-2"></i>随机提示词生成器
+                </h3>
+                <button onclick="closeRandomModal()" aria-label="关闭随机生成器" class="p-2 hover:bg-slate-700/50 rounded-lg transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Lock Options -->
+            <div class="p-4 border-b border-slate-700/50">
+                <div class="flex flex-wrap gap-3">
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="lockGender" class="accent-purple-500 w-4 h-4">
+                        <span class="text-sm text-slate-300"><i class="fas fa-venus-mars mr-1"></i>锁定性别</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="lockAge" class="accent-purple-500 w-4 h-4">
+                        <span class="text-sm text-slate-300"><i class="fas fa-user mr-1"></i>锁定年龄</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="lockClothing" class="accent-purple-500 w-4 h-4">
+                        <span class="text-sm text-slate-300"><i class="fas fa-tshirt mr-1"></i>锁定服装</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="lockScene" class="accent-purple-500 w-4 h-4">
+                        <span class="text-sm text-slate-300"><i class="fas fa-image mr-1"></i>锁定场景</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Preview Area -->
+            <div class="p-4 border-b border-slate-700/50 bg-slate-800/30">
+                <label class="text-xs text-slate-400 mb-2 block">生成的提示词预览</label>
+                <textarea id="randomPromptPreview" readonly rows="3" placeholder="点击「生成随机」按钮生成提示词..."
+                    class="w-full px-3 py-2 bg-slate-900/50 border border-slate-600/50 rounded-lg text-sm text-slate-300 resize-none"></textarea>
+            </div>
+            <!-- Action Buttons -->
+            <div class="p-4 flex gap-3 border-b border-slate-700/50">
+                <button onclick="generateRandomPrompt()"
+                    class="flex-1 px-4 py-2.5 bg-purple-600/30 hover:bg-purple-600/40 text-purple-300 rounded-lg transition-all btn-hover font-medium">
+                    <i class="fas fa-redo mr-2"></i>生成随机
+                </button>
+                <button onclick="applyRandomPrompt()"
+                    class="flex-1 px-4 py-2.5 bg-green-600/30 hover:bg-green-600/40 text-green-300 rounded-lg transition-all btn-hover font-medium">
+                    <i class="fas fa-check mr-2"></i>应用到提示词框
+                </button>
+            </div>
+            <!-- Category Selection Info -->
+            <div class="p-3 bg-slate-800/20 text-xs text-slate-400">
+                <i class="fas fa-info-circle mr-1"></i>
+                从标签库的每个类别中随机选择一个词汇，可锁定特定类别保持当前选择不变
             </div>
         </div>
     </div>
@@ -3308,6 +3373,124 @@
     function closeTagModal() {
         document.getElementById('tagModal').classList.add('hidden');
         document.getElementById('tagModal').classList.remove('flex');
+    }
+
+    // Random Prompt Modal Functions
+    let randomPromptState = {
+        target: 'positive',
+        lockedTags: {
+            gender: null,
+            age: null,
+            clothing: null,
+            scene: null
+        }
+    };
+
+    function openRandomModal(target) {
+        randomPromptState.target = target;
+        document.getElementById('randomModal').classList.remove('hidden');
+        document.getElementById('randomModal').classList.add('flex');
+        makeModalDraggable('randomModalContent', 'randomModalHeader');
+        generateRandomPrompt();
+    }
+
+    function closeRandomModal() {
+        document.getElementById('randomModal').classList.add('hidden');
+        document.getElementById('randomModal').classList.remove('flex');
+    }
+
+    function getRandomTagFromCategory(category) {
+        const tags = TAG_LIBRARY[category] || [];
+        if (tags.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * tags.length);
+        return tags[randomIndex].en || tags[randomIndex].cn;
+    }
+
+    function generateRandomPrompt() {
+        const lockGender = document.getElementById('lockGender').checked;
+        const lockAge = document.getElementById('lockAge').checked;
+        const lockClothing = document.getElementById('lockClothing').checked;
+        const lockScene = document.getElementById('lockScene').checked;
+
+        let promptParts = [];
+
+        // Quality tags (always random)
+        for (let i = 0; i < 3; i++) {
+            const tag = getRandomTagFromCategory('quality');
+            if (tag) promptParts.push(tag);
+        }
+
+        // Character/Gender tags
+        if (!lockGender || !randomPromptState.lockedTags.gender) {
+            randomPromptState.lockedTags.gender = getRandomTagFromCategory('character');
+        }
+        if (randomPromptState.lockedTags.gender) {
+            promptParts.push(randomPromptState.lockedTags.gender);
+        }
+
+        // Pose tags (always random)
+        const poseTag = getRandomTagFromCategory('pose');
+        if (poseTag) promptParts.push(poseTag);
+
+        // Expression tags (always random)
+        const exprTag = getRandomTagFromCategory('expression');
+        if (exprTag) promptParts.push(exprTag);
+
+        // Clothing tags
+        if (!lockClothing || !randomPromptState.lockedTags.clothing) {
+            randomPromptState.lockedTags.clothing = getRandomTagFromCategory('clothing');
+        }
+        if (randomPromptState.lockedTags.clothing) {
+            promptParts.push(randomPromptState.lockedTags.clothing);
+        }
+
+        // Background/Scene tags
+        if (!lockScene || !randomPromptState.lockedTags.scene) {
+            randomPromptState.lockedTags.scene = getRandomTagFromCategory('background');
+        }
+        if (randomPromptState.lockedTags.scene) {
+            promptParts.push(randomPromptState.lockedTags.scene);
+        }
+
+        // Lighting tags (always random)
+        const lightTag = getRandomTagFromCategory('lighting');
+        if (lightTag) promptParts.push(lightTag);
+
+        // Style tags (always random)
+        const styleTag = getRandomTagFromCategory('style');
+        if (styleTag) promptParts.push(styleTag);
+
+        const promptText = promptParts.join(', ');
+        document.getElementById('randomPromptPreview').value = promptText;
+    }
+
+    function applyRandomPrompt() {
+        const promptText = document.getElementById('randomPromptPreview').value;
+        if (!promptText) {
+            showToast('请先生成随机提示词', 'info');
+            return;
+        }
+
+        const target = randomPromptState.target;
+        if (target === 'positive') {
+            const textarea = document.getElementById('positivePrompt');
+            if (textarea.value.trim()) {
+                textarea.value += ', ' + promptText;
+            } else {
+                textarea.value = promptText;
+            }
+            showToast('已应用到正向提示词', 'success');
+        } else if (target === 'k2positive') {
+            const textarea = document.getElementById('k2PositivePrompt');
+            if (textarea.value.trim()) {
+                textarea.value += ', ' + promptText;
+            } else {
+                textarea.value = promptText;
+            }
+            showToast('已应用到 Krea2 正向提示词', 'success');
+        }
+
+        closeRandomModal();
     }
 
     function renderTagTabs() {
