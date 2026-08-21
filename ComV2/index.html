@@ -4621,11 +4621,12 @@
         const scaleY = els.previewImg.naturalHeight / imgRect.height;
 
         // Calculate zoomed image position - show the area under the lens
-        const zoomedX = -clampedX * (magnifierZoom - 1) * scaleX + lensSize / 2;
-        const zoomedY = -clampedY * (magnifierZoom - 1) * scaleY + lensSize / 2;
+        // The key fix: position so that the point under the mouse appears centered in the lens
+        const zoomedX = -(clampedX * scaleX) + (lensSize / 2);
+        const zoomedY = -(clampedY * scaleY) + (lensSize / 2);
 
-        els.magImg.style.width = (imgRect.width * magnifierZoom * scaleX) + 'px';
-        els.magImg.style.height = (imgRect.height * magnifierZoom * scaleY) + 'px';
+        els.magImg.style.width = (els.previewImg.naturalWidth * magnifierZoom) + 'px';
+        els.magImg.style.height = (els.previewImg.naturalHeight * magnifierZoom) + 'px';
         els.magImg.style.left = zoomedX + 'px';
         els.magImg.style.top = zoomedY + 'px';
     }
