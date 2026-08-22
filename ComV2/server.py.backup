@@ -4,12 +4,6 @@
 ComfyUI Console - Backend Server
 Provides static file serving, local model scanning, and ComfyUI API proxy.
 No external dependencies required - uses only Python standard library.
-
-SECURITY FIXES APPLIED:
-- Session-based authentication with secure tokens
-- Path traversal vulnerability fixed with strict validation
-- CORS restricted to same-origin
-- Sensitive operations require authentication
 """
 
 import os
@@ -493,8 +487,7 @@ class ConsoleHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         # Restrict CORS to same-origin for security
-        origin = self.headers.get("Origin", "")
-        self.send_header("Access-Control-Allow-Origin", origin)
+        self.send_header("Access-Control-Allow-Origin", self.headers.get("Origin", ""))
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.send_header("Access-Control-Allow-Credentials", "true")
@@ -601,8 +594,7 @@ class ConsoleHandler(BaseHTTPRequestHandler):
                 self.send_header("Content-Type", content_type)
                 self.send_header("Content-Length", str(len(resp_body)))
                 # Restrict CORS for proxied responses too
-                origin = self.headers.get("Origin", "")
-                self.send_header("Access-Control-Allow-Origin", origin)
+                self.send_header("Access-Control-Allow-Origin", self.headers.get("Origin", ""))
                 self.send_header("Access-Control-Allow-Credentials", "true")
                 # Generated images are immutable (unique filename per generation),
                 # so let the browser cache them aggressively. This stops 4K images
@@ -675,10 +667,14 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             self._send_json({"success": True, "data": load_store()})
             return
 
-        # API: Verify login password (password lives in password.txt on this PC)
+        # API: Verify login password and create session (password lives in password.txt on this PC)
         if path == "/api/auth":
             pw = query.get("pw", [""])[0]
-            self._send_json({"success": True, "ok": (pw == get_password())})
+            if pw == get_password():
+                session_id = create_session()
+                self._send_json({"success": True, "ok": True, "session_id": session_id})
+            else:
+                self._send_json({"success": True, "ok": False})
             return
 
         # API: Model architecture map (for LoRA/checkpoint compatibility hints)
@@ -760,25 +756,22 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             self._send_json({"success": True, "ip": local_ip, "port": SERVER_PORT})
             return
 
-        # Static files
+        # Static files - use secure path resolution to prevent directory traversal
         if path == "/" or path == "":
             path = "/index.html"
 
-        # Sanitize path
-        clean_path = posixpath.normpath(path).lstrip("/")
-        if clean_path.startswith(".."):
+        # Use the secure path resolution method
+        filepath = self._safe_path(path)
+        
+        if filepath is None:
             self.send_error(403, "Forbidden")
             return
-
-        # Map to local directory
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        filepath = os.path.join(base_dir, clean_path)
 
         if os.path.isfile(filepath):
             self._serve_file(filepath)
         else:
             # Try serving index.html for SPA routes
-            index_path = os.path.join(base_dir, "index.html")
+            index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
             if os.path.isfile(index_path):
                 self._serve_file(index_path)
             else:
@@ -800,10 +793,13 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             self._proxy_comfyui("POST", sub, body=body, comfyui_url=resolve_comfy_url())
             return
 
-        # API: Write the shared server-side data store.
+        # API: Write the shared server-side data store - requires authentication
         # Body: {"data": {...}} to replace the whole store, or
         #       {"key": "...", "value": ...} to set a single key.
         if path == "/api/store":
+            if not self._require_auth():
+                self._send_error_json("Authentication required", 401)
+                return
             if isinstance(body.get("data"), dict):
                 ok = save_store(body["data"])
                 self._send_json({"success": ok})
@@ -817,8 +813,11 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             return
 
         # API: Apply update (download latest from GitHub and overwrite app files)
-        if path == "/api/update/apply":
+        # API: Apply update (download latest from GitHub and overwrite app files) - requires authentication
             try:
+            if not self._require_auth():
+                self._send_error_json("Authentication required", 401)
+                return
                 updated, skipped, latest = download_and_apply_update()
                 self._send_json({
                     "success": True,
