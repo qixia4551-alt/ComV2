@@ -294,6 +294,125 @@ def scan_models(models_dir):
     return result
 
 
+# ============================================================
+# Self-update from GitHub
+# ============================================================
+UPDATE_REPO_OWNER = "qixia4551-alt"
+UPDATE_REPO_NAME = "ComV2"
+UPDATE_BRANCH = "main"
+UPDATE_APP_SUBDIR = "ComV2"   # app files live in this subfolder of the repo
+APP_VERSION = "1.0.0"
+UPDATE_CHECK_TIMEOUT = 30
+UPDATE_ZIP_TIMEOUT = 300
+
+# User data / local config files — NEVER overwritten by updates
+UPDATE_PROTECTED_FILES = {
+    "console_data.json",
+    "password.txt",
+    "comfyui_url.txt",
+    "version.json",
+}
+
+VERSION_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "version.json")
+
+
+def load_local_version():
+    """Return the commit SHA recorded by the last successful update (or None)."""
+    try:
+        if os.path.isfile(VERSION_FILE):
+            with open(VERSION_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict):
+                return data.get("commit")
+    except Exception:
+        pass
+    return None
+
+
+def save_local_version(commit):
+    """Persist the currently installed commit SHA to version.json."""
+    try:
+        import datetime
+        data = {
+            "commit": commit,
+            "repo": f"{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}",
+            "branch": UPDATE_BRANCH,
+            "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        with open(VERSION_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        return True
+    except Exception:
+        return False
+
+
+def fetch_latest_commit():
+    """Query the GitHub API for the latest commit on the update branch."""
+    url = f"https://api.github.com/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/commits/{UPDATE_BRANCH}"
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "ComfyUI-Console-Updater",
+        "Accept": "application/vnd.github+json",
+    })
+    with urllib.request.urlopen(req, timeout=UPDATE_CHECK_TIMEOUT) as r:
+        data = json.loads(r.read().decode("utf-8"))
+    commit = data.get("commit", {})
+    return {
+        "sha": data.get("sha", ""),
+        "message": commit.get("message", ""),
+        "date": commit.get("committer", {}).get("date", ""),
+        "url": data.get("html_url", ""),
+    }
+
+
+def download_and_apply_update():
+    """Download the latest repo zip from GitHub and overwrite app files.
+
+    Protected files (user data / local config) are never touched.
+    Returns (updated_files, skipped_files, latest_commit_info).
+    """
+    import io
+    import zipfile
+
+    latest = fetch_latest_commit()
+    zip_url = (
+        f"https://codeload.github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
+        f"/zip/refs/heads/{UPDATE_BRANCH}"
+    )
+    req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
+    with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
+        zip_bytes = r.read()
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    prefix = UPDATE_APP_SUBDIR + "/"
+    updated, skipped = [], []
+
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        for name in zf.namelist():
+            if name.endswith("/") or "/" not in name:
+                continue
+            inner = name.split("/", 1)[1]  # strip the zip's root folder
+            if not inner.startswith(prefix):
+                continue
+            rel = inner[len(prefix):]
+            if not rel:
+                continue
+            if "/" in rel or rel in UPDATE_PROTECTED_FILES:
+                # Only top-level app files are updated; nested paths and
+                # protected user-data files are skipped.
+                skipped.append(rel)
+                continue
+            target = os.path.join(base_dir, rel)
+            with zf.open(name) as src, open(target, "wb") as dst:
+                dst.write(src.read())
+            updated.append(rel)
+
+    if not updated:
+        raise RuntimeError(f"压缩包中未找到 {UPDATE_APP_SUBDIR}/ 下的应用文件，更新中止")
+
+    save_local_version(latest["sha"])
+    return updated, skipped, latest
+
+
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
     """Threaded HTTP server for handling multiple concurrent requests."""
     daemon_threads = True
@@ -473,6 +592,26 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             })
             return
 
+        # API: Check for updates from GitHub
+        if path == "/api/update/check":
+            try:
+                latest = fetch_latest_commit()
+                local = load_local_version()
+                up_to_date = bool(local) and (local == latest["sha"])
+                self._send_json({
+                    "success": True,
+                    "up_to_date": up_to_date,
+                    "local_commit": local,
+                    "latest_commit": latest["sha"],
+                    "latest_message": latest["message"],
+                    "latest_date": latest["date"],
+                    "latest_url": latest["url"],
+                    "version": APP_VERSION,
+                })
+            except Exception as e:
+                self._send_error_json(f"检查更新失败: {e}", 502)
+            return
+
         # API: Proxy ComfyUI object_info
         if path == "/api/object_info":
             comfyui_url = query.get("url", [COMFYUI_DEFAULT_URL])[0]
@@ -570,6 +709,21 @@ class ConsoleHandler(BaseHTTPRequestHandler):
                 self._send_error_json("Invalid store payload", 400)
             return
 
+        # API: Apply update (download latest from GitHub and overwrite app files)
+        if path == "/api/update/apply":
+            try:
+                updated, skipped, latest = download_and_apply_update()
+                self._send_json({
+                    "success": True,
+                    "commit": latest["sha"],
+                    "updated_files": updated,
+                    "skipped_files": skipped,
+                    "message": "更新完成，请刷新页面加载新版前端（如后端有更新需重启服务器）",
+                })
+            except Exception as e:
+                self._send_error_json(f"更新失败: {e}", 502)
+            return
+
         # API: Generate image (proxy to ComfyUI /prompt)
         if path == "/api/generate":
             comfyui_url = body.get("comfyui_url", COMFYUI_DEFAULT_URL)
@@ -606,90 +760,6 @@ class ConsoleHandler(BaseHTTPRequestHandler):
                 })
             else:
                 self._send_error_json(f"Directory not found: {models_dir}", 400)
-            return
-
-        # API: Update from GitHub
-        if path == "/api/update":
-            import subprocess
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            is_git_repo = os.path.isdir(os.path.join(script_dir, '.git'))
-            
-            if not is_git_repo:
-                self._send_json({
-                    "success": False,
-                    "error": "当前目录不是 Git 仓库，无法自动更新。请手动下载最新版本。",
-                    "updated": False
-                })
-                return
-            
-            try:
-                # Fetch latest info from remote
-                fetch_result = subprocess.run(
-                    ["git", "fetch", "origin"],
-                    cwd=script_dir,
-                    capture_output=True,
-                    text=True,
-                    timeout=30
-                )
-                
-                if fetch_result.returncode != 0:
-                    self._send_json({
-                        "success": False,
-                        "error": f"git fetch 失败：{fetch_result.stderr}",
-                        "updated": False
-                    })
-                    return
-                
-                # Check if there are updates
-                log_result = subprocess.run(
-                    ["git", "log", "HEAD..origin/main", "--oneline"],
-                    cwd=script_dir,
-                    capture_output=True,
-                    text=True,
-                    timeout=10
-                )
-                
-                if log_result.stdout.strip():
-                    # There are updates, pull them
-                    pull_result = subprocess.run(
-                        ["git", "pull", "origin", "main"],
-                        cwd=script_dir,
-                        capture_output=True,
-                        text=True,
-                        timeout=60
-                    )
-                    
-                    if pull_result.returncode == 0:
-                        self._send_json({
-                            "success": True,
-                            "updated": True,
-                            "log": f"更新内容:\n{log_result.stdout}\n\n{pull_result.stdout}"
-                        })
-                    else:
-                        self._send_json({
-                            "success": False,
-                            "error": f"git pull 失败：{pull_result.stderr}",
-                            "updated": False
-                        })
-                else:
-                    self._send_json({
-                        "success": True,
-                        "updated": False,
-                        "log": "已是最新版本，无需更新"
-                    })
-                    
-            except subprocess.TimeoutExpired:
-                self._send_json({
-                    "success": False,
-                    "error": "Git 操作超时，请检查网络连接",
-                    "updated": False
-                })
-            except Exception as e:
-                self._send_json({
-                    "success": False,
-                    "error": str(e),
-                    "updated": False
-                })
             return
 
         self._send_error_json("Unknown endpoint", 404)
