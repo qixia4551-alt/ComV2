@@ -608,6 +608,90 @@ class ConsoleHandler(BaseHTTPRequestHandler):
                 self._send_error_json(f"Directory not found: {models_dir}", 400)
             return
 
+        # API: Update from GitHub
+        if path == "/api/update":
+            import subprocess
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            is_git_repo = os.path.isdir(os.path.join(script_dir, '.git'))
+            
+            if not is_git_repo:
+                self._send_json({
+                    "success": False,
+                    "error": "当前目录不是 Git 仓库，无法自动更新。请手动下载最新版本。",
+                    "updated": False
+                })
+                return
+            
+            try:
+                # Fetch latest info from remote
+                fetch_result = subprocess.run(
+                    ["git", "fetch", "origin"],
+                    cwd=script_dir,
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+                
+                if fetch_result.returncode != 0:
+                    self._send_json({
+                        "success": False,
+                        "error": f"git fetch 失败：{fetch_result.stderr}",
+                        "updated": False
+                    })
+                    return
+                
+                # Check if there are updates
+                log_result = subprocess.run(
+                    ["git", "log", "HEAD..origin/main", "--oneline"],
+                    cwd=script_dir,
+                    capture_output=True,
+                    text=True,
+                    timeout=10
+                )
+                
+                if log_result.stdout.strip():
+                    # There are updates, pull them
+                    pull_result = subprocess.run(
+                        ["git", "pull", "origin", "main"],
+                        cwd=script_dir,
+                        capture_output=True,
+                        text=True,
+                        timeout=60
+                    )
+                    
+                    if pull_result.returncode == 0:
+                        self._send_json({
+                            "success": True,
+                            "updated": True,
+                            "log": f"更新内容:\n{log_result.stdout}\n\n{pull_result.stdout}"
+                        })
+                    else:
+                        self._send_json({
+                            "success": False,
+                            "error": f"git pull 失败：{pull_result.stderr}",
+                            "updated": False
+                        })
+                else:
+                    self._send_json({
+                        "success": True,
+                        "updated": False,
+                        "log": "已是最新版本，无需更新"
+                    })
+                    
+            except subprocess.TimeoutExpired:
+                self._send_json({
+                    "success": False,
+                    "error": "Git 操作超时，请检查网络连接",
+                    "updated": False
+                })
+            except Exception as e:
+                self._send_json({
+                    "success": False,
+                    "error": str(e),
+                    "updated": False
+                })
+            return
+
         self._send_error_json("Unknown endpoint", 404)
 
 

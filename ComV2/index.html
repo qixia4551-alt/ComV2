@@ -1125,6 +1125,22 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- System Update -->
+                <div class="glass neon-border rounded-2xl p-5 mb-6">
+                    <h3 class="font-semibold mb-4 text-slate-200">
+                        <i class="fas fa-cloud-download-alt text-green-400 mr-2"></i>系统更新
+                    </h3>
+                    <p class="text-sm text-slate-400 mb-4">检查并拉取 GitHub 仓库的最新版本</p>
+                    <div class="flex items-center gap-3">
+                        <button onclick="checkAndUpdate()" id="updateBtn"
+                            class="px-5 py-2.5 bg-gradient-to-r from-purple-600/30 to-blue-600/30 hover:from-purple-600/50 hover:to-blue-600/50 text-purple-300 rounded-lg transition-all text-sm font-medium border border-purple-500/30">
+                            <i class="fas fa-sync-alt mr-2"></i>检查并更新
+                        </button>
+                        <span id="updateStatus" class="text-sm text-slate-400"></span>
+                    </div>
+                    <div id="updateLog" class="mt-3 p-3 bg-slate-900/50 border border-slate-700/50 rounded-lg text-xs text-slate-300 font-mono max-h-40 overflow-y-auto hidden"></div>
+                </div>
             </div>
         </div>
 
@@ -2493,6 +2509,54 @@
         showToast('Refreshing model list...', 'info');
         await loadModels();
         showToast('Models refreshed', 'success');
+    }
+
+    async function checkAndUpdate() {
+        const btn = document.getElementById('updateBtn');
+        const status = document.getElementById('updateStatus');
+        const logDiv = document.getElementById('updateLog');
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>检查中...';
+        status.textContent = '';
+        logDiv.classList.add('hidden');
+        logDiv.textContent = '';
+        
+        try {
+            const res = await fetch('/api/update', { method: 'POST' });
+            const data = await res.json();
+            
+            if (data.success) {
+                if (data.updated) {
+                    status.textContent = '更新成功！请重启控制台';
+                    status.className = 'text-sm text-green-400 font-medium';
+                    logDiv.textContent = data.log || '已拉取最新版本';
+                    logDiv.classList.remove('hidden');
+                    showToast('更新成功，请重启控制台以应用更新', 'success');
+                } else {
+                    status.textContent = '已是最新版本';
+                    status.className = 'text-sm text-slate-400';
+                    logDiv.textContent = data.log || '无需更新';
+                    logDiv.classList.remove('hidden');
+                    showToast('已是最新版本', 'info');
+                }
+            } else {
+                status.textContent = '更新失败';
+                status.className = 'text-sm text-red-400';
+                logDiv.textContent = data.error || '未知错误';
+                logDiv.classList.remove('hidden');
+                showToast(data.error || '更新失败', 'error');
+            }
+        } catch (err) {
+            status.textContent = '请求失败';
+            status.className = 'text-sm text-red-400';
+            logDiv.textContent = err.message;
+            logDiv.classList.remove('hidden');
+            showToast('网络错误：' + err.message, 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sync-alt mr-2"></i>检查并更新';
+        }
     }
 
     function populateModelDropdowns() {
