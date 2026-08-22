@@ -1329,8 +1329,8 @@
             class="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10">
             <i class="fas fa-chevron-right text-2xl"></i>
         </button>
-        <div id="imagePreviewWrapper" class="relative max-w-full max-h-full" onclick="event.stopPropagation()">
-            <img id="imagePreviewFull" class="max-w-full max-h-full object-contain" alt="生成结果大图预览">
+        <div id="imagePreviewWrapper" class="relative w-full h-full flex items-center justify-center" onclick="event.stopPropagation()">
+            <img id="imagePreviewFull" class="max-w-[100vw] max-h-[100vh] w-auto h-auto object-contain" alt="生成结果大图预览">
             <!-- Magnifier lens (玻璃圆形放大镜) -->
             <div id="magnifierLens" class="hidden absolute rounded-full pointer-events-none z-50 overflow-hidden"
                 style="width: 240px; height: 240px; border: 2px solid rgba(255,255,255,0.65); background: rgba(255,255,255,0.04); box-shadow: 0 10px 30px rgba(0,0,0,0.55), inset 0 0 24px rgba(255,255,255,0.16), inset 0 0 2px rgba(255,255,255,0.45);">

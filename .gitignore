@@ -1,10 +1,25 @@
-```
-# Compiled Python files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Examples 1:
 
-# Original rules preserved
+# Example 2 (Project with artifacts):
+#Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
+build/
+#Dependencies
+.venv/
+venv/
+node_modules/
+#Logs and temp files
 *.log
-```
+*.tmp
+*.swp
+#Environment
+.env
+.env.local
+.env.*
+#Editors
+.vscode/
+.idea/
