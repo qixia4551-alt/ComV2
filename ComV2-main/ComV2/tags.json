@@ -1,0 +1,6510 @@
+{
+  "quality": [
+    {
+      "cn": "杰作",
+      "en": "masterpiece"
+    },
+    {
+      "cn": "最高质量",
+      "en": "best quality"
+    },
+    {
+      "cn": "高分辨率",
+      "en": "highres"
+    },
+    {
+      "cn": "超清",
+      "en": "absurdres"
+    },
+    {
+      "cn": "极致细节",
+      "en": "extremely detailed"
+    },
+    {
+      "cn": "精细细节",
+      "en": "intricate details"
+    },
+    {
+      "cn": "8K",
+      "en": "8k"
+    },
+    {
+      "cn": "超高清",
+      "en": "ultra-detailed"
+    },
+    {
+      "cn": "官方艺术",
+      "en": "official art"
+    },
+    {
+      "cn": "获奖作品",
+      "en": "award-winning"
+    },
+    {
+      "cn": "锐利聚焦",
+      "en": "sharp focus"
+    },
+    {
+      "cn": "专业",
+      "en": "professional"
+    },
+    {
+      "cn": "完美构图",
+      "en": "perfect composition"
+    },
+    {
+      "cn": "景深",
+      "en": "depth of field"
+    },
+    {
+      "cn": "照片级真实",
+      "en": "photorealistic"
+    },
+    {
+      "cn": "电影感",
+      "en": "cinematic"
+    },
+    {
+      "cn": "惊艳质量",
+      "en": "amazing quality"
+    },
+    {
+      "cn": "唯美",
+      "en": "very aesthetic"
+    },
+    {
+      "cn": "超高细节",
+      "en": "highly detailed"
+    },
+    {
+      "cn": "细腻细节",
+      "en": "fine details"
+    },
+    {
+      "cn": "4K分辨率",
+      "en": "4k resolution"
+    },
+    {
+      "cn": "超高分辨率",
+      "en": "ultra-highres"
+    },
+    {
+      "cn": "HDR",
+      "en": "HDR"
+    },
+    {
+      "cn": "光线追踪",
+      "en": "ray tracing"
+    },
+    {
+      "cn": "全局光照",
+      "en": "global illumination"
+    },
+    {
+      "cn": "环境光遮蔽",
+      "en": "ambient occlusion"
+    },
+    {
+      "cn": "次表面散射",
+      "en": "subsurface scattering"
+    },
+    {
+      "cn": "焦散效果",
+      "en": "caustics"
+    },
+    {
+      "cn": "Octane渲染",
+      "en": "octane render"
+    },
+    {
+      "cn": "虚幻引擎5",
+      "en": "unreal engine 5"
+    },
+    {
+      "cn": "Blender渲染",
+      "en": "blender render"
+    },
+    {
+      "cn": "物理渲染",
+      "en": "physically based rendering"
+    },
+    {
+      "cn": "工作室品质",
+      "en": "studio quality"
+    },
+    {
+      "cn": "高端修图",
+      "en": "high-end retouching"
+    },
+    {
+      "cn": "RAW照片",
+      "en": "RAW photo"
+    },
+    {
+      "cn": "单反相机",
+      "en": "DSLR"
+    },
+    {
+      "cn": "35mm镜头",
+      "en": "35mm lens"
+    },
+    {
+      "cn": "大光圈",
+      "en": "f/1.8"
+    },
+    {
+      "cn": "胶片颗粒",
+      "en": "film grain"
+    },
+    {
+      "cn": "超锐利",
+      "en": "ultra sharp"
+    },
+    {
+      "cn": "清晰线条",
+      "en": "crisp lines"
+    },
+    {
+      "cn": "干净线条",
+      "en": "clean lines"
+    },
+    {
+      "cn": "平滑着色",
+      "en": "smooth shading"
+    },
+    {
+      "cn": "丰富色彩",
+      "en": "rich colors"
+    },
+    {
+      "cn": "鲜艳色彩",
+      "en": "vibrant colors"
+    },
+    {
+      "cn": "高饱和",
+      "en": "saturated colors"
+    },
+    {
+      "cn": "柔和色调",
+      "en": "pastel colors"
+    },
+    {
+      "cn": "高对比",
+      "en": "high contrast"
+    },
+    {
+      "cn": "低对比",
+      "en": "low contrast"
+    },
+    {
+      "cn": "虚化背景",
+      "en": "bokeh"
+    },
+    {
+      "cn": "移轴效果",
+      "en": "tilt-shift"
+    },
+    {
+      "cn": "微距摄影",
+      "en": "macro shot"
+    },
+    {
+      "cn": "远景",
+      "en": "wide shot"
+    },
+    {
+      "cn": "特写",
+      "en": "close-up"
+    },
+    {
+      "cn": "极特写",
+      "en": "extreme close-up"
+    },
+    {
+      "cn": "全身镜头",
+      "en": "full body shot"
+    },
+    {
+      "cn": "半身镜头",
+      "en": "upper body"
+    },
+    {
+      "cn": "肖像",
+      "en": "portrait"
+    },
+    {
+      "cn": "侧面肖像",
+      "en": "profile"
+    },
+    {
+      "cn": "鸟瞰视角",
+      "en": "bird's-eye view"
+    },
+    {
+      "cn": "仰视视角",
+      "en": "worm's-eye view"
+    },
+    {
+      "cn": "倾斜镜头",
+      "en": "Dutch angle"
+    },
+    {
+      "cn": "对称构图",
+      "en": "symmetrical composition"
+    },
+    {
+      "cn": "三分构图",
+      "en": "rule of thirds"
+    },
+    {
+      "cn": "留白",
+      "en": "negative space"
+    },
+    {
+      "cn": "极简主义",
+      "en": "minimalist"
+    },
+    {
+      "cn": "极繁主义",
+      "en": "maximalist"
+    },
+    {
+      "cn": "Artstation热门",
+      "en": "trending on artstation"
+    },
+    {
+      "cn": "Pixiv排行",
+      "en": "pixiv ranking"
+    },
+    {
+      "cn": "画廊品质",
+      "en": "gallery quality"
+    },
+    {
+      "cn": "博物馆品质",
+      "en": "museum quality"
+    },
+    {
+      "cn": "收藏级",
+      "en": "archival quality"
+    },
+    {
+      "cn": "重制版画质",
+      "en": "remastered"
+    },
+    {
+      "cn": "升采样",
+      "en": "upscaled"
+    },
+    {
+      "cn": "无噪点",
+      "en": "denoised"
+    },
+    {
+      "cn": "抗锯齿",
+      "en": "anti-aliased"
+    },
+    {
+      "cn": "色散效果",
+      "en": "chromatic aberration"
+    },
+    {
+      "cn": "镜头光晕",
+      "en": "lens flare"
+    },
+    {
+      "cn": "动态模糊",
+      "en": "motion blur"
+    },
+    {
+      "cn": "长曝光",
+      "en": "long exposure"
+    },
+    {
+      "cn": "双重曝光",
+      "en": "double exposure"
+    },
+    {
+      "cn": "全景",
+      "en": "panoramic"
+    },
+    {
+      "cn": "超广角",
+      "en": "ultra-wide"
+    },
+    {
+      "cn": "IMAX画质",
+      "en": "IMAX quality"
+    },
+    {
+      "cn": "大片质感",
+      "en": "blockbuster"
+    },
+    {
+      "cn": "3A游戏美术",
+      "en": "triple-A game art"
+    },
+    {
+      "cn": "概念艺术",
+      "en": "concept art"
+    },
+    {
+      "cn": "主视觉图",
+      "en": "key visual"
+    },
+    {
+      "cn": "插画画质",
+      "en": "splash art"
+    },
+    {
+      "cn": "封面画质",
+      "en": "cover art"
+    },
+    {
+      "cn": "海报品质",
+      "en": "poster quality"
+    },
+    {
+      "cn": "壁纸品质",
+      "en": "wallpaper quality"
+    },
+    {
+      "cn": "无缝图案",
+      "en": "seamless pattern"
+    },
+    {
+      "cn": "矢量风格",
+      "en": "vector style"
+    },
+    {
+      "cn": "扁平设计",
+      "en": "flat design"
+    },
+    {
+      "cn": "等距视角",
+      "en": "isometric"
+    },
+    {
+      "cn": "低多边形",
+      "en": "low poly"
+    },
+    {
+      "cn": "高多边形",
+      "en": "high poly"
+    },
+    {
+      "cn": "摄影测量",
+      "en": "photogrammetry"
+    },
+    {
+      "cn": "栩栩如生",
+      "en": "lifelike"
+    },
+    {
+      "cn": "超写实",
+      "en": "hyperrealistic"
+    },
+    {
+      "cn": "超现实",
+      "en": "surreal"
+    },
+    {
+      "cn": "如梦似幻",
+      "en": "dreamlike"
+    },
+    {
+      "cn": "空灵",
+      "en": "ethereal"
+    },
+    {
+      "cn": "宏伟",
+      "en": "majestic"
+    },
+    {
+      "cn": "史诗规模",
+      "en": "epic scale"
+    },
+    {
+      "cn": "震撼",
+      "en": "breathtaking"
+    },
+    {
+      "cn": "华丽",
+      "en": "gorgeous"
+    },
+    {
+      "cn": "壮丽",
+      "en": "magnificent"
+    },
+    {
+      "cn": "无瑕",
+      "en": "flawless"
+    },
+    {
+      "cn": "纯净",
+      "en": "pristine"
+    },
+    {
+      "cn": "精致打磨",
+      "en": "polished"
+    },
+    {
+      "cn": "精炼",
+      "en": "refined"
+    },
+    {
+      "cn": "优雅",
+      "en": "elegant"
+    },
+    {
+      "cn": "细腻",
+      "en": "delicate"
+    },
+    {
+      "cn": "富有表现力",
+      "en": "expressive"
+    },
+    {
+      "cn": "意境深远",
+      "en": "evocative"
+    },
+    {
+      "cn": "氛围感",
+      "en": "atmospheric"
+    },
+    {
+      "cn": "情绪化",
+      "en": "moody"
+    },
+    {
+      "cn": "戏剧性",
+      "en": "dramatic"
+    },
+    {
+      "cn": "宁静",
+      "en": "serene"
+    },
+    {
+      "cn": "祥和",
+      "en": "tranquil"
+    },
+    {
+      "cn": "和谐",
+      "en": "harmonious"
+    },
+    {
+      "cn": "均衡",
+      "en": "balanced"
+    },
+    {
+      "cn": "整体统一",
+      "en": "cohesive"
+    },
+    {
+      "cn": "体积光",
+      "en": "volumetric lighting"
+    },
+    {
+      "cn": "丁达尔光",
+      "en": "god rays"
+    },
+    {
+      "cn": "轮廓光",
+      "en": "rim lighting"
+    },
+    {
+      "cn": "逆光",
+      "en": "backlit"
+    },
+    {
+      "cn": "黄金时刻",
+      "en": "golden hour"
+    },
+    {
+      "cn": "蓝调时刻",
+      "en": "blue hour"
+    }
+  ],
+  "character": [
+    {
+      "cn": "单人女孩",
+      "en": "1girl"
+    },
+    {
+      "cn": "单人男孩",
+      "en": "1boy"
+    },
+    {
+      "cn": "两个女孩",
+      "en": "2girls"
+    },
+    {
+      "cn": "两个男孩",
+      "en": "2boys"
+    },
+    {
+      "cn": "多人",
+      "en": "multiple girls"
+    },
+    {
+      "cn": "情侣",
+      "en": "couple"
+    },
+    {
+      "cn": "群体",
+      "en": "group"
+    },
+    {
+      "cn": "单人",
+      "en": "solo"
+    },
+    {
+      "cn": "聚焦单人",
+      "en": "solo focus"
+    },
+    {
+      "cn": "儿童",
+      "en": "child"
+    },
+    {
+      "cn": "青少年",
+      "en": "teenager"
+    },
+    {
+      "cn": "青年",
+      "en": "young adult"
+    },
+    {
+      "cn": "成年人",
+      "en": "adult"
+    },
+    {
+      "cn": "成熟女性",
+      "en": "mature female"
+    },
+    {
+      "cn": "成熟男性",
+      "en": "mature male"
+    },
+    {
+      "cn": "老人",
+      "en": "elderly"
+    },
+    {
+      "cn": "老爷爷",
+      "en": "old man"
+    },
+    {
+      "cn": "老奶奶",
+      "en": "old woman"
+    },
+    {
+      "cn": "美少女",
+      "en": "bishoujo"
+    },
+    {
+      "cn": "美少年",
+      "en": "bishounen"
+    },
+    {
+      "cn": "长发",
+      "en": "long hair"
+    },
+    {
+      "cn": "短发",
+      "en": "short hair"
+    },
+    {
+      "cn": "中长发",
+      "en": "medium hair"
+    },
+    {
+      "cn": "超长发",
+      "en": "very long hair"
+    },
+    {
+      "cn": "齐刘海",
+      "en": "blunt bangs"
+    },
+    {
+      "cn": "侧刘海",
+      "en": "side bangs"
+    },
+    {
+      "cn": "斜刘海",
+      "en": "swept bangs"
+    },
+    {
+      "cn": "分缝刘海",
+      "en": "parted bangs"
+    },
+    {
+      "cn": "头发遮单眼",
+      "en": "hair over one eye"
+    },
+    {
+      "cn": "头发遮双眼",
+      "en": "hair over eyes"
+    },
+    {
+      "cn": "不对称刘海",
+      "en": "asymmetrical bangs"
+    },
+    {
+      "cn": "马尾",
+      "en": "ponytail"
+    },
+    {
+      "cn": "高马尾",
+      "en": "high ponytail"
+    },
+    {
+      "cn": "低马尾",
+      "en": "low ponytail"
+    },
+    {
+      "cn": "侧马尾",
+      "en": "side ponytail"
+    },
+    {
+      "cn": "双马尾",
+      "en": "twintails"
+    },
+    {
+      "cn": "短双马尾",
+      "en": "short twintails"
+    },
+    {
+      "cn": "低双马尾",
+      "en": "low twintails"
+    },
+    {
+      "cn": "麻花辫",
+      "en": "braid"
+    },
+    {
+      "cn": "单辫",
+      "en": "single braid"
+    },
+    {
+      "cn": "双辫",
+      "en": "twin braids"
+    },
+    {
+      "cn": "法式辫",
+      "en": "french braid"
+    },
+    {
+      "cn": "盘辫",
+      "en": "crown braid"
+    },
+    {
+      "cn": "辫子马尾",
+      "en": "braided ponytail"
+    },
+    {
+      "cn": "丸子头",
+      "en": "hair bun"
+    },
+    {
+      "cn": "单丸子头",
+      "en": "single hair bun"
+    },
+    {
+      "cn": "双丸子头",
+      "en": "twin buns"
+    },
+    {
+      "cn": "发环",
+      "en": "hair rings"
+    },
+    {
+      "cn": "呆毛",
+      "en": "ahoge"
+    },
+    {
+      "cn": "心形呆毛",
+      "en": "heart ahoge"
+    },
+    {
+      "cn": "超大呆毛",
+      "en": "huge ahoge"
+    },
+    {
+      "cn": "触角发",
+      "en": "antenna hair"
+    },
+    {
+      "cn": "鬓发",
+      "en": "sidelocks"
+    },
+    {
+      "cn": "波浪发",
+      "en": "wavy hair"
+    },
+    {
+      "cn": "卷发",
+      "en": "curly hair"
+    },
+    {
+      "cn": "直发",
+      "en": "straight hair"
+    },
+    {
+      "cn": "凌乱头发",
+      "en": "messy hair"
+    },
+    {
+      "cn": "刺刺头",
+      "en": "spiky hair"
+    },
+    {
+      "cn": "大背头",
+      "en": "slicked-back hair"
+    },
+    {
+      "cn": "脏辫",
+      "en": "dreadlocks"
+    },
+    {
+      "cn": "爆炸头",
+      "en": "afro"
+    },
+    {
+      "cn": "波波头",
+      "en": "bob cut"
+    },
+    {
+      "cn": "公主切",
+      "en": "hime cut"
+    },
+    {
+      "cn": "精灵短发",
+      "en": "pixie cut"
+    },
+    {
+      "cn": "狼尾发型",
+      "en": "mullet"
+    },
+    {
+      "cn": "莫西干",
+      "en": "mohawk"
+    },
+    {
+      "cn": "两侧剃短",
+      "en": "undercut"
+    },
+    {
+      "cn": "飘动头发",
+      "en": "floating hair"
+    },
+    {
+      "cn": "湿发",
+      "en": "wet hair"
+    },
+    {
+      "cn": "光泽头发",
+      "en": "shiny hair"
+    },
+    {
+      "cn": "渐变发色",
+      "en": "gradient hair"
+    },
+    {
+      "cn": "多色头发",
+      "en": "multicolored hair"
+    },
+    {
+      "cn": "双色头发",
+      "en": "two-tone hair"
+    },
+    {
+      "cn": "彩虹发色",
+      "en": "rainbow hair"
+    },
+    {
+      "cn": "金发",
+      "en": "blonde hair"
+    },
+    {
+      "cn": "银发",
+      "en": "silver hair"
+    },
+    {
+      "cn": "白发",
+      "en": "white hair"
+    },
+    {
+      "cn": "灰发",
+      "en": "grey hair"
+    },
+    {
+      "cn": "黑发",
+      "en": "black hair"
+    },
+    {
+      "cn": "棕发",
+      "en": "brown hair"
+    },
+    {
+      "cn": "红发",
+      "en": "red hair"
+    },
+    {
+      "cn": "粉发",
+      "en": "pink hair"
+    },
+    {
+      "cn": "蓝发",
+      "en": "blue hair"
+    },
+    {
+      "cn": "紫发",
+      "en": "purple hair"
+    },
+    {
+      "cn": "绿发",
+      "en": "green hair"
+    },
+    {
+      "cn": "橙发",
+      "en": "orange hair"
+    },
+    {
+      "cn": "水色发",
+      "en": "aqua hair"
+    },
+    {
+      "cn": "浅棕发",
+      "en": "light brown hair"
+    },
+    {
+      "cn": "铂金发",
+      "en": "platinum blonde"
+    },
+    {
+      "cn": "蓝眼",
+      "en": "blue eyes"
+    },
+    {
+      "cn": "红眼",
+      "en": "red eyes"
+    },
+    {
+      "cn": "绿眼",
+      "en": "green eyes"
+    },
+    {
+      "cn": "棕眼",
+      "en": "brown eyes"
+    },
+    {
+      "cn": "黑眼",
+      "en": "black eyes"
+    },
+    {
+      "cn": "紫眼",
+      "en": "purple eyes"
+    },
+    {
+      "cn": "黄眼",
+      "en": "yellow eyes"
+    },
+    {
+      "cn": "粉眼",
+      "en": "pink eyes"
+    },
+    {
+      "cn": "灰眼",
+      "en": "grey eyes"
+    },
+    {
+      "cn": "水色眼",
+      "en": "aqua eyes"
+    },
+    {
+      "cn": "金眼",
+      "en": "golden eyes"
+    },
+    {
+      "cn": "异色瞳",
+      "en": "heterochromia"
+    },
+    {
+      "cn": "闭眼",
+      "en": "closed eyes"
+    },
+    {
+      "cn": "眯眼",
+      "en": "narrow eyes"
+    },
+    {
+      "cn": "圆睁双眼",
+      "en": "wide eyes"
+    },
+    {
+      "cn": "闪亮眼睛",
+      "en": "sparkling eyes"
+    },
+    {
+      "cn": "发光眼睛",
+      "en": "glowing eyes"
+    },
+    {
+      "cn": "竖瞳",
+      "en": "slit pupils"
+    },
+    {
+      "cn": "心形瞳孔",
+      "en": "heart-shaped pupils"
+    },
+    {
+      "cn": "星形瞳孔",
+      "en": "star-shaped pupils"
+    },
+    {
+      "cn": "环形瞳孔",
+      "en": "ring-shaped pupils"
+    },
+    {
+      "cn": "长睫毛",
+      "en": "long eyelashes"
+    },
+    {
+      "cn": "浓眉",
+      "en": "thick eyebrows"
+    },
+    {
+      "cn": "细眉",
+      "en": "thin eyebrows"
+    },
+    {
+      "cn": "皱眉",
+      "en": "furrowed brow"
+    },
+    {
+      "cn": "高个子",
+      "en": "tall"
+    },
+    {
+      "cn": "矮个子",
+      "en": "short"
+    },
+    {
+      "cn": "娇小",
+      "en": "petite"
+    },
+    {
+      "cn": "苗条",
+      "en": "slender"
+    },
+    {
+      "cn": "丰满",
+      "en": "curvy"
+    },
+    {
+      "cn": "微胖",
+      "en": "chubby"
+    },
+    {
+      "cn": "肌肉发达",
+      "en": "muscular"
+    },
+    {
+      "cn": "健美",
+      "en": "toned"
+    },
+    {
+      "cn": "运动身材",
+      "en": "athletic"
+    },
+    {
+      "cn": "宽肩",
+      "en": "broad shoulders"
+    },
+    {
+      "cn": "细腰",
+      "en": "narrow waist"
+    },
+    {
+      "cn": "长腿",
+      "en": "long legs"
+    },
+    {
+      "cn": "雀斑",
+      "en": "freckles"
+    },
+    {
+      "cn": "痣",
+      "en": "mole"
+    },
+    {
+      "cn": "眼下痣",
+      "en": "mole under eye"
+    },
+    {
+      "cn": "脸颊痣",
+      "en": "mole on cheek"
+    },
+    {
+      "cn": "疤痕",
+      "en": "scar"
+    },
+    {
+      "cn": "脸上疤痕",
+      "en": "scar on face"
+    },
+    {
+      "cn": "眼部刀疤",
+      "en": "scar across eye"
+    },
+    {
+      "cn": "纹身",
+      "en": "tattoo"
+    },
+    {
+      "cn": "天使翅膀",
+      "en": "angel wings"
+    },
+    {
+      "cn": "恶魔翅膀",
+      "en": "demon wings"
+    },
+    {
+      "cn": "蝙蝠翅膀",
+      "en": "bat wings"
+    },
+    {
+      "cn": "精灵翅膀",
+      "en": "fairy wings"
+    },
+    {
+      "cn": "蝴蝶翅膀",
+      "en": "butterfly wings"
+    },
+    {
+      "cn": "龙翼",
+      "en": "dragon wings"
+    },
+    {
+      "cn": "机械翅膀",
+      "en": "mechanical wings"
+    },
+    {
+      "cn": "光环",
+      "en": "halo"
+    },
+    {
+      "cn": "恶魔角",
+      "en": "devil horns"
+    },
+    {
+      "cn": "兽耳",
+      "en": "animal ears"
+    },
+    {
+      "cn": "猫耳",
+      "en": "cat ears"
+    },
+    {
+      "cn": "狐耳",
+      "en": "fox ears"
+    },
+    {
+      "cn": "狼耳",
+      "en": "wolf ears"
+    },
+    {
+      "cn": "兔耳",
+      "en": "rabbit ears"
+    },
+    {
+      "cn": "狗耳",
+      "en": "dog ears"
+    },
+    {
+      "cn": "熊耳",
+      "en": "bear ears"
+    },
+    {
+      "cn": "虎耳",
+      "en": "tiger ears"
+    },
+    {
+      "cn": "马耳",
+      "en": "horse ears"
+    },
+    {
+      "cn": "鹿角",
+      "en": "deer antlers"
+    },
+    {
+      "cn": "尾巴",
+      "en": "tail"
+    },
+    {
+      "cn": "猫尾",
+      "en": "cat tail"
+    },
+    {
+      "cn": "狐尾",
+      "en": "fox tail"
+    },
+    {
+      "cn": "狼尾",
+      "en": "wolf tail"
+    },
+    {
+      "cn": "龙尾",
+      "en": "dragon tail"
+    },
+    {
+      "cn": "恶魔尾",
+      "en": "devil tail"
+    },
+    {
+      "cn": "尖耳",
+      "en": "pointed ears"
+    },
+    {
+      "cn": "精灵耳",
+      "en": "elf ears"
+    },
+    {
+      "cn": "獠牙",
+      "en": "fangs"
+    },
+    {
+      "cn": "尖牙",
+      "en": "sharp teeth"
+    },
+    {
+      "cn": "利爪",
+      "en": "claws"
+    },
+    {
+      "cn": "弯角",
+      "en": "curved horns"
+    },
+    {
+      "cn": "第三只眼",
+      "en": "third eye"
+    },
+    {
+      "cn": "面具",
+      "en": "mask"
+    },
+    {
+      "cn": "半面具",
+      "en": "half mask"
+    },
+    {
+      "cn": "面纱",
+      "en": "veil"
+    },
+    {
+      "cn": "眼罩",
+      "en": "eyepatch"
+    },
+    {
+      "cn": "眼镜",
+      "en": "glasses"
+    },
+    {
+      "cn": "圆框眼镜",
+      "en": "round glasses"
+    },
+    {
+      "cn": "墨镜",
+      "en": "sunglasses"
+    },
+    {
+      "cn": "护目镜",
+      "en": "goggles"
+    },
+    {
+      "cn": "头上护目镜",
+      "en": "goggles on head"
+    },
+    {
+      "cn": "发带",
+      "en": "headband"
+    },
+    {
+      "cn": "丝带",
+      "en": "ribbon"
+    },
+    {
+      "cn": "蝴蝶结发饰",
+      "en": "hair bow"
+    },
+    {
+      "cn": "发绳",
+      "en": "hair tie"
+    },
+    {
+      "cn": "大肠发圈",
+      "en": "scrunchie"
+    },
+    {
+      "cn": "发夹",
+      "en": "hairpin"
+    },
+    {
+      "cn": "发卡",
+      "en": "hairclip"
+    },
+    {
+      "cn": "头花",
+      "en": "hair flower"
+    },
+    {
+      "cn": "蝴蝶发饰",
+      "en": "butterfly hair ornament"
+    },
+    {
+      "cn": "皇冠",
+      "en": "crown"
+    },
+    {
+      "cn": "头冠",
+      "en": "tiara"
+    },
+    {
+      "cn": "头环",
+      "en": "circlet"
+    },
+    {
+      "cn": "头饰",
+      "en": "headpiece"
+    },
+    {
+      "cn": "珠宝",
+      "en": "jewelry"
+    },
+    {
+      "cn": "耳环",
+      "en": "earrings"
+    },
+    {
+      "cn": "圆环耳环",
+      "en": "hoop earrings"
+    },
+    {
+      "cn": "项链",
+      "en": "necklace"
+    },
+    {
+      "cn": "颈圈",
+      "en": "choker"
+    },
+    {
+      "cn": "吊坠",
+      "en": "pendant"
+    },
+    {
+      "cn": "手链",
+      "en": "bracelet"
+    },
+    {
+      "cn": "戒指",
+      "en": "ring"
+    },
+    {
+      "cn": "胸针",
+      "en": "brooch"
+    },
+    {
+      "cn": "脚链",
+      "en": "anklet"
+    },
+    {
+      "cn": "耳钉",
+      "en": "ear piercings"
+    },
+    {
+      "cn": "鼻钉",
+      "en": "nose piercing"
+    },
+    {
+      "cn": "唇钉",
+      "en": "lip piercing"
+    }
+  ],
+  "pose": [
+    {
+      "cn": "站立",
+      "en": "standing"
+    },
+    {
+      "cn": "坐姿",
+      "en": "sitting"
+    },
+    {
+      "cn": "正坐",
+      "en": "seiza"
+    },
+    {
+      "cn": "跪姿",
+      "en": "kneeling"
+    },
+    {
+      "cn": "蹲姿",
+      "en": "squatting"
+    },
+    {
+      "cn": "蜷蹲",
+      "en": "crouching"
+    },
+    {
+      "cn": "躺姿",
+      "en": "lying"
+    },
+    {
+      "cn": "仰卧",
+      "en": "lying on back"
+    },
+    {
+      "cn": "侧躺",
+      "en": "lying on side"
+    },
+    {
+      "cn": "俯卧",
+      "en": "prone"
+    },
+    {
+      "cn": "睡觉",
+      "en": "sleeping"
+    },
+    {
+      "cn": "小憩",
+      "en": "napping"
+    },
+    {
+      "cn": "斜靠",
+      "en": "reclining"
+    },
+    {
+      "cn": "靠墙",
+      "en": "leaning against wall"
+    },
+    {
+      "cn": "前倾",
+      "en": "leaning forward"
+    },
+    {
+      "cn": "后仰",
+      "en": "leaning back"
+    },
+    {
+      "cn": "伸懒腰",
+      "en": "stretching"
+    },
+    {
+      "cn": "打哈欠",
+      "en": "yawning"
+    },
+    {
+      "cn": "走路",
+      "en": "walking"
+    },
+    {
+      "cn": "奔跑",
+      "en": "running"
+    },
+    {
+      "cn": "冲刺",
+      "en": "sprinting"
+    },
+    {
+      "cn": "慢跑",
+      "en": "jogging"
+    },
+    {
+      "cn": "跳跃",
+      "en": "jumping"
+    },
+    {
+      "cn": "腾跃",
+      "en": "leaping"
+    },
+    {
+      "cn": "单脚跳",
+      "en": "hopping"
+    },
+    {
+      "cn": "蹦跳",
+      "en": "skipping"
+    },
+    {
+      "cn": "跳舞",
+      "en": "dancing"
+    },
+    {
+      "cn": "芭蕾姿势",
+      "en": "ballet pose"
+    },
+    {
+      "cn": "旋转",
+      "en": "spinning"
+    },
+    {
+      "cn": "脚尖旋转",
+      "en": "pirouette"
+    },
+    {
+      "cn": "战斗架势",
+      "en": "fighting stance"
+    },
+    {
+      "cn": "格斗姿势",
+      "en": "combat stance"
+    },
+    {
+      "cn": "武术动作",
+      "en": "martial arts"
+    },
+    {
+      "cn": "出拳",
+      "en": "punching"
+    },
+    {
+      "cn": "踢腿",
+      "en": "kicking"
+    },
+    {
+      "cn": "持剑架势",
+      "en": "sword stance"
+    },
+    {
+      "cn": "拔刀",
+      "en": "drawing sword"
+    },
+    {
+      "cn": "瞄准",
+      "en": "aiming"
+    },
+    {
+      "cn": "举枪瞄准",
+      "en": "aiming gun"
+    },
+    {
+      "cn": "射箭",
+      "en": "archery"
+    },
+    {
+      "cn": "拉弓",
+      "en": "drawing bow"
+    },
+    {
+      "cn": "施法",
+      "en": "casting spell"
+    },
+    {
+      "cn": "魔法阵",
+      "en": "magic circle"
+    },
+    {
+      "cn": "召唤",
+      "en": "summoning"
+    },
+    {
+      "cn": "冥想",
+      "en": "meditating"
+    },
+    {
+      "cn": "祈祷",
+      "en": "praying"
+    },
+    {
+      "cn": "鞠躬",
+      "en": "bowing"
+    },
+    {
+      "cn": "屈膝礼",
+      "en": "curtsy"
+    },
+    {
+      "cn": "敬礼",
+      "en": "saluting"
+    },
+    {
+      "cn": "挥手",
+      "en": "waving"
+    },
+    {
+      "cn": "竖大拇指",
+      "en": "thumbs up"
+    },
+    {
+      "cn": "剪刀手",
+      "en": "peace sign"
+    },
+    {
+      "cn": "V字手势",
+      "en": "v-sign"
+    },
+    {
+      "cn": "指向",
+      "en": "pointing"
+    },
+    {
+      "cn": "指向观众",
+      "en": "pointing at viewer"
+    },
+    {
+      "cn": "指向上方",
+      "en": "pointing up"
+    },
+    {
+      "cn": "OK手势",
+      "en": "ok sign"
+    },
+    {
+      "cn": "握拳",
+      "en": "clenched fist"
+    },
+    {
+      "cn": "张开手掌",
+      "en": "open palm"
+    },
+    {
+      "cn": "双手举起",
+      "en": "hands up"
+    },
+    {
+      "cn": "举臂",
+      "en": "arms up"
+    },
+    {
+      "cn": "抱臂",
+      "en": "arms crossed"
+    },
+    {
+      "cn": "背手",
+      "en": "arms behind back"
+    },
+    {
+      "cn": "双手抱头",
+      "en": "arms behind head"
+    },
+    {
+      "cn": "叉腰",
+      "en": "hands on hips"
+    },
+    {
+      "cn": "单手叉腰",
+      "en": "hand on hip"
+    },
+    {
+      "cn": "手抚胸口",
+      "en": "hands on own chest"
+    },
+    {
+      "cn": "手扶头",
+      "en": "hand on own head"
+    },
+    {
+      "cn": "手抓头发",
+      "en": "hand in hair"
+    },
+    {
+      "cn": "手插口袋",
+      "en": "hand in pocket"
+    },
+    {
+      "cn": "双手插兜",
+      "en": "hands in pockets"
+    },
+    {
+      "cn": "扶眼镜",
+      "en": "adjusting glasses"
+    },
+    {
+      "cn": "整理头发",
+      "en": "adjusting hair"
+    },
+    {
+      "cn": "摸脸",
+      "en": "touching face"
+    },
+    {
+      "cn": "捂眼",
+      "en": "covering eyes"
+    },
+    {
+      "cn": "捂嘴",
+      "en": "covering mouth"
+    },
+    {
+      "cn": "捂脸",
+      "en": "covering face"
+    },
+    {
+      "cn": "嘘手势",
+      "en": "shushing"
+    },
+    {
+      "cn": "手指抵唇",
+      "en": "finger to lips"
+    },
+    {
+      "cn": "托下巴",
+      "en": "hand on chin"
+    },
+    {
+      "cn": "思考姿势",
+      "en": "thinking pose"
+    },
+    {
+      "cn": "指尖相对",
+      "en": "steepled fingers"
+    },
+    {
+      "cn": "歪头",
+      "en": "head tilt"
+    },
+    {
+      "cn": "回头看",
+      "en": "looking back"
+    },
+    {
+      "cn": "回眸",
+      "en": "looking over shoulder"
+    },
+    {
+      "cn": "仰视",
+      "en": "looking up"
+    },
+    {
+      "cn": "俯视",
+      "en": "looking down"
+    },
+    {
+      "cn": "看向观众",
+      "en": "looking at viewer"
+    },
+    {
+      "cn": "看向别处",
+      "en": "looking away"
+    },
+    {
+      "cn": "侧目",
+      "en": "side glance"
+    },
+    {
+      "cn": "怒视",
+      "en": "glaring"
+    },
+    {
+      "cn": "眨眼示意",
+      "en": "winking at viewer"
+    },
+    {
+      "cn": "对观众微笑",
+      "en": "smiling at viewer"
+    },
+    {
+      "cn": "背面视角",
+      "en": "from behind"
+    },
+    {
+      "cn": "侧面视角",
+      "en": "from side"
+    },
+    {
+      "cn": "上方视角",
+      "en": "from above"
+    },
+    {
+      "cn": "下方视角",
+      "en": "from below"
+    },
+    {
+      "cn": "七分身镜头",
+      "en": "cowboy shot"
+    },
+    {
+      "cn": "动态姿势",
+      "en": "dynamic pose"
+    },
+    {
+      "cn": "动作姿势",
+      "en": "action pose"
+    },
+    {
+      "cn": "戏剧化姿势",
+      "en": "dramatic pose"
+    },
+    {
+      "cn": "英雄姿势",
+      "en": "heroic pose"
+    },
+    {
+      "cn": "自信姿势",
+      "en": "confident pose"
+    },
+    {
+      "cn": "休闲姿势",
+      "en": "casual pose"
+    },
+    {
+      "cn": "放松姿势",
+      "en": "relaxed pose"
+    },
+    {
+      "cn": "优雅姿势",
+      "en": "elegant pose"
+    },
+    {
+      "cn": "妩媚姿势",
+      "en": "alluring pose"
+    },
+    {
+      "cn": "害羞姿势",
+      "en": "shy pose"
+    },
+    {
+      "cn": "防御姿势",
+      "en": "defensive pose"
+    },
+    {
+      "cn": "潜行姿势",
+      "en": "stealthy pose"
+    },
+    {
+      "cn": "蹑手蹑脚",
+      "en": "tiptoeing"
+    },
+    {
+      "cn": "单腿平衡",
+      "en": "balancing on one leg"
+    },
+    {
+      "cn": "瑜伽姿势",
+      "en": "yoga pose"
+    },
+    {
+      "cn": "莲花坐",
+      "en": "lotus position"
+    },
+    {
+      "cn": "悬挂",
+      "en": "hanging"
+    },
+    {
+      "cn": "攀爬",
+      "en": "climbing"
+    },
+    {
+      "cn": "荡秋千",
+      "en": "swinging"
+    },
+    {
+      "cn": "游泳",
+      "en": "swimming"
+    },
+    {
+      "cn": "水中漂浮",
+      "en": "floating in water"
+    },
+    {
+      "cn": "潜水",
+      "en": "diving"
+    },
+    {
+      "cn": "冲浪",
+      "en": "surfing"
+    },
+    {
+      "cn": "滑板",
+      "en": "skateboarding"
+    },
+    {
+      "cn": "骑车",
+      "en": "cycling"
+    },
+    {
+      "cn": "骑马",
+      "en": "horseback riding"
+    },
+    {
+      "cn": "骑摩托",
+      "en": "motorbike riding"
+    },
+    {
+      "cn": "驾驶",
+      "en": "driving"
+    },
+    {
+      "cn": "飞行",
+      "en": "flying"
+    },
+    {
+      "cn": "悬浮",
+      "en": "levitating"
+    },
+    {
+      "cn": "空中悬停",
+      "en": "hovering"
+    },
+    {
+      "cn": "坠落",
+      "en": "falling"
+    },
+    {
+      "cn": "绊倒",
+      "en": "tripping"
+    },
+    {
+      "cn": "公主抱",
+      "en": "carried bridal style"
+    },
+    {
+      "cn": "背人",
+      "en": "piggyback"
+    },
+    {
+      "cn": "拥抱",
+      "en": "hugging"
+    },
+    {
+      "cn": "相拥",
+      "en": "embracing"
+    },
+    {
+      "cn": "牵手",
+      "en": "holding hands"
+    },
+    {
+      "cn": "搂肩",
+      "en": "arm around shoulder"
+    },
+    {
+      "cn": "头靠肩",
+      "en": "head on shoulder"
+    },
+    {
+      "cn": "膝枕",
+      "en": "lap pillow"
+    },
+    {
+      "cn": "格斗",
+      "en": "grappling"
+    },
+    {
+      "cn": "对决",
+      "en": "dueling"
+    },
+    {
+      "cn": "剑斗",
+      "en": "sword fighting"
+    },
+    {
+      "cn": "对峙",
+      "en": "standoff"
+    },
+    {
+      "cn": "追逐",
+      "en": "chase"
+    },
+    {
+      "cn": "逃跑",
+      "en": "fleeing"
+    },
+    {
+      "cn": "躲藏",
+      "en": "hiding"
+    },
+    {
+      "cn": "偷看",
+      "en": "peeking"
+    },
+    {
+      "cn": "瑟缩",
+      "en": "cowering"
+    },
+    {
+      "cn": "颤抖",
+      "en": "trembling"
+    },
+    {
+      "cn": "欢呼",
+      "en": "cheering"
+    },
+    {
+      "cn": "庆祝",
+      "en": "celebrating"
+    },
+    {
+      "cn": "胜利姿势",
+      "en": "victory pose"
+    },
+    {
+      "cn": "展示肌肉",
+      "en": "flexing muscles"
+    },
+    {
+      "cn": "模特姿势",
+      "en": "model pose"
+    },
+    {
+      "cn": "T台走秀",
+      "en": "runway walk"
+    },
+    {
+      "cn": "拍照姿势",
+      "en": "photoshoot pose"
+    },
+    {
+      "cn": "抓拍姿势",
+      "en": "candid pose"
+    },
+    {
+      "cn": "自然姿势",
+      "en": "natural pose"
+    }
+  ],
+  "background": [
+    {
+      "cn": "简单背景",
+      "en": "simple background"
+    },
+    {
+      "cn": "纯色背景",
+      "en": "plain background"
+    },
+    {
+      "cn": "白色背景",
+      "en": "white background"
+    },
+    {
+      "cn": "黑色背景",
+      "en": "black background"
+    },
+    {
+      "cn": "渐变背景",
+      "en": "gradient background"
+    },
+    {
+      "cn": "抽象背景",
+      "en": "abstract background"
+    },
+    {
+      "cn": "花纹背景",
+      "en": "patterned background"
+    },
+    {
+      "cn": "花卉背景",
+      "en": "floral background"
+    },
+    {
+      "cn": "星空",
+      "en": "starry sky"
+    },
+    {
+      "cn": "星夜",
+      "en": "starry night"
+    },
+    {
+      "cn": "银河",
+      "en": "milky way"
+    },
+    {
+      "cn": "流星",
+      "en": "shooting star"
+    },
+    {
+      "cn": "新月",
+      "en": "crescent moon"
+    },
+    {
+      "cn": "满月",
+      "en": "full moon"
+    },
+    {
+      "cn": "血月",
+      "en": "blood moon"
+    },
+    {
+      "cn": "日食",
+      "en": "solar eclipse"
+    },
+    {
+      "cn": "极光",
+      "en": "aurora"
+    },
+    {
+      "cn": "北极光",
+      "en": "northern lights"
+    },
+    {
+      "cn": "彩虹",
+      "en": "rainbow"
+    },
+    {
+      "cn": "双彩虹",
+      "en": "double rainbow"
+    },
+    {
+      "cn": "多云天空",
+      "en": "cloudy sky"
+    },
+    {
+      "cn": "阴天",
+      "en": "overcast"
+    },
+    {
+      "cn": "晴空",
+      "en": "clear sky"
+    },
+    {
+      "cn": "蓝天",
+      "en": "blue sky"
+    },
+    {
+      "cn": "日落",
+      "en": "sunset"
+    },
+    {
+      "cn": "日出",
+      "en": "sunrise"
+    },
+    {
+      "cn": "黄昏",
+      "en": "dusk"
+    },
+    {
+      "cn": "黎明",
+      "en": "dawn"
+    },
+    {
+      "cn": "暮光",
+      "en": "twilight"
+    },
+    {
+      "cn": "夜晚",
+      "en": "night"
+    },
+    {
+      "cn": "午夜",
+      "en": "midnight"
+    },
+    {
+      "cn": "白天",
+      "en": "day"
+    },
+    {
+      "cn": "清晨",
+      "en": "morning"
+    },
+    {
+      "cn": "傍晚",
+      "en": "evening"
+    },
+    {
+      "cn": "春天",
+      "en": "spring"
+    },
+    {
+      "cn": "夏天",
+      "en": "summer"
+    },
+    {
+      "cn": "秋天",
+      "en": "autumn"
+    },
+    {
+      "cn": "冬天",
+      "en": "winter"
+    },
+    {
+      "cn": "樱花",
+      "en": "cherry blossoms"
+    },
+    {
+      "cn": "飘落花瓣",
+      "en": "falling petals"
+    },
+    {
+      "cn": "花海",
+      "en": "flower field"
+    },
+    {
+      "cn": "向日葵田",
+      "en": "sunflower field"
+    },
+    {
+      "cn": "薰衣草田",
+      "en": "lavender field"
+    },
+    {
+      "cn": "玫瑰园",
+      "en": "rose garden"
+    },
+    {
+      "cn": "郁金香田",
+      "en": "tulip field"
+    },
+    {
+      "cn": "草地",
+      "en": "meadow"
+    },
+    {
+      "cn": "草原",
+      "en": "grassland"
+    },
+    {
+      "cn": "麦田",
+      "en": "wheat field"
+    },
+    {
+      "cn": "稻田",
+      "en": "rice field"
+    },
+    {
+      "cn": "梯田",
+      "en": "terraced fields"
+    },
+    {
+      "cn": "农田",
+      "en": "farmland"
+    },
+    {
+      "cn": "葡萄园",
+      "en": "vineyard"
+    },
+    {
+      "cn": "果园",
+      "en": "orchard"
+    },
+    {
+      "cn": "森林",
+      "en": "forest"
+    },
+    {
+      "cn": "竹林",
+      "en": "bamboo forest"
+    },
+    {
+      "cn": "丛林",
+      "en": "jungle"
+    },
+    {
+      "cn": "雨林",
+      "en": "rainforest"
+    },
+    {
+      "cn": "秋叶",
+      "en": "autumn leaves"
+    },
+    {
+      "cn": "枫叶",
+      "en": "maple leaves"
+    },
+    {
+      "cn": "落叶",
+      "en": "fallen leaves"
+    },
+    {
+      "cn": "苔藓",
+      "en": "moss"
+    },
+    {
+      "cn": "蘑菇森林",
+      "en": "mushroom forest"
+    },
+    {
+      "cn": "巨树",
+      "en": "giant trees"
+    },
+    {
+      "cn": "树屋",
+      "en": "treehouse"
+    },
+    {
+      "cn": "山脉",
+      "en": "mountain range"
+    },
+    {
+      "cn": "雪山",
+      "en": "snowy mountain"
+    },
+    {
+      "cn": "火山",
+      "en": "volcano"
+    },
+    {
+      "cn": "悬崖",
+      "en": "cliff"
+    },
+    {
+      "cn": "峡谷",
+      "en": "canyon"
+    },
+    {
+      "cn": "山谷",
+      "en": "valley"
+    },
+    {
+      "cn": "瀑布",
+      "en": "waterfall"
+    },
+    {
+      "cn": "河流",
+      "en": "river"
+    },
+    {
+      "cn": "溪流",
+      "en": "stream"
+    },
+    {
+      "cn": "湖泊",
+      "en": "lake"
+    },
+    {
+      "cn": "池塘",
+      "en": "pond"
+    },
+    {
+      "cn": "大海",
+      "en": "ocean"
+    },
+    {
+      "cn": "海滩",
+      "en": "beach"
+    },
+    {
+      "cn": "海岸线",
+      "en": "coastline"
+    },
+    {
+      "cn": "岛屿",
+      "en": "island"
+    },
+    {
+      "cn": "热带岛屿",
+      "en": "tropical island"
+    },
+    {
+      "cn": "沙漠",
+      "en": "desert"
+    },
+    {
+      "cn": "沙丘",
+      "en": "dunes"
+    },
+    {
+      "cn": "绿洲",
+      "en": "oasis"
+    },
+    {
+      "cn": "洞穴",
+      "en": "cave"
+    },
+    {
+      "cn": "水晶洞",
+      "en": "crystal cave"
+    },
+    {
+      "cn": "地下湖",
+      "en": "underground lake"
+    },
+    {
+      "cn": "冰川",
+      "en": "glacier"
+    },
+    {
+      "cn": "冰山",
+      "en": "iceberg"
+    },
+    {
+      "cn": "雪原",
+      "en": "snowfield"
+    },
+    {
+      "cn": "结冰湖面",
+      "en": "frozen lake"
+    },
+    {
+      "cn": "温泉",
+      "en": "hot spring"
+    },
+    {
+      "cn": "珊瑚礁",
+      "en": "coral reef"
+    },
+    {
+      "cn": "水下",
+      "en": "underwater"
+    },
+    {
+      "cn": "海底",
+      "en": "seabed"
+    },
+    {
+      "cn": "城市",
+      "en": "city"
+    },
+    {
+      "cn": "城市景观",
+      "en": "cityscape"
+    },
+    {
+      "cn": "街道",
+      "en": "street"
+    },
+    {
+      "cn": "小巷",
+      "en": "alley"
+    },
+    {
+      "cn": "窄巷",
+      "en": "narrow alley"
+    },
+    {
+      "cn": "十字路口",
+      "en": "intersection"
+    },
+    {
+      "cn": "人行横道",
+      "en": "crosswalk"
+    },
+    {
+      "cn": "桥梁",
+      "en": "bridge"
+    },
+    {
+      "cn": "吊桥",
+      "en": "suspension bridge"
+    },
+    {
+      "cn": "石桥",
+      "en": "stone bridge"
+    },
+    {
+      "cn": "摩天大楼",
+      "en": "skyscraper"
+    },
+    {
+      "cn": "高塔",
+      "en": "tower"
+    },
+    {
+      "cn": "城堡",
+      "en": "castle"
+    },
+    {
+      "cn": "宫殿",
+      "en": "palace"
+    },
+    {
+      "cn": "寺庙",
+      "en": "temple"
+    },
+    {
+      "cn": "神社",
+      "en": "shrine"
+    },
+    {
+      "cn": "鸟居",
+      "en": "torii"
+    },
+    {
+      "cn": "宝塔",
+      "en": "pagoda"
+    },
+    {
+      "cn": "大教堂",
+      "en": "cathedral"
+    },
+    {
+      "cn": "教堂",
+      "en": "church"
+    },
+    {
+      "cn": "遗迹",
+      "en": "ruins"
+    },
+    {
+      "cn": "古代遗迹",
+      "en": "ancient ruins"
+    },
+    {
+      "cn": "斗兽场",
+      "en": "colosseum"
+    },
+    {
+      "cn": "金字塔",
+      "en": "pyramid"
+    },
+    {
+      "cn": "长城",
+      "en": "great wall"
+    },
+    {
+      "cn": "灯塔",
+      "en": "lighthouse"
+    },
+    {
+      "cn": "风车",
+      "en": "windmill"
+    },
+    {
+      "cn": "农舍",
+      "en": "farmhouse"
+    },
+    {
+      "cn": "小屋",
+      "en": "cottage"
+    },
+    {
+      "cn": "木屋里",
+      "en": "log cabin"
+    },
+    {
+      "cn": "帐篷",
+      "en": "tent"
+    },
+    {
+      "cn": "营地",
+      "en": "campsite"
+    },
+    {
+      "cn": "篝火",
+      "en": "campfire"
+    },
+    {
+      "cn": "村庄",
+      "en": "village"
+    },
+    {
+      "cn": "小镇",
+      "en": "town"
+    },
+    {
+      "cn": "乡村",
+      "en": "countryside"
+    },
+    {
+      "cn": "日式庭院",
+      "en": "japanese garden"
+    },
+    {
+      "cn": "禅意庭院",
+      "en": "zen garden"
+    },
+    {
+      "cn": "庭院",
+      "en": "courtyard"
+    },
+    {
+      "cn": "阳台",
+      "en": "balcony"
+    },
+    {
+      "cn": "露台",
+      "en": "terrace"
+    },
+    {
+      "cn": "屋顶",
+      "en": "rooftop"
+    },
+    {
+      "cn": "屋顶花园",
+      "en": "rooftop garden"
+    },
+    {
+      "cn": "公园",
+      "en": "park"
+    },
+    {
+      "cn": "游乐场",
+      "en": "playground"
+    },
+    {
+      "cn": "喷泉",
+      "en": "fountain"
+    },
+    {
+      "cn": "广场",
+      "en": "plaza"
+    },
+    {
+      "cn": "夜市",
+      "en": "night market"
+    },
+    {
+      "cn": "集市",
+      "en": "street market"
+    },
+    {
+      "cn": "祭典",
+      "en": "festival"
+    },
+    {
+      "cn": "烟花",
+      "en": "fireworks"
+    },
+    {
+      "cn": "游乐园",
+      "en": "amusement park"
+    },
+    {
+      "cn": "摩天轮",
+      "en": "ferris wheel"
+    },
+    {
+      "cn": "过山车",
+      "en": "roller coaster"
+    },
+    {
+      "cn": "旋转木马",
+      "en": "carousel"
+    },
+    {
+      "cn": "体育场",
+      "en": "stadium"
+    },
+    {
+      "cn": "竞技场",
+      "en": "arena"
+    },
+    {
+      "cn": "音乐厅",
+      "en": "concert hall"
+    },
+    {
+      "cn": "剧院",
+      "en": "theater"
+    },
+    {
+      "cn": "电影院",
+      "en": "cinema"
+    },
+    {
+      "cn": "图书馆",
+      "en": "library"
+    },
+    {
+      "cn": "博物馆",
+      "en": "museum"
+    },
+    {
+      "cn": "美术馆",
+      "en": "art gallery"
+    },
+    {
+      "cn": "教室",
+      "en": "classroom"
+    },
+    {
+      "cn": "学校",
+      "en": "school"
+    },
+    {
+      "cn": "学校走廊",
+      "en": "school hallway"
+    },
+    {
+      "cn": "体育馆",
+      "en": "gymnasium"
+    },
+    {
+      "cn": "游泳池",
+      "en": "swimming pool"
+    },
+    {
+      "cn": "水族馆",
+      "en": "aquarium"
+    },
+    {
+      "cn": "动物园",
+      "en": "zoo"
+    },
+    {
+      "cn": "植物园",
+      "en": "botanical garden"
+    },
+    {
+      "cn": "温室",
+      "en": "greenhouse"
+    },
+    {
+      "cn": "办公室",
+      "en": "office"
+    },
+    {
+      "cn": "会议室",
+      "en": "conference room"
+    },
+    {
+      "cn": "实验室",
+      "en": "laboratory"
+    },
+    {
+      "cn": "工作室",
+      "en": "workshop"
+    },
+    {
+      "cn": "画室",
+      "en": "atelier"
+    },
+    {
+      "cn": "厨房",
+      "en": "kitchen"
+    },
+    {
+      "cn": "餐厅",
+      "en": "restaurant"
+    },
+    {
+      "cn": "咖啡馆",
+      "en": "cafe"
+    },
+    {
+      "cn": "酒吧",
+      "en": "bar"
+    },
+    {
+      "cn": "居酒屋",
+      "en": "izakaya"
+    },
+    {
+      "cn": "面包房",
+      "en": "bakery"
+    },
+    {
+      "cn": "书店",
+      "en": "bookstore"
+    },
+    {
+      "cn": "卧室",
+      "en": "bedroom"
+    },
+    {
+      "cn": "客厅",
+      "en": "living room"
+    },
+    {
+      "cn": "浴室",
+      "en": "bathroom"
+    },
+    {
+      "cn": "浴缸",
+      "en": "bathtub"
+    },
+    {
+      "cn": "阁楼",
+      "en": "attic"
+    },
+    {
+      "cn": "地下室",
+      "en": "basement"
+    },
+    {
+      "cn": "旋转楼梯",
+      "en": "spiral stairs"
+    },
+    {
+      "cn": "走廊",
+      "en": "hallway"
+    },
+    {
+      "cn": "窗边",
+      "en": "window"
+    },
+    {
+      "cn": "窗台",
+      "en": "windowsill"
+    },
+    {
+      "cn": "拱门",
+      "en": "archway"
+    },
+    {
+      "cn": "柱廊",
+      "en": "colonnade"
+    },
+    {
+      "cn": "大理石地面",
+      "en": "marble floor"
+    },
+    {
+      "cn": "木地板",
+      "en": "wooden floor"
+    },
+    {
+      "cn": "榻榻米",
+      "en": "tatami"
+    },
+    {
+      "cn": "吊灯",
+      "en": "chandelier"
+    },
+    {
+      "cn": "壁炉",
+      "en": "fireplace"
+    },
+    {
+      "cn": "书架",
+      "en": "bookshelf"
+    },
+    {
+      "cn": "王座",
+      "en": "throne"
+    },
+    {
+      "cn": "祭坛",
+      "en": "altar"
+    },
+    {
+      "cn": "地牢",
+      "en": "dungeon"
+    },
+    {
+      "cn": "工厂",
+      "en": "factory"
+    },
+    {
+      "cn": "仓库",
+      "en": "warehouse"
+    },
+    {
+      "cn": "工地",
+      "en": "construction site"
+    },
+    {
+      "cn": "矿井",
+      "en": "mine"
+    },
+    {
+      "cn": "铁轨",
+      "en": "railway"
+    },
+    {
+      "cn": "火车站",
+      "en": "train station"
+    },
+    {
+      "cn": "站台",
+      "en": "platform"
+    },
+    {
+      "cn": "地铁",
+      "en": "subway"
+    },
+    {
+      "cn": "机场",
+      "en": "airport"
+    },
+    {
+      "cn": "港口",
+      "en": "harbor"
+    },
+    {
+      "cn": "码头",
+      "en": "pier"
+    },
+    {
+      "cn": "帆船",
+      "en": "sailing ship"
+    },
+    {
+      "cn": "飞艇",
+      "en": "airship"
+    },
+    {
+      "cn": "热气球",
+      "en": "hot air balloon"
+    },
+    {
+      "cn": "太空站",
+      "en": "space station"
+    },
+    {
+      "cn": "月球表面",
+      "en": "moon surface"
+    },
+    {
+      "cn": "外星地表",
+      "en": "alien planet"
+    },
+    {
+      "cn": "浮空岛",
+      "en": "floating islands"
+    },
+    {
+      "cn": "天空之城",
+      "en": "sky city"
+    },
+    {
+      "cn": "云海",
+      "en": "cloud sea"
+    },
+    {
+      "cn": "云上",
+      "en": "above clouds"
+    },
+    {
+      "cn": "外太空",
+      "en": "outer space"
+    },
+    {
+      "cn": "星云",
+      "en": "nebula"
+    },
+    {
+      "cn": "星系",
+      "en": "galaxy"
+    },
+    {
+      "cn": "赛博城市",
+      "en": "cyberpunk city"
+    },
+    {
+      "cn": "霓虹城市",
+      "en": "neon city"
+    },
+    {
+      "cn": "未来城市",
+      "en": "futuristic city"
+    },
+    {
+      "cn": "飞船内部",
+      "en": "spaceship interior"
+    },
+    {
+      "cn": "驾驶舱",
+      "en": "cockpit"
+    },
+    {
+      "cn": "控制室",
+      "en": "control room"
+    },
+    {
+      "cn": "全息投影",
+      "en": "holographic display"
+    },
+    {
+      "cn": "末世废墟",
+      "en": "post-apocalyptic ruins"
+    },
+    {
+      "cn": "废土",
+      "en": "wasteland"
+    },
+    {
+      "cn": "战场",
+      "en": "battlefield"
+    },
+    {
+      "cn": "战壕",
+      "en": "trench"
+    },
+    {
+      "cn": "掩体",
+      "en": "bunker"
+    },
+    {
+      "cn": "雾",
+      "en": "fog"
+    },
+    {
+      "cn": "薄雾",
+      "en": "mist"
+    },
+    {
+      "cn": "雨",
+      "en": "rain"
+    },
+    {
+      "cn": "雨天",
+      "en": "rainy day"
+    },
+    {
+      "cn": "雷暴",
+      "en": "thunderstorm"
+    },
+    {
+      "cn": "闪电",
+      "en": "lightning"
+    },
+    {
+      "cn": "雪",
+      "en": "snow"
+    },
+    {
+      "cn": "降雪",
+      "en": "snowfall"
+    },
+    {
+      "cn": "暴风雪",
+      "en": "blizzard"
+    },
+    {
+      "cn": "强风",
+      "en": "strong wind"
+    },
+    {
+      "cn": "沙尘暴",
+      "en": "sandstorm"
+    },
+    {
+      "cn": "龙卷风",
+      "en": "tornado"
+    },
+    {
+      "cn": "火焰",
+      "en": "flames"
+    },
+    {
+      "cn": "火星",
+      "en": "embers"
+    },
+    {
+      "cn": "气泡",
+      "en": "bubbles"
+    },
+    {
+      "cn": "漂浮粒子",
+      "en": "floating particles"
+    },
+    {
+      "cn": "光粒",
+      "en": "light particles"
+    },
+    {
+      "cn": "萤火虫",
+      "en": "fireflies"
+    },
+    {
+      "cn": "飞鸟",
+      "en": "flock of birds"
+    },
+    {
+      "cn": "蝴蝶",
+      "en": "butterflies"
+    },
+    {
+      "cn": "水洼",
+      "en": "puddle"
+    },
+    {
+      "cn": "水面倒影",
+      "en": "water reflection"
+    },
+    {
+      "cn": "湿润地面",
+      "en": "wet ground"
+    },
+    {
+      "cn": "霓虹灯牌",
+      "en": "neon signs"
+    },
+    {
+      "cn": "广告牌",
+      "en": "billboard"
+    },
+    {
+      "cn": "自动售货机",
+      "en": "vending machine"
+    },
+    {
+      "cn": "电线杆",
+      "en": "telephone pole"
+    },
+    {
+      "cn": "路灯",
+      "en": "streetlight"
+    },
+    {
+      "cn": "纸灯笼",
+      "en": "paper lantern"
+    },
+    {
+      "cn": "火把",
+      "en": "torch"
+    },
+    {
+      "cn": "蜡烛",
+      "en": "candles"
+    },
+    {
+      "cn": "圣诞树",
+      "en": "christmas tree"
+    },
+    {
+      "cn": "舞台",
+      "en": "stage"
+    },
+    {
+      "cn": "观众席",
+      "en": "audience"
+    },
+    {
+      "cn": "人群",
+      "en": "crowd"
+    }
+  ],
+  "expression": [
+    {
+      "cn": "微笑",
+      "en": "smile"
+    },
+    {
+      "cn": "浅笑",
+      "en": "light smile"
+    },
+    {
+      "cn": "小微笑",
+      "en": "small smile"
+    },
+    {
+      "cn": "温柔微笑",
+      "en": "gentle smile"
+    },
+    {
+      "cn": "灿烂笑容",
+      "en": "bright smile"
+    },
+    {
+      "cn": "露齿笑",
+      "en": "grin"
+    },
+    {
+      "cn": "咧嘴笑",
+      "en": "open mouth smile"
+    },
+    {
+      "cn": "大笑",
+      "en": "laughing"
+    },
+    {
+      "cn": "狂笑",
+      "en": "laughing out loud"
+    },
+    {
+      "cn": "傻笑",
+      "en": "giggling"
+    },
+    {
+      "cn": "轻笑",
+      "en": "chuckling"
+    },
+    {
+      "cn": "坏笑",
+      "en": "smirk"
+    },
+    {
+      "cn": "奸笑",
+      "en": "evil smile"
+    },
+    {
+      "cn": "自信微笑",
+      "en": "confident smile"
+    },
+    {
+      "cn": "温柔表情",
+      "en": "soft expression"
+    },
+    {
+      "cn": "平静表情",
+      "en": "calm expression"
+    },
+    {
+      "cn": "面无表情",
+      "en": "expressionless"
+    },
+    {
+      "cn": "严肃",
+      "en": "serious"
+    },
+    {
+      "cn": "严厉",
+      "en": "stern"
+    },
+    {
+      "cn": "冷峻",
+      "en": "cold expression"
+    },
+    {
+      "cn": "怒容",
+      "en": "angry"
+    },
+    {
+      "cn": "暴怒",
+      "en": "furious"
+    },
+    {
+      "cn": "皱眉",
+      "en": "frown"
+    },
+    {
+      "cn": "怒视",
+      "en": "glare"
+    },
+    {
+      "cn": "咬牙",
+      "en": "clenched teeth"
+    },
+    {
+      "cn": "烦躁",
+      "en": "annoyed"
+    },
+    {
+      "cn": "不耐烦",
+      "en": "impatient"
+    },
+    {
+      "cn": "悲伤",
+      "en": "sad"
+    },
+    {
+      "cn": "忧郁",
+      "en": "melancholy"
+    },
+    {
+      "cn": "沮丧",
+      "en": "depressed"
+    },
+    {
+      "cn": "沮丧低头",
+      "en": "gloomy"
+    },
+    {
+      "cn": "哭泣",
+      "en": "crying"
+    },
+    {
+      "cn": "流泪",
+      "en": "tears"
+    },
+    {
+      "cn": "眼泪汪汪",
+      "en": "teary eyes"
+    },
+    {
+      "cn": "喜极而泣",
+      "en": "tears of joy"
+    },
+    {
+      "cn": "抽泣",
+      "en": "sobbing"
+    },
+    {
+      "cn": "嚎啕大哭",
+      "en": "wailing"
+    },
+    {
+      "cn": "强忍泪水",
+      "en": "holding back tears"
+    },
+    {
+      "cn": "单滴眼泪",
+      "en": "single tear"
+    },
+    {
+      "cn": "惊讶",
+      "en": "surprised"
+    },
+    {
+      "cn": "震惊",
+      "en": "shocked"
+    },
+    {
+      "cn": "目瞪口呆",
+      "en": "astonished"
+    },
+    {
+      "cn": "张嘴惊讶",
+      "en": "open mouth"
+    },
+    {
+      "cn": "惊叹",
+      "en": "amazed"
+    },
+    {
+      "cn": "难以置信",
+      "en": "disbelief"
+    },
+    {
+      "cn": "恐慌",
+      "en": "panicked"
+    },
+    {
+      "cn": "害怕",
+      "en": "scared"
+    },
+    {
+      "cn": "恐惧",
+      "en": "terrified"
+    },
+    {
+      "cn": "颤抖恐惧",
+      "en": "fearful"
+    },
+    {
+      "cn": "紧张",
+      "en": "nervous"
+    },
+    {
+      "cn": "焦虑",
+      "en": "anxious"
+    },
+    {
+      "cn": "担心",
+      "en": "worried"
+    },
+    {
+      "cn": "尴尬",
+      "en": "embarrassed"
+    },
+    {
+      "cn": "难为情",
+      "en": "awkward"
+    },
+    {
+      "cn": "慌张",
+      "en": "flustered"
+    },
+    {
+      "cn": "冒汗",
+      "en": "sweatdrop"
+    },
+    {
+      "cn": "满脸通红",
+      "en": "blushing"
+    },
+    {
+      "cn": "害羞",
+      "en": "shy"
+    },
+    {
+      "cn": "羞涩",
+      "en": "bashful"
+    },
+    {
+      "cn": "忸怩",
+      "en": "coy"
+    },
+    {
+      "cn": "嘟嘴",
+      "en": "pout"
+    },
+    {
+      "cn": "噘嘴",
+      "en": "pouting"
+    },
+    {
+      "cn": "撅嘴生气",
+      "en": "huffing"
+    },
+    {
+      "cn": "不满",
+      "en": "displeased"
+    },
+    {
+      "cn": "嫌弃",
+      "en": "disgusted"
+    },
+    {
+      "cn": "轻蔑",
+      "en": "contemptuous"
+    },
+    {
+      "cn": "傲慢",
+      "en": "arrogant"
+    },
+    {
+      "cn": "得意",
+      "en": "smug"
+    },
+    {
+      "cn": "骄傲",
+      "en": "proud"
+    },
+    {
+      "cn": "自信",
+      "en": "confident"
+    },
+    {
+      "cn": "坚定",
+      "en": "determined"
+    },
+    {
+      "cn": "专注",
+      "en": "focused"
+    },
+    {
+      "cn": "沉思",
+      "en": "thoughtful"
+    },
+    {
+      "cn": "若有所思",
+      "en": "pensive"
+    },
+    {
+      "cn": "忧郁眼神",
+      "en": "wistful"
+    },
+    {
+      "cn": "梦幻表情",
+      "en": "dreamy expression"
+    },
+    {
+      "cn": "恍惚",
+      "en": "dazed"
+    },
+    {
+      "cn": "茫然",
+      "en": "blank stare"
+    },
+    {
+      "cn": "空洞眼神",
+      "en": "empty eyes"
+    },
+    {
+      "cn": "困倦",
+      "en": "sleepy"
+    },
+    {
+      "cn": "疲惫",
+      "en": "tired"
+    },
+    {
+      "cn": "精疲力竭",
+      "en": "exhausted"
+    },
+    {
+      "cn": "无聊",
+      "en": "bored"
+    },
+    {
+      "cn": "无精打采",
+      "en": "listless"
+    },
+    {
+      "cn": "慵懒",
+      "en": "lazy"
+    },
+    {
+      "cn": "放松表情",
+      "en": "relaxed expression"
+    },
+    {
+      "cn": "满足",
+      "en": "content"
+    },
+    {
+      "cn": "幸福",
+      "en": "happy"
+    },
+    {
+      "cn": "狂喜",
+      "en": "ecstatic"
+    },
+    {
+      "cn": "兴奋",
+      "en": "excited"
+    },
+    {
+      "cn": "雀跃",
+      "en": "elated"
+    },
+    {
+      "cn": "调皮",
+      "en": "playful"
+    },
+    {
+      "cn": "淘气",
+      "en": "mischievous"
+    },
+    {
+      "cn": "恶作剧表情",
+      "en": "teasing"
+    },
+    {
+      "cn": "吐舌头",
+      "en": "tongue out"
+    },
+    {
+      "cn": "眨眼",
+      "en": "wink"
+    },
+    {
+      "cn": "单眼闭",
+      "en": "one eye closed"
+    },
+    {
+      "cn": "双眼微闭",
+      "en": "eyes closed"
+    },
+    {
+      "cn": "眯眼笑",
+      "en": "closed eyes smile"
+    },
+    {
+      "cn": "睁大眼睛",
+      "en": "wide open eyes"
+    },
+    {
+      "cn": "瞳孔收缩",
+      "en": "constricted pupils"
+    },
+    {
+      "cn": "瞳孔放大",
+      "en": "dilated pupils"
+    },
+    {
+      "cn": "翻白眼",
+      "en": "rolling eyes"
+    },
+    {
+      "cn": "斜眼看",
+      "en": "sideways glance"
+    },
+    {
+      "cn": "偷瞄",
+      "en": "sneaky glance"
+    },
+    {
+      "cn": "直视镜头",
+      "en": "looking straight at camera"
+    },
+    {
+      "cn": "挑逗眼神",
+      "en": "seductive look"
+    },
+    {
+      "cn": "深情凝视",
+      "en": "loving gaze"
+    },
+    {
+      "cn": "含情脉脉",
+      "en": "affectionate look"
+    },
+    {
+      "cn": "温柔眼神",
+      "en": "tender eyes"
+    },
+    {
+      "cn": "冰冷眼神",
+      "en": "icy stare"
+    },
+    {
+      "cn": "锐利眼神",
+      "en": "sharp gaze"
+    },
+    {
+      "cn": "警惕",
+      "en": "wary"
+    },
+    {
+      "cn": "怀疑",
+      "en": "skeptical"
+    },
+    {
+      "cn": "狐疑",
+      "en": "suspicious"
+    },
+    {
+      "cn": "好奇",
+      "en": "curious"
+    },
+    {
+      "cn": "感兴趣",
+      "en": "intrigued"
+    },
+    {
+      "cn": "着迷",
+      "en": "fascinated"
+    },
+    {
+      "cn": "崇拜",
+      "en": "admiring"
+    },
+    {
+      "cn": "仰慕",
+      "en": "adoring"
+    },
+    {
+      "cn": "爱慕",
+      "en": "enamored"
+    },
+    {
+      "cn": "嫉妒",
+      "en": "jealous"
+    },
+    {
+      "cn": "羡慕",
+      "en": "envious"
+    },
+    {
+      "cn": "同情",
+      "en": "sympathetic"
+    },
+    {
+      "cn": "怜悯",
+      "en": "pitying"
+    },
+    {
+      "cn": "温柔关怀",
+      "en": "caring expression"
+    },
+    {
+      "cn": "母性光辉",
+      "en": "maternal look"
+    },
+    {
+      "cn": "父性威严",
+      "en": "paternal look"
+    },
+    {
+      "cn": "慈祥",
+      "en": "kind expression"
+    },
+    {
+      "cn": "和蔼",
+      "en": "amiable"
+    },
+    {
+      "cn": "亲切",
+      "en": "friendly"
+    },
+    {
+      "cn": "热情",
+      "en": "enthusiastic"
+    },
+    {
+      "cn": "活力四射",
+      "en": "energetic"
+    },
+    {
+      "cn": "朝气蓬勃",
+      "en": "spirited"
+    },
+    {
+      "cn": "冷静",
+      "en": "composed"
+    },
+    {
+      "cn": "沉着",
+      "en": "poised"
+    },
+    {
+      "cn": "泰然自若",
+      "en": "unfazed"
+    },
+    {
+      "cn": "面无表情冷酷",
+      "en": "stoic"
+    },
+    {
+      "cn": "坚忍",
+      "en": "resolute"
+    },
+    {
+      "cn": "无畏",
+      "en": "fearless"
+    },
+    {
+      "cn": "英勇",
+      "en": "heroic expression"
+    },
+    {
+      "cn": "威严",
+      "en": "dignified"
+    },
+    {
+      "cn": "高贵",
+      "en": "noble expression"
+    },
+    {
+      "cn": "王者风范",
+      "en": "regal"
+    },
+    {
+      "cn": "神秘",
+      "en": "mysterious"
+    },
+    {
+      "cn": "诡异笑容",
+      "en": "eerie smile"
+    },
+    {
+      "cn": "疯狂",
+      "en": "crazy expression"
+    },
+    {
+      "cn": "狂气",
+      "en": "manic"
+    },
+    {
+      "cn": "歇斯底里",
+      "en": "hysterical"
+    },
+    {
+      "cn": "崩溃",
+      "en": "breakdown"
+    },
+    {
+      "cn": "绝望",
+      "en": "despair"
+    },
+    {
+      "cn": "痛苦",
+      "en": "anguished"
+    },
+    {
+      "cn": "煎熬",
+      "en": "tormented"
+    },
+    {
+      "cn": "挣扎",
+      "en": "struggling"
+    },
+    {
+      "cn": "隐忍",
+      "en": "enduring"
+    },
+    {
+      "cn": "释然",
+      "en": "relieved"
+    },
+    {
+      "cn": "恍然大悟",
+      "en": "realization"
+    },
+    {
+      "cn": "顿悟",
+      "en": "epiphany"
+    },
+    {
+      "cn": "灵光一闪",
+      "en": "idea struck"
+    }
+  ],
+  "clothing": [
+    {
+      "cn": "连衣裙",
+      "en": "dress"
+    },
+    {
+      "cn": "长裙",
+      "en": "long dress"
+    },
+    {
+      "cn": "短裙",
+      "en": "short dress"
+    },
+    {
+      "cn": "礼服",
+      "en": "gown"
+    },
+    {
+      "cn": "晚礼服",
+      "en": "evening gown"
+    },
+    {
+      "cn": "婚纱",
+      "en": "wedding dress"
+    },
+    {
+      "cn": "旗袍",
+      "en": "qipao"
+    },
+    {
+      "cn": "和服",
+      "en": "kimono"
+    },
+    {
+      "cn": "浴衣",
+      "en": "yukata"
+    },
+    {
+      "cn": "韩服",
+      "en": "hanbok"
+    },
+    {
+      "cn": "纱丽",
+      "en": "sari"
+    },
+    {
+      "cn": "T恤",
+      "en": "t-shirt"
+    },
+    {
+      "cn": "白T恤",
+      "en": "white t-shirt"
+    },
+    {
+      "cn": "印花T恤",
+      "en": "graphic tee"
+    },
+    {
+      "cn": "衬衫",
+      "en": "shirt"
+    },
+    {
+      "cn": "白衬衫",
+      "en": "white shirt"
+    },
+    {
+      "cn": "荷叶边衬衫",
+      "en": "ruffled shirt"
+    },
+    {
+      "cn": "法兰绒衬衫",
+      "en": "flannel shirt"
+    },
+    {
+      "cn": "Polo衫",
+      "en": "polo shirt"
+    },
+    {
+      "cn": "西装",
+      "en": "suit"
+    },
+    {
+      "cn": "黑色西装",
+      "en": "black suit"
+    },
+    {
+      "cn": "燕尾服",
+      "en": "tuxedo"
+    },
+    {
+      "cn": "马甲",
+      "en": "vest"
+    },
+    {
+      "cn": "西装马甲",
+      "en": "waistcoat"
+    },
+    {
+      "cn": "西装外套",
+      "en": "blazer"
+    },
+    {
+      "cn": "领带",
+      "en": "necktie"
+    },
+    {
+      "cn": "蝴蝶结领带",
+      "en": "bow tie"
+    },
+    {
+      "cn": "松开的领带",
+      "en": "loose tie"
+    },
+    {
+      "cn": "毛衣",
+      "en": "sweater"
+    },
+    {
+      "cn": "针织衫",
+      "en": "knitwear"
+    },
+    {
+      "cn": "开衫",
+      "en": "cardigan"
+    },
+    {
+      "cn": "卫衣",
+      "en": "hoodie"
+    },
+    {
+      "cn": "连帽衫",
+      "en": "hooded sweatshirt"
+    },
+    {
+      "cn": "卫衣帽戴上",
+      "en": "hood up"
+    },
+    {
+      "cn": "夹克",
+      "en": "jacket"
+    },
+    {
+      "cn": "皮夹克",
+      "en": "leather jacket"
+    },
+    {
+      "cn": "牛仔夹克",
+      "en": "denim jacket"
+    },
+    {
+      "cn": "飞行夹克",
+      "en": "bomber jacket"
+    },
+    {
+      "cn": "风衣",
+      "en": "trench coat"
+    },
+    {
+      "cn": "大衣",
+      "en": "coat"
+    },
+    {
+      "cn": "长外套",
+      "en": "long coat"
+    },
+    {
+      "cn": "羽绒服",
+      "en": "down jacket"
+    },
+    {
+      "cn": "斗篷",
+      "en": "cloak"
+    },
+    {
+      "cn": "披风",
+      "en": "cape"
+    },
+    {
+      "cn": "连帽斗篷",
+      "en": "hooded cloak"
+    },
+    {
+      "cn": "披肩",
+      "en": "shawl"
+    },
+    {
+      "cn": "围巾",
+      "en": "scarf"
+    },
+    {
+      "cn": "长围巾",
+      "en": "long scarf"
+    },
+    {
+      "cn": "毛衣围巾",
+      "en": "knit scarf"
+    },
+    {
+      "cn": "手套",
+      "en": "gloves"
+    },
+    {
+      "cn": "长手套",
+      "en": "long gloves"
+    },
+    {
+      "cn": "皮手套",
+      "en": "leather gloves"
+    },
+    {
+      "cn": "无指手套",
+      "en": "fingerless gloves"
+    },
+    {
+      "cn": "连指手套",
+      "en": "mittens"
+    },
+    {
+      "cn": "牛仔裤",
+      "en": "jeans"
+    },
+    {
+      "cn": "短裤",
+      "en": "shorts"
+    },
+    {
+      "cn": "牛仔短裤",
+      "en": "denim shorts"
+    },
+    {
+      "cn": "休闲裤",
+      "en": "trousers"
+    },
+    {
+      "cn": "西裤",
+      "en": "slacks"
+    },
+    {
+      "cn": "灯笼裤",
+      "en": "bloomers"
+    },
+    {
+      "cn": "运动裤",
+      "en": "sweatpants"
+    },
+    {
+      "cn": "打底裤",
+      "en": "leggings"
+    },
+    {
+      "cn": "百褶裙",
+      "en": "pleated skirt"
+    },
+    {
+      "cn": "迷你裙",
+      "en": "miniskirt"
+    },
+    {
+      "cn": "长裙摆",
+      "en": "maxi skirt"
+    },
+    {
+      "cn": "蓬蓬裙",
+      "en": "tutu"
+    },
+    {
+      "cn": "铅笔裙",
+      "en": "pencil skirt"
+    },
+    {
+      "cn": "吊带裙",
+      "en": "sundress"
+    },
+    {
+      "cn": "背带裤",
+      "en": "overalls"
+    },
+    {
+      "cn": "背带裙",
+      "en": "pinafore dress"
+    },
+    {
+      "cn": "水手服",
+      "en": "sailor uniform"
+    },
+    {
+      "cn": "校服",
+      "en": "school uniform"
+    },
+    {
+      "cn": "西装校服",
+      "en": "blazer uniform"
+    },
+    {
+      "cn": "运动服",
+      "en": "tracksuit"
+    },
+    {
+      "cn": "球衣",
+      "en": "jersey"
+    },
+    {
+      "cn": "篮球服",
+      "en": "basketball uniform"
+    },
+    {
+      "cn": "足球服",
+      "en": "soccer uniform"
+    },
+    {
+      "cn": "网球服",
+      "en": "tennis outfit"
+    },
+    {
+      "cn": "泳装",
+      "en": "swimsuit"
+    },
+    {
+      "cn": "比基尼",
+      "en": "bikini"
+    },
+    {
+      "cn": "连体泳衣",
+      "en": "one-piece swimsuit"
+    },
+    {
+      "cn": "竞技泳衣",
+      "en": "competition swimsuit"
+    },
+    {
+      "cn": "潜水服",
+      "en": "wetsuit"
+    },
+    {
+      "cn": "盔甲",
+      "en": "armor"
+    },
+    {
+      "cn": "板甲",
+      "en": "plate armor"
+    },
+    {
+      "cn": "锁子甲",
+      "en": "chainmail"
+    },
+    {
+      "cn": "皮甲",
+      "en": "leather armor"
+    },
+    {
+      "cn": "武士铠甲",
+      "en": "samurai armor"
+    },
+    {
+      "cn": "骑士铠甲",
+      "en": "knight armor"
+    },
+    {
+      "cn": "肩甲",
+      "en": "pauldrons"
+    },
+    {
+      "cn": "护胸",
+      "en": "breastplate"
+    },
+    {
+      "cn": "护手",
+      "en": "gauntlets"
+    },
+    {
+      "cn": "护腿",
+      "en": "greaves"
+    },
+    {
+      "cn": "头盔",
+      "en": "helmet"
+    },
+    {
+      "cn": "面甲",
+      "en": "visor"
+    },
+    {
+      "cn": "兜帽",
+      "en": "hood"
+    },
+    {
+      "cn": "头巾",
+      "en": "headscarf"
+    },
+    {
+      "cn": "头巾包裹",
+      "en": "turban"
+    },
+    {
+      "cn": "棒球帽",
+      "en": "baseball cap"
+    },
+    {
+      "cn": "鸭舌帽",
+      "en": "flat cap"
+    },
+    {
+      "cn": "礼帽",
+      "en": "top hat"
+    },
+    {
+      "cn": "软呢帽",
+      "en": "fedora"
+    },
+    {
+      "cn": "牛仔帽",
+      "en": "cowboy hat"
+    },
+    {
+      "cn": "渔夫帽",
+      "en": "bucket hat"
+    },
+    {
+      "cn": "贝雷帽",
+      "en": "beret"
+    },
+    {
+      "cn": "草帽",
+      "en": "straw hat"
+    },
+    {
+      "cn": "宽檐帽",
+      "en": "wide-brim hat"
+    },
+    {
+      "cn": "女巫帽",
+      "en": "witch hat"
+    },
+    {
+      "cn": "巫师帽",
+      "en": "wizard hat"
+    },
+    {
+      "cn": "圣诞帽",
+      "en": "santa hat"
+    },
+    {
+      "cn": "王冠",
+      "en": "crown"
+    },
+    {
+      "cn": "发冠",
+      "en": "diadem"
+    },
+    {
+      "cn": "花环",
+      "en": "flower crown"
+    },
+    {
+      "cn": "光环",
+      "en": "halo"
+    },
+    {
+      "cn": "蝴蝶结",
+      "en": "ribbon bow"
+    },
+    {
+      "cn": "大蝴蝶结",
+      "en": "large bow"
+    },
+    {
+      "cn": "发带蝴蝶结",
+      "en": "hair bow"
+    },
+    {
+      "cn": "丝带",
+      "en": "ribbon"
+    },
+    {
+      "cn": "蕾丝",
+      "en": "lace"
+    },
+    {
+      "cn": "荷叶边",
+      "en": "frills"
+    },
+    {
+      "cn": "褶边",
+      "en": "ruffles"
+    },
+    {
+      "cn": "蝴蝶结领带",
+      "en": "ribbon tie"
+    },
+    {
+      "cn": "领结",
+      "en": "bowtie"
+    },
+    {
+      "cn": "项圈",
+      "en": "collar"
+    },
+    {
+      "cn": "皮带",
+      "en": "belt"
+    },
+    {
+      "cn": "宽腰带",
+      "en": "wide belt"
+    },
+    {
+      "cn": "束腰",
+      "en": "corset"
+    },
+    {
+      "cn": "腰封",
+      "en": "obi"
+    },
+    {
+      "cn": "吊带",
+      "en": "suspenders"
+    },
+    {
+      "cn": "丝袜",
+      "en": "stockings"
+    },
+    {
+      "cn": "连裤袜",
+      "en": "pantyhose"
+    },
+    {
+      "cn": "长筒袜",
+      "en": "thigh-highs"
+    },
+    {
+      "cn": "过膝袜",
+      "en": "over-knee socks"
+    },
+    {
+      "cn": "短袜",
+      "en": "ankle socks"
+    },
+    {
+      "cn": "条纹袜",
+      "en": "striped socks"
+    },
+    {
+      "cn": "网袜",
+      "en": "fishnet stockings"
+    },
+    {
+      "cn": "袜子",
+      "en": "socks"
+    },
+    {
+      "cn": "高跟鞋",
+      "en": "high heels"
+    },
+    {
+      "cn": "细高跟",
+      "en": "stilettos"
+    },
+    {
+      "cn": "靴子",
+      "en": "boots"
+    },
+    {
+      "cn": "长靴",
+      "en": "knee-high boots"
+    },
+    {
+      "cn": "过膝靴",
+      "en": "thigh-high boots"
+    },
+    {
+      "cn": "短靴",
+      "en": "ankle boots"
+    },
+    {
+      "cn": "战斗靴",
+      "en": "combat boots"
+    },
+    {
+      "cn": "牛仔靴",
+      "en": "cowboy boots"
+    },
+    {
+      "cn": "雨靴",
+      "en": "rain boots"
+    },
+    {
+      "cn": "雪地靴",
+      "en": "snow boots"
+    },
+    {
+      "cn": "运动鞋",
+      "en": "sneakers"
+    },
+    {
+      "cn": "帆布鞋",
+      "en": "canvas shoes"
+    },
+    {
+      "cn": "乐福鞋",
+      "en": "loafers"
+    },
+    {
+      "cn": "玛丽珍鞋",
+      "en": "mary janes"
+    },
+    {
+      "cn": "木屐",
+      "en": "geta"
+    },
+    {
+      "cn": "凉鞋",
+      "en": "sandals"
+    },
+    {
+      "cn": "拖鞋",
+      "en": "slippers"
+    },
+    {
+      "cn": "赤脚",
+      "en": "barefoot"
+    },
+    {
+      "cn": "室内鞋",
+      "en": "uwabaki"
+    },
+    {
+      "cn": "制服",
+      "en": "uniform"
+    },
+    {
+      "cn": "军装",
+      "en": "military uniform"
+    },
+    {
+      "cn": "警服",
+      "en": "police uniform"
+    },
+    {
+      "cn": "护士服",
+      "en": "nurse uniform"
+    },
+    {
+      "cn": "女仆装",
+      "en": "maid outfit"
+    },
+    {
+      "cn": "侍应生服",
+      "en": "waitress uniform"
+    },
+    {
+      "cn": "厨师服",
+      "en": "chef uniform"
+    },
+    {
+      "cn": "空姐服",
+      "en": "flight attendant uniform"
+    },
+    {
+      "cn": "飞行员服",
+      "en": "pilot uniform"
+    },
+    {
+      "cn": "宇航服",
+      "en": "spacesuit"
+    },
+    {
+      "cn": "防护服",
+      "en": "hazmat suit"
+    },
+    {
+      "cn": "实验服",
+      "en": "lab coat"
+    },
+    {
+      "cn": "工作服",
+      "en": "workwear"
+    },
+    {
+      "cn": "工装裤",
+      "en": "cargo pants"
+    },
+    {
+      "cn": "道服",
+      "en": "gi"
+    },
+    {
+      "cn": "空手道服",
+      "en": "karate gi"
+    },
+    {
+      "cn": "柔道服",
+      "en": "judo gi"
+    },
+    {
+      "cn": "剑道服",
+      "en": "kendo gear"
+    },
+    {
+      "cn": "巫女服",
+      "en": "miko outfit"
+    },
+    {
+      "cn": "僧袍",
+      "en": "monk robes"
+    },
+    {
+      "cn": "长袍",
+      "en": "robe"
+    },
+    {
+      "cn": "法师袍",
+      "en": "mage robes"
+    },
+    {
+      "cn": "学士服",
+      "en": "graduation gown"
+    },
+    {
+      "cn": "法官袍",
+      "en": "judge robe"
+    },
+    {
+      "cn": "睡衣",
+      "en": "pajamas"
+    },
+    {
+      "cn": "睡裙",
+      "en": "nightgown"
+    },
+    {
+      "cn": "浴袍",
+      "en": "bathrobe"
+    },
+    {
+      "cn": "浴巾",
+      "en": "towel"
+    },
+    {
+      "cn": "围裙",
+      "en": "apron"
+    },
+    {
+      "cn": "铠甲裙",
+      "en": "armored skirt"
+    },
+    {
+      "cn": "皮裤",
+      "en": "leather pants"
+    },
+    {
+      "cn": "紧身衣",
+      "en": "bodysuit"
+    },
+    {
+      "cn": "连体紧身衣",
+      "en": "catsuit"
+    },
+    {
+      "cn": "胶衣",
+      "en": "latex suit"
+    },
+    {
+      "cn": "机甲服",
+      "en": "mech suit"
+    },
+    {
+      "cn": "动力装甲",
+      "en": "power armor"
+    },
+    {
+      "cn": "忍者服",
+      "en": "ninja outfit"
+    },
+    {
+      "cn": "刺客装",
+      "en": "assassin outfit"
+    },
+    {
+      "cn": "盗贼装",
+      "en": "rogue outfit"
+    },
+    {
+      "cn": "游侠装",
+      "en": "ranger outfit"
+    },
+    {
+      "cn": "弓箭手装",
+      "en": "archer outfit"
+    },
+    {
+      "cn": "骑士装",
+      "en": "knight outfit"
+    },
+    {
+      "cn": "圣骑士装",
+      "en": "paladin armor"
+    },
+    {
+      "cn": "法师装",
+      "en": "wizard outfit"
+    },
+    {
+      "cn": "牧师装",
+      "en": "priest robes"
+    },
+    {
+      "cn": "吟游诗人装",
+      "en": "bard outfit"
+    },
+    {
+      "cn": "舞者装",
+      "en": "dancer outfit"
+    },
+    {
+      "cn": "芭蕾裙",
+      "en": "ballet tutu"
+    },
+    {
+      "cn": "演出服",
+      "en": "stage costume"
+    },
+    {
+      "cn": "偶像服",
+      "en": "idol costume"
+    },
+    {
+      "cn": "乐队装",
+      "en": "band outfit"
+    },
+    {
+      "cn": "朋克装",
+      "en": "punk outfit"
+    },
+    {
+      "cn": "哥特装",
+      "en": "gothic outfit"
+    },
+    {
+      "cn": "洛丽塔",
+      "en": "lolita fashion"
+    },
+    {
+      "cn": "甜系洛丽塔",
+      "en": "sweet lolita"
+    },
+    {
+      "cn": "蒸汽朋克",
+      "en": "steampunk outfit"
+    },
+    {
+      "cn": "赛博朋克装",
+      "en": "cyberpunk outfit"
+    },
+    {
+      "cn": "机能风",
+      "en": "techwear"
+    },
+    {
+      "cn": "街头风",
+      "en": "streetwear"
+    },
+    {
+      "cn": "嘻哈风",
+      "en": "hip-hop style"
+    },
+    {
+      "cn": "复古风",
+      "en": "vintage style"
+    },
+    {
+      "cn": "学院风",
+      "en": "preppy style"
+    },
+    {
+      "cn": "商务休闲",
+      "en": "business casual"
+    },
+    {
+      "cn": "正装",
+      "en": "formal wear"
+    },
+    {
+      "cn": "休闲装",
+      "en": "casual wear"
+    },
+    {
+      "cn": "夏装",
+      "en": "summer outfit"
+    },
+    {
+      "cn": "冬装",
+      "en": "winter outfit"
+    },
+    {
+      "cn": "雨衣",
+      "en": "raincoat"
+    },
+    {
+      "cn": "雨伞",
+      "en": "umbrella"
+    },
+    {
+      "cn": "透明伞",
+      "en": "transparent umbrella"
+    },
+    {
+      "cn": "油纸伞",
+      "en": "paper umbrella"
+    },
+    {
+      "cn": "扇子",
+      "en": "fan"
+    },
+    {
+      "cn": "折扇",
+      "en": "folding fan"
+    },
+    {
+      "cn": "团扇",
+      "en": "round fan"
+    },
+    {
+      "cn": "手袋",
+      "en": "handbag"
+    },
+    {
+      "cn": "双肩包",
+      "en": "backpack"
+    },
+    {
+      "cn": "书包",
+      "en": "school bag"
+    },
+    {
+      "cn": "挎包",
+      "en": "shoulder bag"
+    },
+    {
+      "cn": "钱包",
+      "en": "purse"
+    },
+    {
+      "cn": "行李箱",
+      "en": "suitcase"
+    },
+    {
+      "cn": "滑板",
+      "en": "skateboard"
+    },
+    {
+      "cn": "吉他",
+      "en": "guitar"
+    },
+    {
+      "cn": "电吉他",
+      "en": "electric guitar"
+    },
+    {
+      "cn": "小提琴",
+      "en": "violin"
+    },
+    {
+      "cn": "麦克风",
+      "en": "microphone"
+    },
+    {
+      "cn": "耳机",
+      "en": "headphones"
+    },
+    {
+      "cn": "耳麦",
+      "en": "headset"
+    },
+    {
+      "cn": "相机",
+      "en": "camera"
+    },
+    {
+      "cn": "手机",
+      "en": "phone"
+    },
+    {
+      "cn": "书本",
+      "en": "book"
+    },
+    {
+      "cn": "魔法书",
+      "en": "grimoire"
+    },
+    {
+      "cn": "卷轴",
+      "en": "scroll"
+    },
+    {
+      "cn": "法杖",
+      "en": "staff"
+    },
+    {
+      "cn": "魔杖",
+      "en": "wand"
+    },
+    {
+      "cn": "剑",
+      "en": "sword"
+    },
+    {
+      "cn": "长剑",
+      "en": "longsword"
+    },
+    {
+      "cn": "武士刀",
+      "en": "katana"
+    },
+    {
+      "cn": "双刀",
+      "en": "dual swords"
+    },
+    {
+      "cn": "巨剑",
+      "en": "greatsword"
+    },
+    {
+      "cn": "匕首",
+      "en": "dagger"
+    },
+    {
+      "cn": "长枪",
+      "en": "spear"
+    },
+    {
+      "cn": "长矛",
+      "en": "lance"
+    },
+    {
+      "cn": "战斧",
+      "en": "axe"
+    },
+    {
+      "cn": "锤子",
+      "en": "war hammer"
+    },
+    {
+      "cn": "弓",
+      "en": "bow"
+    },
+    {
+      "cn": "箭袋",
+      "en": "quiver"
+    },
+    {
+      "cn": "盾牌",
+      "en": "shield"
+    },
+    {
+      "cn": "手枪",
+      "en": "pistol"
+    },
+    {
+      "cn": "左轮",
+      "en": "revolver"
+    },
+    {
+      "cn": "步枪",
+      "en": "rifle"
+    },
+    {
+      "cn": "狙击枪",
+      "en": "sniper rifle"
+    },
+    {
+      "cn": "冲锋枪",
+      "en": "submachine gun"
+    },
+    {
+      "cn": "霰弹枪",
+      "en": "shotgun"
+    },
+    {
+      "cn": "手雷",
+      "en": "grenade"
+    },
+    {
+      "cn": "锁链",
+      "en": "chains"
+    },
+    {
+      "cn": "鞭子",
+      "en": "whip"
+    },
+    {
+      "cn": "手里剑",
+      "en": "shuriken"
+    },
+    {
+      "cn": "苦无",
+      "en": "kunai"
+    },
+    {
+      "cn": "三叉戟",
+      "en": "trident"
+    },
+    {
+      "cn": "镰刀",
+      "en": "scythe"
+    },
+    {
+      "cn": "十字架",
+      "en": "cross"
+    },
+    {
+      "cn": "念珠",
+      "en": "prayer beads"
+    },
+    {
+      "cn": "符咒",
+      "en": "talisman"
+    },
+    {
+      "cn": "灯笼",
+      "en": "lantern"
+    },
+    {
+      "cn": "提灯",
+      "en": "oil lamp"
+    },
+    {
+      "cn": "火把",
+      "en": "torch"
+    }
+  ],
+  "lighting": [
+    {
+      "cn": "自然光",
+      "en": "natural light"
+    },
+    {
+      "cn": "阳光",
+      "en": "sunlight"
+    },
+    {
+      "cn": "柔光",
+      "en": "soft light"
+    },
+    {
+      "cn": "硬光",
+      "en": "hard light"
+    },
+    {
+      "cn": "直射光",
+      "en": "direct light"
+    },
+    {
+      "cn": "漫射光",
+      "en": "diffused light"
+    },
+    {
+      "cn": "环境光",
+      "en": "ambient light"
+    },
+    {
+      "cn": "逆光",
+      "en": "backlighting"
+    },
+    {
+      "cn": "侧光",
+      "en": "side lighting"
+    },
+    {
+      "cn": "顶光",
+      "en": "top lighting"
+    },
+    {
+      "cn": "底光",
+      "en": "underlighting"
+    },
+    {
+      "cn": "轮廓光",
+      "en": "rim light"
+    },
+    {
+      "cn": "发丝光",
+      "en": "hair light"
+    },
+    {
+      "cn": "伦勃朗光",
+      "en": "rembrandt lighting"
+    },
+    {
+      "cn": "蝴蝶光",
+      "en": "butterfly lighting"
+    },
+    {
+      "cn": "分割光",
+      "en": "split lighting"
+    },
+    {
+      "cn": "环形光",
+      "en": "loop lighting"
+    },
+    {
+      "cn": "平光",
+      "en": "flat lighting"
+    },
+    {
+      "cn": "高调光",
+      "en": "high key lighting"
+    },
+    {
+      "cn": "低调光",
+      "en": "low key lighting"
+    },
+    {
+      "cn": "戏剧光",
+      "en": "dramatic lighting"
+    },
+    {
+      "cn": "电影光",
+      "en": "cinematic lighting"
+    },
+    {
+      "cn": "摄影棚光",
+      "en": "studio lighting"
+    },
+    {
+      "cn": "三点布光",
+      "en": "three-point lighting"
+    },
+    {
+      "cn": "体积光",
+      "en": "volumetric lighting"
+    },
+    {
+      "cn": "上帝之光",
+      "en": "god rays"
+    },
+    {
+      "cn": "光束",
+      "en": "light beams"
+    },
+    {
+      "cn": "光柱",
+      "en": "shafts of light"
+    },
+    {
+      "cn": "丁达尔效应",
+      "en": "tyndall effect"
+    },
+    {
+      "cn": "透过窗户的光",
+      "en": "light through window"
+    },
+    {
+      "cn": "百叶窗光影",
+      "en": "window blinds shadows"
+    },
+    {
+      "cn": "斑驳光影",
+      "en": "dappled sunlight"
+    },
+    {
+      "cn": "树影",
+      "en": "tree shadows"
+    },
+    {
+      "cn": "树叶漏光",
+      "en": "komorebi"
+    },
+    {
+      "cn": "月光",
+      "en": "moonlight"
+    },
+    {
+      "cn": "星光",
+      "en": "starlight"
+    },
+    {
+      "cn": "黄昏光",
+      "en": "dusk light"
+    },
+    {
+      "cn": "晨光",
+      "en": "morning light"
+    },
+    {
+      "cn": "午后阳光",
+      "en": "afternoon sun"
+    },
+    {
+      "cn": "金色时刻",
+      "en": "golden hour"
+    },
+    {
+      "cn": "蓝色时刻",
+      "en": "blue hour"
+    },
+    {
+      "cn": "魔幻时刻",
+      "en": "magic hour"
+    },
+    {
+      "cn": "暖阳",
+      "en": "warm sunlight"
+    },
+    {
+      "cn": "冷光",
+      "en": "cool light"
+    },
+    {
+      "cn": "暖色调",
+      "en": "warm tones"
+    },
+    {
+      "cn": "冷色调",
+      "en": "cool tones"
+    },
+    {
+      "cn": "橙蓝对比",
+      "en": "teal and orange"
+    },
+    {
+      "cn": "霓虹灯光",
+      "en": "neon lights"
+    },
+    {
+      "cn": "霓虹辉光",
+      "en": "neon glow"
+    },
+    {
+      "cn": "赛博灯光",
+      "en": "cyberpunk lighting"
+    },
+    {
+      "cn": "荧光",
+      "en": "fluorescent"
+    },
+    {
+      "cn": "紫外光",
+      "en": "uv light"
+    },
+    {
+      "cn": "黑光",
+      "en": "blacklight"
+    },
+    {
+      "cn": "LED灯光",
+      "en": "LED lights"
+    },
+    {
+      "cn": "灯带",
+      "en": "light strips"
+    },
+    {
+      "cn": "烛光",
+      "en": "candlelight"
+    },
+    {
+      "cn": "灯笼光",
+      "en": "lantern light"
+    },
+    {
+      "cn": "火光",
+      "en": "firelight"
+    },
+    {
+      "cn": "篝火光照",
+      "en": "campfire glow"
+    },
+    {
+      "cn": "炉火",
+      "en": "fireplace glow"
+    },
+    {
+      "cn": "火炬光",
+      "en": "torchlight"
+    },
+    {
+      "cn": "油灯光",
+      "en": "lamplight"
+    },
+    {
+      "cn": "街灯光",
+      "en": "streetlight glow"
+    },
+    {
+      "cn": "车灯光",
+      "en": "headlights"
+    },
+    {
+      "cn": "尾灯",
+      "en": "taillights"
+    },
+    {
+      "cn": "光轨",
+      "en": "light trails"
+    },
+    {
+      "cn": "屏幕光",
+      "en": "screen glow"
+    },
+    {
+      "cn": "显示器光",
+      "en": "monitor glow"
+    },
+    {
+      "cn": "手机屏幕光",
+      "en": "phone screen glow"
+    },
+    {
+      "cn": "全息光",
+      "en": "holographic light"
+    },
+    {
+      "cn": "发光",
+      "en": "glowing"
+    },
+    {
+      "cn": "自发光",
+      "en": "self-illumination"
+    },
+    {
+      "cn": "生物发光",
+      "en": "bioluminescence"
+    },
+    {
+      "cn": "魔法光芒",
+      "en": "magical glow"
+    },
+    {
+      "cn": "神秘光",
+      "en": "mystical light"
+    },
+    {
+      "cn": "圣光",
+      "en": "holy light"
+    },
+    {
+      "cn": "神圣光芒",
+      "en": "divine radiance"
+    },
+    {
+      "cn": "光环效果",
+      "en": "halo effect"
+    },
+    {
+      "cn": "天使光",
+      "en": "angelic light"
+    },
+    {
+      "cn": "恶魔光",
+      "en": "demonic glow"
+    },
+    {
+      "cn": "邪能绿光",
+      "en": "fel green glow"
+    },
+    {
+      "cn": "暗影",
+      "en": "shadowy"
+    },
+    {
+      "cn": "深影",
+      "en": "deep shadows"
+    },
+    {
+      "cn": "剪影",
+      "en": "silhouette"
+    },
+    {
+      "cn": "半剪影",
+      "en": "semi-silhouette"
+    },
+    {
+      "cn": "明暗对照",
+      "en": "chiaroscuro"
+    },
+    {
+      "cn": "暗调",
+      "en": "low light"
+    },
+    {
+      "cn": "昏暗",
+      "en": "dimly lit"
+    },
+    {
+      "cn": "幽暗",
+      "en": "gloomy lighting"
+    },
+    {
+      "cn": "阴森",
+      "en": "eerie lighting"
+    },
+    {
+      "cn": "恐怖氛围",
+      "en": "horror lighting"
+    },
+    {
+      "cn": "悬疑氛围",
+      "en": "suspenseful lighting"
+    },
+    {
+      "cn": "梦幻光",
+      "en": "dreamy lighting"
+    },
+    {
+      "cn": "柔焦光",
+      "en": "soft focus glow"
+    },
+    {
+      "cn": "朦胧光",
+      "en": "hazy light"
+    },
+    {
+      "cn": "雾气光",
+      "en": "foggy light"
+    },
+    {
+      "cn": "辉光",
+      "en": "glow"
+    },
+    {
+      "cn": "泛光",
+      "en": "bloom"
+    },
+    {
+      "cn": "镜头眩光",
+      "en": "lens flare"
+    },
+    {
+      "cn": "光斑",
+      "en": "bokeh lights"
+    },
+    {
+      "cn": "散景",
+      "en": "bokeh"
+    },
+    {
+      "cn": "焦外成像",
+      "en": "out of focus lights"
+    },
+    {
+      "cn": "反射光",
+      "en": "reflected light"
+    },
+    {
+      "cn": "折射光",
+      "en": "refracted light"
+    },
+    {
+      "cn": "水面反光",
+      "en": "water reflection light"
+    },
+    {
+      "cn": "镜面反射",
+      "en": "mirror reflection"
+    },
+    {
+      "cn": "金属反光",
+      "en": "metallic reflections"
+    },
+    {
+      "cn": "湿润反光",
+      "en": "wet reflections"
+    },
+    {
+      "cn": "彩虹光",
+      "en": "rainbow light"
+    },
+    {
+      "cn": "棱镜光",
+      "en": "prism light"
+    },
+    {
+      "cn": "彩色玻璃光",
+      "en": "stained glass light"
+    },
+    {
+      "cn": "教堂彩窗",
+      "en": "cathedral windows"
+    },
+    {
+      "cn": "色散",
+      "en": "chromatic aberration"
+    },
+    {
+      "cn": "色差",
+      "en": "color fringing"
+    },
+    {
+      "cn": "高饱和光",
+      "en": "vivid lighting"
+    },
+    {
+      "cn": "单色光",
+      "en": "monochromatic light"
+    },
+    {
+      "cn": "双色光",
+      "en": "duotone lighting"
+    },
+    {
+      "cn": "多色光",
+      "en": "multicolored lights"
+    },
+    {
+      "cn": "渐变光",
+      "en": "gradient lighting"
+    },
+    {
+      "cn": "点光源",
+      "en": "point light"
+    },
+    {
+      "cn": "聚光灯",
+      "en": "spotlight"
+    },
+    {
+      "cn": "追光",
+      "en": "follow spot"
+    },
+    {
+      "cn": "舞台灯光",
+      "en": "stage lighting"
+    },
+    {
+      "cn": "演唱会灯光",
+      "en": "concert lighting"
+    },
+    {
+      "cn": "频闪",
+      "en": "strobe light"
+    },
+    {
+      "cn": "激光",
+      "en": "laser lights"
+    },
+    {
+      "cn": "迪斯科球",
+      "en": "disco ball"
+    },
+    {
+      "cn": "烟花光",
+      "en": "fireworks glow"
+    },
+    {
+      "cn": "火花",
+      "en": "sparks"
+    },
+    {
+      "cn": "飞溅火星",
+      "en": "flying sparks"
+    },
+    {
+      "cn": "余烬",
+      "en": "embers glow"
+    },
+    {
+      "cn": "烟雾中的光",
+      "en": "light in smoke"
+    },
+    {
+      "cn": "尘埃中的光",
+      "en": "light in dust"
+    },
+    {
+      "cn": "水下光",
+      "en": "underwater light"
+    },
+    {
+      "cn": "水光折射",
+      "en": "caustic light"
+    },
+    {
+      "cn": "焦散",
+      "en": "caustics"
+    },
+    {
+      "cn": "次表面散射",
+      "en": "subsurface scattering"
+    },
+    {
+      "cn": "全局光照",
+      "en": "global illumination"
+    },
+    {
+      "cn": "光线追踪",
+      "en": "ray tracing"
+    },
+    {
+      "cn": "环境光遮蔽",
+      "en": "ambient occlusion"
+    },
+    {
+      "cn": "HDR光照",
+      "en": "HDR lighting"
+    },
+    {
+      "cn": "过曝",
+      "en": "overexposed"
+    },
+    {
+      "cn": "欠曝",
+      "en": "underexposed"
+    },
+    {
+      "cn": "长曝光光轨",
+      "en": "long exposure lights"
+    },
+    {
+      "cn": "星芒",
+      "en": "sunstar"
+    },
+    {
+      "cn": "眩光",
+      "en": "glare"
+    },
+    {
+      "cn": "耀斑",
+      "en": "flare"
+    },
+    {
+      "cn": "光晕",
+      "en": "halation"
+    },
+    {
+      "cn": "柔光罩效果",
+      "en": "softbox look"
+    },
+    {
+      "cn": "窗光人像",
+      "en": "window light portrait"
+    },
+    {
+      "cn": "黄金比例光",
+      "en": "golden ratio lighting"
+    },
+    {
+      "cn": "电影级调色",
+      "en": "cinematic color grading"
+    },
+    {
+      "cn": "胶片感",
+      "en": "filmic"
+    },
+    {
+      "cn": "柯达胶片",
+      "en": "kodak portra"
+    },
+    {
+      "cn": "富士胶片",
+      "en": "fuji film"
+    },
+    {
+      "cn": "黑白胶片",
+      "en": "black and white film"
+    },
+    {
+      "cn": "宝丽来",
+      "en": "polaroid"
+    },
+    {
+      "cn": "复古滤镜",
+      "en": "vintage filter"
+    },
+    {
+      "cn": "褪色效果",
+      "en": "faded look"
+    },
+    {
+      "cn": "漂白效果",
+      "en": "bleach bypass"
+    },
+    {
+      "cn": "交叉冲洗",
+      "en": "cross processing"
+    }
+  ],
+  "style": [
+    {
+      "cn": "动漫风格",
+      "en": "anime style"
+    },
+    {
+      "cn": "漫画风格",
+      "en": "manga style"
+    },
+    {
+      "cn": "日漫风格",
+      "en": "japanese anime"
+    },
+    {
+      "cn": "美漫风格",
+      "en": "western comic"
+    },
+    {
+      "cn": "卡通风格",
+      "en": "cartoon"
+    },
+    {
+      "cn": "Q版",
+      "en": "chibi"
+    },
+    {
+      "cn": "SD角色",
+      "en": "super deformed"
+    },
+    {
+      "cn": "像素风",
+      "en": "pixel art"
+    },
+    {
+      "cn": "8位风格",
+      "en": "8-bit"
+    },
+    {
+      "cn": "16位风格",
+      "en": "16-bit"
+    },
+    {
+      "cn": "体素风",
+      "en": "voxel art"
+    },
+    {
+      "cn": "低多边形",
+      "en": "low poly"
+    },
+    {
+      "cn": "写实风格",
+      "en": "realistic"
+    },
+    {
+      "cn": "照片级",
+      "en": "photorealistic"
+    },
+    {
+      "cn": "超写实",
+      "en": "hyperrealism"
+    },
+    {
+      "cn": "3D渲染",
+      "en": "3d render"
+    },
+    {
+      "cn": "CG渲染",
+      "en": "CGI"
+    },
+    {
+      "cn": "游戏CG",
+      "en": "game CG"
+    },
+    {
+      "cn": "CG插画",
+      "en": "digital painting"
+    },
+    {
+      "cn": "厚涂",
+      "en": "impasto"
+    },
+    {
+      "cn": "平涂",
+      "en": "flat color"
+    },
+    {
+      "cn": "赛璐璐",
+      "en": "cel shading"
+    },
+    {
+      "cn": "水彩",
+      "en": "watercolor"
+    },
+    {
+      "cn": "油画",
+      "en": "oil painting"
+    },
+    {
+      "cn": "丙烯画",
+      "en": "acrylic painting"
+    },
+    {
+      "cn": "素描",
+      "en": "sketch"
+    },
+    {
+      "cn": "铅笔画",
+      "en": "pencil drawing"
+    },
+    {
+      "cn": "炭笔画",
+      "en": "charcoal drawing"
+    },
+    {
+      "cn": "钢笔画",
+      "en": "pen drawing"
+    },
+    {
+      "cn": "圆珠笔画",
+      "en": "ballpoint pen"
+    },
+    {
+      "cn": "马克笔",
+      "en": "marker"
+    },
+    {
+      "cn": "彩铅",
+      "en": "colored pencil"
+    },
+    {
+      "cn": "蜡笔",
+      "en": "crayon"
+    },
+    {
+      "cn": "粉彩",
+      "en": "pastel"
+    },
+    {
+      "cn": "粉笔画",
+      "en": "chalk art"
+    },
+    {
+      "cn": "水墨画",
+      "en": "ink wash painting"
+    },
+    {
+      "cn": "国画",
+      "en": "chinese painting"
+    },
+    {
+      "cn": "工笔画",
+      "en": "gongbi"
+    },
+    {
+      "cn": "写意",
+      "en": "xieyi"
+    },
+    {
+      "cn": "浮世绘",
+      "en": "ukiyo-e"
+    },
+    {
+      "cn": "版画",
+      "en": "woodblock print"
+    },
+    {
+      "cn": "蚀刻版画",
+      "en": "etching"
+    },
+    {
+      "cn": "铜版画",
+      "en": "engraving"
+    },
+    {
+      "cn": "石版画",
+      "en": "lithograph"
+    },
+    {
+      "cn": "丝网印刷",
+      "en": "screen print"
+    },
+    {
+      "cn": "插画",
+      "en": "illustration"
+    },
+    {
+      "cn": "儿童插画",
+      "en": "children's illustration"
+    },
+    {
+      "cn": "绘本风格",
+      "en": "picture book style"
+    },
+    {
+      "cn": "童话风格",
+      "en": "fairytale style"
+    },
+    {
+      "cn": "幻想艺术",
+      "en": "fantasy art"
+    },
+    {
+      "cn": "暗黑幻想",
+      "en": "dark fantasy"
+    },
+    {
+      "cn": "高幻想",
+      "en": "high fantasy"
+    },
+    {
+      "cn": "科幻",
+      "en": "science fiction"
+    },
+    {
+      "cn": "赛博朋克",
+      "en": "cyberpunk"
+    },
+    {
+      "cn": "蒸汽朋克",
+      "en": "steampunk"
+    },
+    {
+      "cn": "柴油朋克",
+      "en": "dieselpunk"
+    },
+    {
+      "cn": "太阳朋克",
+      "en": "solarpunk"
+    },
+    {
+      "cn": "生物朋克",
+      "en": "biopunk"
+    },
+    {
+      "cn": "复古未来",
+      "en": "retrofuturism"
+    },
+    {
+      "cn": "原子朋克",
+      "en": "atompunk"
+    },
+    {
+      "cn": "合成波",
+      "en": "synthwave"
+    },
+    {
+      "cn": "蒸汽波",
+      "en": "vaporwave"
+    },
+    {
+      "cn": "赛博浪人",
+      "en": "cyber noir"
+    },
+    {
+      "cn": "黑色电影",
+      "en": "film noir"
+    },
+    {
+      "cn": "新黑色",
+      "en": "neo-noir"
+    },
+    {
+      "cn": "哥特风格",
+      "en": "gothic"
+    },
+    {
+      "cn": "巴洛克",
+      "en": "baroque"
+    },
+    {
+      "cn": "洛可可",
+      "en": "rococo"
+    },
+    {
+      "cn": "文艺复兴",
+      "en": "renaissance"
+    },
+    {
+      "cn": "印象派",
+      "en": "impressionism"
+    },
+    {
+      "cn": "表现主义",
+      "en": "expressionism"
+    },
+    {
+      "cn": "超现实主义",
+      "en": "surrealism"
+    },
+    {
+      "cn": "立体主义",
+      "en": "cubism"
+    },
+    {
+      "cn": "抽象艺术",
+      "en": "abstract art"
+    },
+    {
+      "cn": "抽象表现",
+      "en": "abstract expressionism"
+    },
+    {
+      "cn": "极简主义",
+      "en": "minimalism"
+    },
+    {
+      "cn": "波普艺术",
+      "en": "pop art"
+    },
+    {
+      "cn": "欧普艺术",
+      "en": "op art"
+    },
+    {
+      "cn": "装饰艺术",
+      "en": "art deco"
+    },
+    {
+      "cn": "新艺术运动",
+      "en": "art nouveau"
+    },
+    {
+      "cn": "包豪斯",
+      "en": "bauhaus"
+    },
+    {
+      "cn": "构成主义",
+      "en": "constructivism"
+    },
+    {
+      "cn": "达达主义",
+      "en": "dadaism"
+    },
+    {
+      "cn": "未来主义",
+      "en": "futurism"
+    },
+    {
+      "cn": "点彩派",
+      "en": "pointillism"
+    },
+    {
+      "cn": "野兽派",
+      "en": "fauvism"
+    },
+    {
+      "cn": "浪漫主义",
+      "en": "romanticism"
+    },
+    {
+      "cn": "古典主义",
+      "en": "classicism"
+    },
+    {
+      "cn": "新古典",
+      "en": "neoclassical"
+    },
+    {
+      "cn": "学院派",
+      "en": "academic art"
+    },
+    {
+      "cn": "前拉斐尔",
+      "en": "pre-raphaelite"
+    },
+    {
+      "cn": "象征主义",
+      "en": "symbolism"
+    },
+    {
+      "cn": "魔幻现实",
+      "en": "magic realism"
+    },
+    {
+      "cn": "科幻插画",
+      "en": "sci-fi illustration"
+    },
+    {
+      "cn": "机甲风格",
+      "en": "mecha style"
+    },
+    {
+      "cn": "机器人",
+      "en": "robotic"
+    },
+    {
+      "cn": "机械感",
+      "en": "mechanical"
+    },
+    {
+      "cn": "赛博格",
+      "en": "cyborg"
+    },
+    {
+      "cn": "仿生人",
+      "en": "android"
+    },
+    {
+      "cn": "全息风格",
+      "en": "holographic"
+    },
+    {
+      "cn": "故障艺术",
+      "en": "glitch art"
+    },
+    {
+      "cn": "像素故障",
+      "en": "datamosh"
+    },
+    {
+      "cn": "拼贴",
+      "en": "collage"
+    },
+    {
+      "cn": "剪纸",
+      "en": "paper cut"
+    },
+    {
+      "cn": "折纸",
+      "en": "origami"
+    },
+    {
+      "cn": "黏土风",
+      "en": "claymation"
+    },
+    {
+      "cn": "定格动画",
+      "en": "stop motion"
+    },
+    {
+      "cn": "木偶风",
+      "en": "puppet style"
+    },
+    {
+      "cn": "毛毡风",
+      "en": "felt style"
+    },
+    {
+      "cn": "针织风",
+      "en": "knitted style"
+    },
+    {
+      "cn": "刺绣风",
+      "en": "embroidery style"
+    },
+    {
+      "cn": "马赛克",
+      "en": "mosaic"
+    },
+    {
+      "cn": "彩色玻璃",
+      "en": "stained glass"
+    },
+    {
+      "cn": "珐琅",
+      "en": "enamel"
+    },
+    {
+      "cn": "陶瓷",
+      "en": "ceramic"
+    },
+    {
+      "cn": "瓷器",
+      "en": "porcelain"
+    },
+    {
+      "cn": "玻璃艺术",
+      "en": "glass art"
+    },
+    {
+      "cn": "水晶",
+      "en": "crystal"
+    },
+    {
+      "cn": "金属质感",
+      "en": "metallic"
+    },
+    {
+      "cn": "镀铬",
+      "en": "chrome"
+    },
+    {
+      "cn": "黄金",
+      "en": "golden"
+    },
+    {
+      "cn": "白银",
+      "en": "silver"
+    },
+    {
+      "cn": "青铜",
+      "en": "bronze"
+    },
+    {
+      "cn": "铁锈",
+      "en": "rusty"
+    },
+    {
+      "cn": "木质",
+      "en": "wooden"
+    },
+    {
+      "cn": "石质",
+      "en": "stone"
+    },
+    {
+      "cn": "大理石",
+      "en": "marble"
+    },
+    {
+      "cn": "玉石",
+      "en": "jade"
+    },
+    {
+      "cn": "宝石",
+      "en": "gemstone"
+    },
+    {
+      "cn": "钻石",
+      "en": "diamond"
+    },
+    {
+      "cn": "水晶质感",
+      "en": "crystalline"
+    },
+    {
+      "cn": "冰晶",
+      "en": "icy"
+    },
+    {
+      "cn": "火焰质感",
+      "en": "fiery"
+    },
+    {
+      "cn": "液态",
+      "en": "liquid"
+    },
+    {
+      "cn": "流体艺术",
+      "en": "fluid art"
+    },
+    {
+      "cn": "大理石纹",
+      "en": "marbled"
+    },
+    {
+      "cn": "烟雾",
+      "en": "smoky"
+    },
+    {
+      "cn": "霓虹",
+      "en": "neon"
+    },
+    {
+      "cn": "发光线条",
+      "en": "glowing lines"
+    },
+    {
+      "cn": "线框",
+      "en": "wireframe"
+    },
+    {
+      "cn": "蓝图",
+      "en": "blueprint"
+    },
+    {
+      "cn": "技术图纸",
+      "en": "technical drawing"
+    },
+    {
+      "cn": "工程图",
+      "en": "schematic"
+    },
+    {
+      "cn": "解剖图",
+      "en": "anatomical drawing"
+    },
+    {
+      "cn": "地图",
+      "en": "map style"
+    },
+    {
+      "cn": "星图",
+      "en": "star chart"
+    },
+    {
+      "cn": "塔罗牌",
+      "en": "tarot card"
+    },
+    {
+      "cn": "扑克牌",
+      "en": "playing card"
+    },
+    {
+      "cn": "海报",
+      "en": "poster"
+    },
+    {
+      "cn": "宣传画",
+      "en": "propaganda poster"
+    },
+    {
+      "cn": "电影海报",
+      "en": "movie poster"
+    },
+    {
+      "cn": "专辑封面",
+      "en": "album cover"
+    },
+    {
+      "cn": "书封",
+      "en": "book cover"
+    },
+    {
+      "cn": "漫画封面",
+      "en": "comic cover"
+    },
+    {
+      "cn": "杂志封面",
+      "en": "magazine cover"
+    },
+    {
+      "cn": "时尚大片",
+      "en": "fashion editorial"
+    },
+    {
+      "cn": "高级时装",
+      "en": "haute couture"
+    },
+    {
+      "cn": "街头摄影",
+      "en": "street photography"
+    },
+    {
+      "cn": "纪实摄影",
+      "en": "documentary photography"
+    },
+    {
+      "cn": "人像摄影",
+      "en": "portrait photography"
+    },
+    {
+      "cn": "风光摄影",
+      "en": "landscape photography"
+    },
+    {
+      "cn": "野生动物摄影",
+      "en": "wildlife photography"
+    },
+    {
+      "cn": "天文摄影",
+      "en": "astrophotography"
+    },
+    {
+      "cn": "微距摄影",
+      "en": "macro photography"
+    },
+    {
+      "cn": "美食摄影",
+      "en": "food photography"
+    },
+    {
+      "cn": "产品摄影",
+      "en": "product photography"
+    },
+    {
+      "cn": "建筑摄影",
+      "en": "architecture photography"
+    },
+    {
+      "cn": "航拍",
+      "en": "aerial photography"
+    },
+    {
+      "cn": "无人机视角",
+      "en": "drone view"
+    },
+    {
+      "cn": "水下摄影",
+      "en": "underwater photography"
+    },
+    {
+      "cn": "红外摄影",
+      "en": "infrared photography"
+    },
+    {
+      "cn": "X光风格",
+      "en": "x-ray style"
+    },
+    {
+      "cn": "热成像",
+      "en": "thermal imaging"
+    },
+    {
+      "cn": "夜视",
+      "en": "night vision"
+    },
+    {
+      "cn": "监控风格",
+      "en": "cctv style"
+    },
+    {
+      "cn": "老照片",
+      "en": "old photograph"
+    },
+    {
+      "cn": "黑白照片",
+      "en": "black and white photo"
+    },
+    {
+      "cn": "棕褐色调",
+      "en": "sepia"
+    },
+    {
+      "cn": "柯达胶片",
+      "en": "kodachrome"
+    },
+    {
+      "cn": "宝丽来",
+      "en": "polaroid"
+    },
+    {
+      "cn": "拍立得",
+      "en": "instax"
+    },
+    {
+      "cn": "VHS风格",
+      "en": "vhs style"
+    },
+    {
+      "cn": "录像带",
+      "en": "videotape"
+    },
+    {
+      "cn": "CRT效果",
+      "en": "crt effect"
+    },
+    {
+      "cn": "扫描线",
+      "en": "scanlines"
+    },
+    {
+      "cn": "80年代",
+      "en": "80s style"
+    },
+    {
+      "cn": "90年代",
+      "en": "90s style"
+    },
+    {
+      "cn": "千禧年",
+      "en": "y2k aesthetic"
+    },
+    {
+      "cn": "复古",
+      "en": "retro"
+    },
+    {
+      "cn": "怀旧",
+      "en": "nostalgic"
+    },
+    {
+      "cn": "和风",
+      "en": "japanese style"
+    },
+    {
+      "cn": "中国风",
+      "en": "chinese style"
+    },
+    {
+      "cn": "国潮",
+      "en": "guochao"
+    },
+    {
+      "cn": "敦煌风",
+      "en": "dunhuang style"
+    },
+    {
+      "cn": "唐风",
+      "en": "tang dynasty style"
+    },
+    {
+      "cn": "宋风",
+      "en": "song dynasty style"
+    },
+    {
+      "cn": "汉服",
+      "en": "hanfu"
+    },
+    {
+      "cn": "仙侠",
+      "en": "xianxia"
+    },
+    {
+      "cn": "武侠",
+      "en": "wuxia"
+    },
+    {
+      "cn": "修真",
+      "en": "cultivation style"
+    },
+    {
+      "cn": "克苏鲁",
+      "en": "lovecraftian"
+    },
+    {
+      "cn": "恐怖",
+      "en": "horror"
+    },
+    {
+      "cn": "惊悚",
+      "en": "thriller"
+    },
+    {
+      "cn": "废土风",
+      "en": "wasteland style"
+    },
+    {
+      "cn": "末世",
+      "en": "post-apocalyptic"
+    },
+    {
+      "cn": "末日",
+      "en": "apocalyptic"
+    },
+    {
+      "cn": "太空歌剧",
+      "en": "space opera"
+    },
+    {
+      "cn": "星际",
+      "en": "interstellar"
+    },
+    {
+      "cn": "硬科幻",
+      "en": "hard sci-fi"
+    },
+    {
+      "cn": "奇幻史诗",
+      "en": "epic fantasy"
+    },
+    {
+      "cn": "神话",
+      "en": "mythology"
+    },
+    {
+      "cn": "希腊神话",
+      "en": "greek mythology"
+    },
+    {
+      "cn": "北欧神话",
+      "en": "norse mythology"
+    },
+    {
+      "cn": "埃及神话",
+      "en": "egyptian mythology"
+    },
+    {
+      "cn": "日本神话",
+      "en": "japanese mythology"
+    },
+    {
+      "cn": "中国神话",
+      "en": "chinese mythology"
+    },
+    {
+      "cn": "宗教画",
+      "en": "religious art"
+    },
+    {
+      "cn": "圣像画",
+      "en": "icon painting"
+    },
+    {
+      "cn": "壁画",
+      "en": "mural"
+    },
+    {
+      "cn": "湿壁画",
+      "en": "fresco"
+    },
+    {
+      "cn": "涂鸦",
+      "en": "graffiti"
+    },
+    {
+      "cn": "街头艺术",
+      "en": "street art"
+    },
+    {
+      "cn": "纹身艺术",
+      "en": "tattoo art"
+    },
+    {
+      "cn": "浮世绘风",
+      "en": "ukiyo-e style"
+    },
+    {
+      "cn": "水墨风",
+      "en": "ink style"
+    },
+    {
+      "cn": "禅意",
+      "en": "zen"
+    },
+    {
+      "cn": "侘寂",
+      "en": "wabi-sabi"
+    },
+    {
+      "cn": "治愈系",
+      "en": "iyashikei"
+    },
+    {
+      "cn": "可爱风",
+      "en": "kawaii"
+    },
+    {
+      "cn": "萌系",
+      "en": "moe style"
+    },
+    {
+      "cn": "少女漫画",
+      "en": "shoujo manga"
+    },
+    {
+      "cn": "少年漫画",
+      "en": "shounen manga"
+    },
+    {
+      "cn": "赛博武侠",
+      "en": "cyber wuxia"
+    },
+    {
+      "cn": "国风赛博",
+      "en": "chinese cyberpunk"
+    },
+    {
+      "cn": "蒸汽波美学",
+      "en": "vaporwave aesthetic"
+    },
+    {
+      "cn": "梦核",
+      "en": "dreamcore"
+    },
+    {
+      "cn": "怪核",
+      "en": "weirdcore"
+    },
+    {
+      "cn": "田园风",
+      "en": "cottagecore"
+    },
+    {
+      "cn": "暗黑学院",
+      "en": "dark academia"
+    },
+    {
+      "cn": "光明学院",
+      "en": "light academia"
+    },
+    {
+      "cn": "哥特萝莉",
+      "en": "gothic lolita"
+    },
+    {
+      "cn": "朋克",
+      "en": "punk"
+    },
+    {
+      "cn": "摇滚",
+      "en": "rock"
+    },
+    {
+      "cn": "金属",
+      "en": "metal"
+    },
+    {
+      "cn": "嘻哈",
+      "en": "hip hop"
+    },
+    {
+      "cn": "电子",
+      "en": "electronic"
+    },
+    {
+      "cn": "爵士",
+      "en": "jazz"
+    },
+    {
+      "cn": "古典",
+      "en": "classical"
+    },
+    {
+      "cn": "歌剧",
+      "en": "opera"
+    },
+    {
+      "cn": "芭蕾",
+      "en": "ballet"
+    },
+    {
+      "cn": "戏剧",
+      "en": "theatrical"
+    },
+    {
+      "cn": "马戏团",
+      "en": "circus"
+    },
+    {
+      "cn": "嘉年华",
+      "en": "carnival"
+    },
+    {
+      "cn": "节日",
+      "en": "festive"
+    },
+    {
+      "cn": "圣诞",
+      "en": "christmas"
+    },
+    {
+      "cn": "万圣节",
+      "en": "halloween"
+    },
+    {
+      "cn": "情人节",
+      "en": "valentine"
+    },
+    {
+      "cn": "新年",
+      "en": "new year"
+    },
+    {
+      "cn": "春节",
+      "en": "spring festival"
+    },
+    {
+      "cn": "中秋",
+      "en": "mid-autumn"
+    },
+    {
+      "cn": "端午",
+      "en": "dragon boat festival"
+    }
+  ]
+}
