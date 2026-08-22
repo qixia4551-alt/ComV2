@@ -135,6 +135,154 @@
         }
     </style>
     <style>
+        /* ===== 图库球形轨道展示 ===== */
+        #panel-gallery { padding: 0 !important; }
+        #panel-gallery > div { position: relative; }
+        #galleryOrbitStage {
+            position: relative;
+            z-index: 0; /* 形成独立层叠上下文，轨道圆片的 z-index 不会盖到全屏查看层之上 */
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+        /* 桌面顶栏显示时扣除其高度，轨道球恰好铺满可视区域 */
+        #awTopbar:not(.hidden) ~ #mainContent #galleryOrbitStage { height: calc(100vh - 60px); }
+        #awTopbar:not(.hidden) ~ #mainContent { min-height: calc(100vh - 60px); }
+        #mainContent { transition: margin-left 0.3s ease; min-height: 100vh; }
+        /* 全屏模式：收起左侧边栏，主区域占满宽度 */
+        body.sidebar-collapsed #sidebar { transform: translateX(-100%) !important; }
+        body.sidebar-collapsed #mainContent { margin-left: 0 !important; }
+        /* 侧边栏右缘的收起把手 */
+        #sidebarCollapseBtn {
+            position: absolute; top: 50%; right: -14px; transform: translateY(-50%);
+            z-index: 51; width: 28px; height: 48px; border-radius: 9999px;
+            background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 212, 255, 0.25);
+            color: #94a3b8; display: none; align-items: center; justify-content: center; cursor: pointer;
+        }
+        #sidebarCollapseBtn:hover { color: #00d4ff; }
+        /* 收起后贴左缘的展开把手 */
+        #sidebarExpandBtn {
+            position: fixed; top: 50%; left: 0; transform: translateY(-50%);
+            z-index: 45; width: 24px; height: 56px; border-radius: 0 12px 12px 0;
+            background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 212, 255, 0.25); border-left: none;
+            color: #94a3b8; display: none; align-items: center; justify-content: center; cursor: pointer;
+        }
+        #sidebarExpandBtn:hover { color: #00d4ff; }
+        @media (min-width: 1024px) {
+            #sidebarCollapseBtn { display: flex; }
+            body.sidebar-collapsed #sidebarCollapseBtn { display: none; }
+            body.sidebar-collapsed #sidebarExpandBtn { display: flex; }
+        }
+        /* 清空全部按钮固定在屏幕右下角 */
+        #galleryClearBtn { position: fixed; right: 24px; bottom: 24px; z-index: 30; }
+        /* 空状态提示叠加在轨道球区域居中显示 */
+        #galleryEmpty { position: absolute; inset: 0; }
+        #galleryEmpty:not(.hidden) { display: flex; }
+        @media (max-width: 1023px) {
+            #galleryOrbitStage { height: calc(100vh - 120px); } /* 顶部状态栏 + 底部导航栏 */
+            #galleryClearBtn { bottom: 72px; } /* 避开底部导航栏 */
+            body:has(#panel-gallery:not(.hidden)) #mainContent { padding-bottom: 0; } /* 图库全屏时去掉底部留白 */
+        }
+        #galleryOrbitCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .g-item { position: absolute; left: 0; top: 0; width: 112px; height: 112px; cursor: pointer; will-change: transform, opacity; }
+        .g-item .g-clip {
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #0b1220;
+            border: 2px solid rgba(255, 255, 255, 0.20);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+            transition: border-radius 0.45s cubic-bezier(0.22, 0.8, 0.3, 1),
+                        transform 0.35s ease,
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+        .g-item img {
+            position: absolute; left: 50%; top: 50%;
+            width: 100%; height: 100%; object-fit: cover;
+            transform: translate(-50%, -50%);
+            transition: width 0.45s cubic-bezier(0.22, 0.8, 0.3, 1),
+                        height 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+            pointer-events: none;
+        }
+        .g-item.hover .g-clip {
+            border-radius: 14px; /* 圆形丝滑扩散为矩形 */
+            transform: scale(1.28);
+            border-color: rgba(0, 212, 255, 0.65);
+            box-shadow: 0 0 22px rgba(0, 212, 255, 0.35), 0 8px 24px rgba(0, 0, 0, 0.55);
+        }
+        .g-item.hover img { width: 178%; height: 178%; } /* 悬停时展示原矩形画面 */
+        #galleryFullView {
+            position: fixed; inset: 0; z-index: 50;
+            background: rgba(2, 6, 18, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+        }
+        #galleryFullView.hidden { display: none; }
+        #galleryFullViewImg {
+            max-width: 90vw; max-height: 84vh;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform-origin: 50% 50%;
+            transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.3, 1),
+                        border-radius 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+            cursor: pointer;
+        }
+        #galleryFullView.opening #galleryFullViewImg {
+            transform: scale(0.08);
+            border-radius: 50%;
+        }
+        /* 全屏查看右侧置顶的生成信息悬浮窗（稍微透明） */
+        #fvInfoBox {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 300px; max-width: 82vw;
+            max-height: 70vh;
+            display: flex; flex-direction: column;
+            background: rgba(10, 16, 32, 0.62);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 14px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+            color: #dbe7ff;
+            font-size: 12px;
+            z-index: 60;
+            overflow: hidden;
+            cursor: auto;
+        }
+        #fvInfoBox .fv-info-head {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            font-weight: 600; font-size: 12px; color: #9fb6e8;
+        }
+        #fvInfoBox .fv-info-body {
+            padding: 10px 12px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+        #fvInfoBox .fv-info-body .fv-label { color: #7d90b8; }
+        #fvInfoBox .fv-info-body .fv-sep { border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0; }
+        #fvInfoBox .fv-info-foot {
+            padding: 8px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        #fvInfoBox .fv-download {
+            width: 100%;
+            padding: 7px 0;
+            border-radius: 9px;
+            background: rgba(37, 99, 235, 0.55);
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+        #fvInfoBox .fv-download:hover { background: rgba(59, 130, 246, 0.75); }
+    </style>
+    <style>
         /* Light theme readability fix: force dark text on light background */
         body.theme-light,
         body.theme-light .text-slate-100,
@@ -368,6 +516,9 @@
 
     <!-- Sidebar -->
     <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 z-50 glass border-r border-slate-700/50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+        <button id="sidebarCollapseBtn" onclick="collapseSidebar()" aria-label="收起侧边栏" title="收起侧边栏">
+            <i class="fas fa-chevron-left"></i>
+        </button>
         <!-- Logo -->
         <div class="p-6 border-b border-slate-700/50">
             <div class="flex items-center gap-3">
@@ -434,8 +585,13 @@
         </div>
     </aside>
 
+    <!-- 侧边栏收起后的展开把手 -->
+    <button id="sidebarExpandBtn" onclick="expandSidebar()" aria-label="展开侧边栏" title="展开侧边栏">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
     <!-- Main Content -->
-    <main id="mainContent" class="lg:ml-64 pt-16 lg:pt-0 min-h-screen">
+    <main id="mainContent" class="lg:ml-64 pt-16 lg:pt-0">
         <!-- ========== GENERATE PANEL ========== -->
         <div id="panel-generate" class="panel p-4 lg:p-6 panel-enter">
             <div class="max-w-7xl mx-auto">
@@ -983,30 +1139,23 @@
         </div>
 
         <!-- ========== GALLERY PANEL ========== -->
-        <div id="panel-gallery" class="panel p-4 lg:p-6 hidden">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-1">
-                            <i class="fas fa-images text-purple-400 mr-3"></i>图库
-                        </h2>
-                        <p class="text-slate-400 text-sm">你生成的所有图像</p>
-                    </div>
-                    <button onclick="confirmClearGallery()"
-                        class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl transition-all btn-hover text-sm">
-                        <i class="fas fa-trash mr-2"></i>清空全部
-                    </button>
+        <div id="panel-gallery" class="panel hidden">
+            <div>
+                <div id="galleryOrbitStage">
+                    <canvas id="galleryOrbitCanvas"></canvas>
+                    <!-- 轨道图片由 JS 动态生成 -->
                 </div>
 
-                <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    <!-- Gallery items filled by JS -->
-                </div>
-
-                <div id="galleryEmpty" class="flex flex-col items-center justify-center py-20 text-slate-400">
+                <div id="galleryEmpty" class="hidden flex-col items-center justify-center text-slate-400">
                     <i class="fas fa-images text-6xl mb-4 opacity-20"></i>
                     <p class="text-lg">还没有图像</p>
                     <p class="text-sm mt-1">生成一些图像后会显示在这里</p>
                 </div>
+
+                <button id="galleryClearBtn" onclick="confirmClearGallery()"
+                    class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl transition-all btn-hover text-sm">
+                    <i class="fas fa-trash mr-2"></i>清空全部
+                </button>
             </div>
         </div>
 
@@ -1246,8 +1395,8 @@
                         <span class="text-sm text-slate-300"><i class="fas fa-venus-mars mr-1"></i>锁定性别</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer select-none">
-                        <input type="checkbox" id="lockAge" class="accent-purple-500 w-4 h-4">
-                        <span class="text-sm text-slate-300"><i class="fas fa-user mr-1"></i>锁定年龄</span>
+                        <input type="checkbox" id="lockHair" class="accent-purple-500 w-4 h-4">
+                        <span class="text-sm text-slate-300"><i class="fas fa-scissors mr-1"></i>锁定发型</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" id="lockClothing" class="accent-purple-500 w-4 h-4">
@@ -1279,7 +1428,7 @@
             <!-- Category Selection Info -->
             <div class="p-3 bg-slate-800/20 text-xs text-slate-400">
                 <i class="fas fa-info-circle mr-1"></i>
-                从标签库的每个类别中随机选择一个词汇，可锁定特定类别保持当前选择不变
+                各大类随机取词，可叠加维度（发型+发色、场景+天气+时段等）按子维度自动叠加；可锁定特定维度保持不变
             </div>
         </div>
     </div>
@@ -1311,6 +1460,28 @@
             <div id="templateList" class="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-thin">
                 <!-- Templates filled by JS -->
             </div>
+        </div>
+    </div>
+
+    <!-- Gallery Full View (圆形丝滑扩散查看全貌) -->
+    <div id="galleryFullView" class="hidden">
+        <img id="galleryFullViewImg" src="" alt="图库图片全貌">
+        <!-- 玻璃圆形放大镜（左键开关、滚轮缩放；右键退出全屏） -->
+        <div id="fvMagnifierLens" class="hidden absolute rounded-full pointer-events-none z-50 overflow-hidden"
+            style="width: 240px; height: 240px; border: 2px solid rgba(255,255,255,0.65); background: rgba(255,255,255,0.04); box-shadow: 0 10px 30px rgba(0,0,0,0.55), inset 0 0 24px rgba(255,255,255,0.16), inset 0 0 2px rgba(255,255,255,0.45);">
+            <img id="fvMagnifierImage" src="" alt="" style="position: absolute; max-width: none; max-height: none;">
+            <div style="position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 30% 22%, rgba(255,255,255,0.30), rgba(255,255,255,0.06) 34%, rgba(255,255,255,0) 60%);"></div>
+        </div>
+        <!-- 右侧置顶生成信息悬浮窗 -->
+        <div id="fvInfoBox">
+            <div class="fv-info-head"><span><i class="fas fa-scroll" style="margin-right:6px"></i>生成信息</span></div>
+            <div class="fv-info-body" id="fvInfoBody"></div>
+            <div class="fv-info-foot">
+                <div class="fv-download" id="fvDownloadBtn"><i class="fas fa-download" style="margin-right:6px"></i>下载图片</div>
+            </div>
+        </div>
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/50 text-xs text-slate-300 pointer-events-none">
+            左键：放大镜 · 滚轮：缩放 · 右键：退出
         </div>
     </div>
 
@@ -2332,6 +2503,11 @@
             renderThemeGrid();
             renderUiModeChoices();
         }
+
+        // 图库面板激活时启动球形轨道动画，离开时暂停
+        if (typeof goSetActive === 'function') {
+            goSetActive(panel === 'gallery');
+        }
     }
 
     function toggleSidebar(force) {
@@ -2346,6 +2522,16 @@
             sidebar.classList.remove('-translate-x-full');
             overlay.classList.remove('hidden');
         }
+    }
+
+    // 桌面端收起/展开左侧边栏（图库等面板可全屏展示）
+    function collapseSidebar() {
+        document.body.classList.add('sidebar-collapsed');
+        setTimeout(() => { if (typeof goResizeCanvas === 'function') goResizeCanvas(); }, 320);
+    }
+    function expandSidebar() {
+        document.body.classList.remove('sidebar-collapsed');
+        setTimeout(() => { if (typeof goResizeCanvas === 'function') goResizeCanvas(); }, 320);
     }
 
     // ============================================================
@@ -3411,10 +3597,11 @@
     let randomPromptState = {
         target: 'positive',
         lockedTags: {
-            gender: null,
-            age: null,
+            gender: null,   // 主体（性别/人数）
+            hair: null,     // 发型+发色+瞳色（可叠加组合）
             clothing: null,
-            scene: null
+            scene: null,    // 地点场景
+            timeOfDay: null // 时段
         }
     };
 
@@ -3438,11 +3625,68 @@
         return tags[randomIndex].en || tags[randomIndex].cn;
     }
 
+    // ---- 随机提示词：子维度定义（按顺序优先归类，先命中先得，避免一词多类）----
+    // 人物/背景大类内部可叠加的维度，生成时每个维度独立随机、结果叠加。
+    const RANDOM_CHAR_SUBCATS = [
+        { key: 'subject',   re: /\b(1girl|1boy|2girls|2boys|multiple girls|couple|group|solo( focus)?|child|teenager|young adult|adult|mature (female|male)|elderly|old (man|woman)|bishoujo|bishounen)\b/i },
+        { key: 'haircolor', re: /(blonde|silver|white|grey|black|brown|red|pink|blue|purple|green|orange|aqua|light brown) hair|gradient hair|multicolored hair|two-tone hair|rainbow hair|platinum blonde/i },
+        { key: 'hairstyle', re: /(long|short|medium|very long) hair|bangs|hair over|ponytail|twintails|braids?\b|buns?\b|hair rings|ahoge|antenna hair|sidelocks|wavy hair|curly hair|straight hair|messy hair|spiky hair|slicked-back hair|dreadlocks|afro|bob cut|hime cut|pixie cut|mullet|mohawk|undercut|floating hair|wet hair|shiny hair/i },
+        { key: 'eyes',      re: /\beyes\b|heterochromia|pupils|eyelashes|eyebrows|\bbrow\b/i },
+        { key: 'body',      re: /\b(tall|short|petite|slender|curvy|chubby|muscular|toned|athletic)\b|shoulders|\bwaist\b|long legs/i },
+        { key: 'features',  re: /freckles|\bmole\b|scar|tattoo|wings|halo|horns|\bears\b|antlers|\btail\b|fangs|teeth|claws|third eye|pointed ears|elf ears/i },
+        { key: 'accessory', re: /mask|veil|eyepatch|glasses|sunglasses|goggles|headband|ribbon|hair bow|hair tie|scrunchie|hairpin|hairclip|hair flower|hair ornament|crown|tiara|circlet|headpiece|jewelry|earrings|necklace|choker|pendant|bracelet|\bring\b|brooch|anklet|piercing/i }
+    ];
+    const RANDOM_BG_SUBCATS = [
+        { key: 'place',   re: /(background|forest|bamboo|jungle|rainforest|field|meadow|grassland|mountain|volcano|cliff|canyon|valley|waterfall|river|stream|lake|pond|ocean|beach|coast|island|desert|dunes|oasis|cave|glacier|iceberg|snowy mountain|snowfield|frozen lake|hot spring|coral reef|underwater|seabed|city|town|village|countryside|\bstreet\b|alley|intersection|crosswalk|bridge|skyscraper|tower|castle|palace|temple|shrine|torii|pagoda|cathedral|church|ruins|colosseum|pyramid|great wall|lighthouse|windmill|farmhouse|cottage|cabin|tent|campsite|campfire|garden|courtyard|balcony|terrace|rooftop|park|playground|fountain|plaza|market|festival|amusement|ferris wheel|roller coaster|carousel|stadium|arena|concert|theater|cinema|library|museum|gallery|classroom|school|gymnasium|pool|aquarium|zoo|greenhouse|office|conference|laboratory|workshop|atelier|kitchen|restaurant|cafe|\bbar\b|izakaya|bakery|bookstore|bedroom|living room|bathroom|bathtub|attic|basement|stairs|hallway|window|windowsill|archway|colonnade|floor|tatami|chandelier|fireplace|bookshelf|throne|altar|dungeon|factory|warehouse|construction|mine\b|railway|station|platform|subway|airport|harbor|pier|ship|airship|balloon|space station|moon surface|planet|floating|sky city|cockpit|control room|holographic|wasteland|battlefield|trench|bunker|treehouse|mushroom|farmland|vineyard|orchard|giant trees)/i },
+        { key: 'weather', re: /\b(fog|mist|rain|thunderstorm|lightning|snow|blizzard|wind|sandstorm|tornado)\b|rainy day|snowfall|strong wind|overcast/i },
+        { key: 'sky',     re: /(starry|milky way|shooting star|\bmoon\b|eclipse|aurora|northern lights|rainbow|\bsky\b|sunset|sunrise|dusk|dawn|twilight|cloud sea|above clouds|outer space|nebula|galaxy)/i },
+        { key: 'season',  re: /\b(spring|summer|autumn|winter)\b|cherry blossoms|petals|autumn leaves|maple leaves|fallen leaves/i },
+        { key: 'time',    re: /\b(night|midnight|day|morning|evening)\b/i },
+        { key: 'ambient', re: /(flames|embers|bubbles|particles|fireflies|birds|butterflies|puddle|reflection|wet ground|neon signs|billboard|vending machine|telephone pole|streetlight|lantern|torch|candles|christmas tree|\bmoss\b|fireworks)/i },
+        { key: 'crowd',   re: /\b(stage|audience|crowd)\b/i }
+    ];
+
+    // 返回单个标签归属的子维度 key（顺序优先，先命中先得）
+    function classifyTag(subcats, en) {
+        for (let i = 0; i < subcats.length; i++) {
+            if (subcats[i].re.test(en || '')) return subcats[i].key;
+        }
+        return null;
+    }
+
+    // 取某大类下某子维度的全部标签
+    function getTagBucket(category, subcats, key) {
+        return (TAG_LIBRARY[category] || []).filter(t => classifyTag(subcats, t.en || '') === key);
+    }
+
+    function randomFromBucket(bucket) {
+        if (!bucket || bucket.length === 0) return null;
+        const t = bucket[Math.floor(Math.random() * bucket.length)];
+        return t.en || t.cn;
+    }
+
+    // 可锁定维度：锁定时沿用旧值（需仍属于该子维度），否则重新随机并记录
+    function pickLocked(key, isLocked, bucket, category, subcats, subKey) {
+        const locked = randomPromptState.lockedTags;
+        if (isLocked && locked[key]) {
+            const t = (TAG_LIBRARY[category] || []).find(x => (x.en || x.cn) === locked[key]);
+            if (t && classifyTag(subcats, t.en || '') === subKey) return locked[key];
+        }
+        const v = randomFromBucket(bucket);
+        locked[key] = v;
+        return v;
+    }
+
     function generateRandomPrompt() {
         const lockGender = document.getElementById('lockGender').checked;
-        const lockAge = document.getElementById('lockAge').checked;
+        const lockHair = document.getElementById('lockHair').checked;
         const lockClothing = document.getElementById('lockClothing').checked;
         const lockScene = document.getElementById('lockScene').checked;
+
+        const charBuckets = {};
+        RANDOM_CHAR_SUBCATS.forEach(s => { charBuckets[s.key] = getTagBucket('character', RANDOM_CHAR_SUBCATS, s.key); });
+        const bgBuckets = {};
+        RANDOM_BG_SUBCATS.forEach(s => { bgBuckets[s.key] = getTagBucket('background', RANDOM_BG_SUBCATS, s.key); });
 
         let promptParts = [];
 
@@ -3452,13 +3696,23 @@
             if (tag) promptParts.push(tag);
         }
 
-        // Character/Gender tags
-        if (!lockGender || !randomPromptState.lockedTags.gender) {
-            randomPromptState.lockedTags.gender = getRandomTagFromCategory('character');
-        }
-        if (randomPromptState.lockedTags.gender) {
-            promptParts.push(randomPromptState.lockedTags.gender);
-        }
+        // 主体（性别/人数）
+        const subject = pickLocked('gender', lockGender, charBuckets.subject, 'character', RANDOM_CHAR_SUBCATS, 'subject');
+        if (subject) promptParts.push(subject);
+
+        // 人物可叠加维度：发型 + 发色 + 瞳色 + 体型 + 特征（各自随机，互不排斥）
+        const hairParts = [];
+        const hairstyle = pickLocked('hair', lockHair, charBuckets.hairstyle, 'character', RANDOM_CHAR_SUBCATS, 'hairstyle');
+        if (hairstyle) hairParts.push(hairstyle);
+        const haircolor = randomFromBucket(charBuckets.haircolor);
+        if (haircolor) hairParts.push(haircolor);
+        promptParts = promptParts.concat(hairParts);
+        const eyesTag = randomFromBucket(charBuckets.eyes);
+        if (eyesTag) promptParts.push(eyesTag);
+        const bodyTag = randomFromBucket(charBuckets.body);
+        if (bodyTag) promptParts.push(bodyTag);
+        const featTag = randomFromBucket(charBuckets.features);
+        if (featTag) promptParts.push(featTag);
 
         // Pose tags (always random)
         const poseTag = getRandomTagFromCategory('pose');
@@ -3476,13 +3730,19 @@
             promptParts.push(randomPromptState.lockedTags.clothing);
         }
 
-        // Background/Scene tags
-        if (!lockScene || !randomPromptState.lockedTags.scene) {
-            randomPromptState.lockedTags.scene = getRandomTagFromCategory('background');
-        }
-        if (randomPromptState.lockedTags.scene) {
-            promptParts.push(randomPromptState.lockedTags.scene);
-        }
+        // 背景可叠加维度：场景 + 天气 + 天空 + 时段 + 季节 + 氛围（各自随机）
+        const scene = pickLocked('scene', lockScene, bgBuckets.place, 'background', RANDOM_BG_SUBCATS, 'place');
+        if (scene) promptParts.push(scene);
+        const weatherTag = randomFromBucket(bgBuckets.weather);
+        if (weatherTag) promptParts.push(weatherTag);
+        const skyTag = randomFromBucket(bgBuckets.sky);
+        if (skyTag) promptParts.push(skyTag);
+        const timeTag = pickLocked('timeOfDay', lockScene, bgBuckets.time, 'background', RANDOM_BG_SUBCATS, 'time');
+        if (timeTag) promptParts.push(timeTag);
+        const seasonTag = randomFromBucket(bgBuckets.season);
+        if (seasonTag) promptParts.push(seasonTag);
+        const ambientTag = randomFromBucket(bgBuckets.ambient);
+        if (ambientTag) promptParts.push(ambientTag);
 
         // Lighting tags (always random)
         const lightTag = getRandomTagFromCategory('lighting');
@@ -3705,6 +3965,7 @@
         // Remember what this run used, so each generated image can show its prompt/params
         state.pendingMeta = {
             positive: positive, negative: negative,
+            model: model,
             steps: steps, cfg: cfg, seed: seed,
             width: width, height: height
         };
@@ -4352,34 +4613,355 @@
         updateGalleryCount();
     }
 
+    // ============================================================
+    // 图库球形轨道展示（移植自 deepseek 参照实现的轨道引擎）
+    // ============================================================
+    const GO = {
+        items: [], planes: [], t: 0, ay: 0, tilt: 0.35,
+        viewScale: 0, targetScale: 0, zoom: 1, zoomTarget: 1,
+        last: 0, active: false,
+        stage: null, canvas: null
+    };
+
+    function goResizeCanvas() {
+        if (!GO.canvas || !GO.stage) return;
+        const r = GO.stage.getBoundingClientRect();
+        GO.canvas.width = Math.max(1, Math.round(r.width));
+        GO.canvas.height = Math.max(1, Math.round(r.height));
+    }
+
+    function goSpawn(entries) {
+        GO.items.forEach(it => it.el.remove());
+        GO.items = [];
+        const n = Math.max(1, entries.length);
+        const planeCount = Math.max(3, Math.min(6, Math.round(n / 8) + 2));
+        GO.planes = [];
+        for (let k = 0; k < planeCount; k++) {
+            const inc = (0.35 + 0.7 * (k / Math.max(1, planeCount - 1))) * Math.PI * 0.75;
+            const node = k * Math.PI / planeCount;
+            const cn = Math.cos(node), sn = Math.sin(node);
+            const cp = Math.cos(inc), sp = Math.sin(inc);
+            GO.planes.push({
+                u: { x: cn, y: 0, z: -sn },
+                v: { x: cp * sn, y: -sp, z: cp * cn },
+                speed: (0.00028 + 0.0001 * (k % 3)) * (k % 2 ? -1 : 1),
+                phase: k * 0.9,
+                count: 0
+            });
+        }
+        const idxIn = [];
+        entries.forEach((entry, i) => { idxIn[i] = GO.planes[i % planeCount].count++; });
+        entries.forEach((entry, i) => {
+            const el = document.createElement('div');
+            el.className = 'g-item';
+            el.innerHTML = '<div class="g-clip"><img src="' + entry.url + '" alt="" loading="lazy" decoding="async"></div>';
+            const pl = GO.planes[i % planeCount];
+            const it = {
+                el: el, plane: i % planeCount, index: entry.index,
+                u: pl.u, v: pl.v,
+                a0: pl.phase + (idxIn[i] / Math.max(1, pl.count)) * Math.PI * 2,
+                speed: pl.speed,
+                hovered: false,
+                dx: 0, dy: 0, fx: null, fy: null, lx: null, ly: null,
+                curS: null, curO: null, lockS: null, lockO: null,
+                pres: null
+            };
+            el.addEventListener('mouseenter', () => { it.hovered = true; el.classList.add('hover'); });
+            el.addEventListener('mouseleave', () => { it.hovered = false; el.classList.remove('hover'); });
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openGalleryFullView(entry);
+            });
+            el.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                deleteGalleryItem(it.index);
+            });
+            GO.stage.appendChild(el);
+            GO.items.push(it);
+        });
+    }
+
+    function goTick(now) {
+        requestAnimationFrame(goTick);
+        if (!GO.last) GO.last = now;
+        const dt = Math.min(50, now - GO.last); GO.last = now;
+        if (!GO.active) return;
+        const r = GO.stage.getBoundingClientRect();
+        const W = r.width, H = r.height;
+        GO.viewScale += (GO.targetScale - GO.viewScale) * (1 - Math.exp(-dt / 250));
+        if (GO.targetScale === 0 && GO.viewScale < 0.001) GO.viewScale = 0;
+        GO.zoom += (GO.zoomTarget - GO.zoom) * (1 - Math.exp(-dt / 120));
+        const R = Math.max(1, Math.min(W, H) * 0.40 * GO.viewScale * GO.zoom);
+        const cx = W / 2, cy = H / 2;
+        GO.t += dt;
+        GO.ay += 0.00012 * dt;
+        const cosY = Math.cos(GO.ay), sinY = Math.sin(GO.ay);
+        const cosX = Math.cos(GO.tilt), sinX = Math.sin(GO.tilt);
+        const g = GO.canvas.getContext('2d');
+        g.clearRect(0, 0, GO.canvas.width, GO.canvas.height);
+        const fade = Math.min(1, GO.viewScale * 1.5);
+        let hoverPlane = -1;
+        for (const it of GO.items) { if (it.hovered) { hoverPlane = it.plane; break; } }
+        // 轨道环线
+        if (fade > 0.03) {
+            g.lineWidth = 1;
+            for (let pk = 0; pk < GO.planes.length; pk++) {
+                const pl = GO.planes[pk];
+                let prev = null;
+                for (let st = 0; st <= 48; st++) {
+                    const a = (st / 48) * Math.PI * 2;
+                    const ca = Math.cos(a), sa = Math.sin(a);
+                    const px = pl.u.x * ca + pl.v.x * sa;
+                    const py = pl.u.y * ca + pl.v.y * sa;
+                    const pz = pl.u.z * ca + pl.v.z * sa;
+                    const x1 = px * cosY + pz * sinY;
+                    const z1 = -px * sinY + pz * cosY;
+                    const y2 = py * cosX - z1 * sinX;
+                    const z2 = py * sinX + z1 * cosX;
+                    const persp = 1200 / (1200 + z2 * R);
+                    const X = cx + x1 * R * persp;
+                    const Y = cy + y2 * R * persp;
+                    if (prev) {
+                        const depth = (1 - (z2 + prev.z) / 2) / 2;
+                        const tw = (0.8 + 0.2 * Math.sin(now * 0.0015 + pk * 1.7)) * (pk === hoverPlane ? 2.4 : 1);
+                        g.strokeStyle = 'rgba(77,166,255,' + Math.min(0.85, (0.05 + 0.17 * depth) * fade * tw).toFixed(3) + ')';
+                        g.beginPath(); g.moveTo(prev.X, prev.Y); g.lineTo(X, Y); g.stroke();
+                    }
+                    prev = { X: X, Y: Y, z: z2 };
+                }
+            }
+        }
+        // 图片沿各自轨道运行
+        for (const it of GO.items) {
+            const a = it.a0 + it.speed * GO.t;
+            const ca = Math.cos(a), sa = Math.sin(a);
+            const px = it.u.x * ca + it.v.x * sa;
+            const py = it.u.y * ca + it.v.y * sa;
+            const pz = it.u.z * ca + it.v.z * sa;
+            const x1 = px * cosY + pz * sinY;
+            const z1 = -px * sinY + pz * cosY;
+            const y2 = py * cosX - z1 * sinX;
+            const z2 = py * sinX + z1 * cosX;
+            const persp = 1200 / (1200 + z2 * R);
+            const sx = cx + x1 * R * persp;
+            const sy = cy + y2 * R * persp;
+            const depth = (1 - z2) / 2;
+            // 悬停时冻结在原地（丝滑停下）
+            if (it.hovered) {
+                if (it.fx == null) { it.fx = (it.lx == null ? sx : it.lx); it.fy = (it.ly == null ? sy : it.ly); }
+                it.dx = it.fx - sx; it.dy = it.fy - sy;
+            } else {
+                it.fx = null;
+                if (it.dx || it.dy) {
+                    const k = Math.exp(-dt / 280);
+                    it.dx *= k; it.dy *= k;
+                    if (it.dx * it.dx + it.dy * it.dy < 0.25) { it.dx = 0; it.dy = 0; }
+                }
+            }
+            const X = sx + it.dx, Y = sy + it.dy;
+            it.lx = X; it.ly = Y;
+            const liveS = persp;
+            const liveO = (0.3 + 0.7 * depth) * fade;
+            if (it.hovered) {
+                if (it.lockS == null) { it.lockS = liveS; it.lockO = liveO; }
+                it.curS = it.lockS; it.curO = it.lockO;
+            } else {
+                it.lockS = null; it.lockO = null;
+                const k = 1 - Math.exp(-dt / 180);
+                it.curS = (it.curS == null) ? liveS : it.curS + (liveS - it.curS) * k;
+                it.curO = (it.curO == null) ? liveO : it.curO + (liveO - it.curO) * k;
+            }
+            it.pres = (it.pres == null) ? 1 : it.pres + (1 - it.pres) * (1 - Math.exp(-dt / 220));
+            it.el.style.transform = 'translate(' + X + 'px,' + Y + 'px) translate(-50%,-50%) scale(' + (it.curS * Math.max(0, it.pres)).toFixed(3) + ')';
+            it.el.style.opacity = (it.curO * Math.max(0, it.pres)).toFixed(2);
+            it.el.style.zIndex = Math.round(depth * 100);
+        }
+    }
+
+    function goSetActive(on) {
+        if (on && !GO.active) {
+            GO.active = true;
+            GO.targetScale = 1;
+            goResizeCanvas();
+        } else if (!on && GO.active) {
+            GO.active = false;
+            GO.targetScale = 0;
+        }
+    }
+
+    window.addEventListener('resize', goResizeCanvas);
+    requestAnimationFrame(goTick);
+
+    // 滚轮调整轨道球大小（仅在图库舞台内生效）
+    document.addEventListener('wheel', (e) => {
+        if (!GO.active || !GO.stage) return;
+        if (!GO.stage.contains(e.target)) return;
+        GO.zoomTarget += (e.deltaY < 0 ? 0.12 : -0.12);
+        GO.zoomTarget = Math.max(0.5, Math.min(1.6, GO.zoomTarget));
+    }, { passive: true });
+
+    // 全屏查看：圆形丝滑扩散为原尺寸矩形
+    // 交互：左键点击图片开/关玻璃放大镜，滚轮调倍率，右键退出
+    let fvMagnifierEnabled = false;
+    let fvMagnifierZoom = 2.5;
+    let fvLastPos = null;
+
+    function fvGetEls() {
+        return {
+            fv: document.getElementById('galleryFullView'),
+            lens: document.getElementById('fvMagnifierLens'),
+            magImg: document.getElementById('fvMagnifierImage'),
+            img: document.getElementById('galleryFullViewImg')
+        };
+    }
+    function fvHideMagnifier() {
+        const els = fvGetEls();
+        fvMagnifierEnabled = false;
+        if (els.lens) els.lens.classList.add('hidden');
+        if (els.fv) els.fv.classList.remove('magnifier-on');
+    }
+    function fvUpdateMagnifier(pos) {
+        const els = fvGetEls();
+        if (!fvMagnifierEnabled || !els.lens || els.lens.classList.contains('hidden')) return;
+        if (!els.fv || !els.img) return;
+        const imgRect = els.img.getBoundingClientRect();
+        if (imgRect.width === 0 || imgRect.height === 0) return;
+        const x = Math.max(0, Math.min(pos.clientX - imgRect.left, imgRect.width));
+        const y = Math.max(0, Math.min(pos.clientY - imgRect.top, imgRect.height));
+        const lensSize = 240;
+        const fvRect = els.fv.getBoundingClientRect();
+        els.lens.style.left = (pos.clientX - fvRect.left - lensSize / 2) + 'px';
+        els.lens.style.top = (pos.clientY - fvRect.top - lensSize / 2) + 'px';
+        const scaleX = els.img.naturalWidth / imgRect.width;
+        const scaleY = els.img.naturalHeight / imgRect.height;
+        els.magImg.style.width = (els.img.naturalWidth * fvMagnifierZoom) + 'px';
+        els.magImg.style.height = (els.img.naturalHeight * fvMagnifierZoom) + 'px';
+        els.magImg.style.left = (-(x * scaleX * fvMagnifierZoom) + lensSize / 2) + 'px';
+        els.magImg.style.top = (-(y * scaleY * fvMagnifierZoom) + lensSize / 2) + 'px';
+    }
+    function fvToggleMagnifier() {
+        const els = fvGetEls();
+        if (!els.lens || !els.img) return;
+        fvMagnifierEnabled = !fvMagnifierEnabled;
+        if (fvMagnifierEnabled) {
+            els.magImg.src = els.img.src;
+            els.lens.classList.remove('hidden');
+            els.fv.classList.add('magnifier-on');
+            if (fvLastPos) fvUpdateMagnifier(fvLastPos);
+        } else {
+            els.lens.classList.add('hidden');
+            els.fv.classList.remove('magnifier-on');
+        }
+    }
+
+    function fvEscape(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    let fvCurrentEntry = null;
+    function fvRenderInfo(entry) {
+        const body = document.getElementById('fvInfoBody');
+        if (!body) return;
+        const meta = (entry && entry.meta) || {};
+        const when = (entry && entry.timestamp) ? new Date(entry.timestamp) : null;
+        const pad = (n) => String(n).padStart(2, '0');
+        const fmt = (d) => d ? (d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds())) : '—';
+        let html = '';
+        if (when) html += '<div><span class="fv-label">生成时间：</span>' + fvEscape(fmt(when)) + '</div>';
+        if (meta.model) html += '<div><span class="fv-label">模型：</span>' + fvEscape(meta.model) + '</div>';
+        const params = [];
+        if (meta.width && meta.height) params.push(meta.width + '×' + meta.height);
+        if (meta.steps != null) params.push('步数 ' + meta.steps);
+        if (meta.cfg != null) params.push('CFG ' + meta.cfg);
+        if (meta.seed != null) params.push('种子 ' + meta.seed);
+        if (meta.seconds != null) params.push('耗时 ' + meta.seconds + 's');
+        if (params.length) html += '<div><span class="fv-label">参数：</span>' + fvEscape(params.join(' · ')) + '</div>';
+        html += '<div class="fv-sep"></div>';
+        html += '<div><span class="fv-label">正向提示词：</span><div style="white-space:pre-wrap;word-break:break-word">' + (meta.positive ? fvEscape(meta.positive) : '<span class="fv-label">（无记录）</span>') + '</div></div>';
+        if (meta.negative) html += '<div class="fv-sep"></div><div><span class="fv-label">负向提示词：</span><div style="white-space:pre-wrap;word-break:break-word">' + fvEscape(meta.negative) + '</div></div>';
+        body.innerHTML = html;
+    }
+
+    function openGalleryFullView(entry) {
+        const fv = document.getElementById('galleryFullView');
+        const img = document.getElementById('galleryFullViewImg');
+        // 兼容旧调用：允许直接传 url 字符串
+        if (typeof entry === 'string') entry = { url: entry, filename: 'image.png', meta: {} };
+        fvCurrentEntry = entry;
+        img.src = entry.url;
+        fvRenderInfo(entry);
+        fvMagnifierZoom = 2.5;
+        fvLastPos = null;
+        fvHideMagnifier();
+        fv.classList.remove('hidden');
+        fv.classList.add('opening');
+        requestAnimationFrame(() => requestAnimationFrame(() => fv.classList.remove('opening')));
+    }
+    function closeGalleryFullView() {
+        const fv = document.getElementById('galleryFullView');
+        fvHideMagnifier();
+        fv.classList.add('hidden');
+        fv.classList.remove('opening');
+    }
+
+    // 全屏层交互绑定：左键放大镜 / 滚轮缩放 / 右键退出
+    (function bindGalleryFullViewEvents() {
+        const fv = document.getElementById('galleryFullView');
+        const img = document.getElementById('galleryFullViewImg');
+        if (!fv || !img) return;
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fvToggleMagnifier();
+        });
+        fv.addEventListener('mousemove', (e) => {
+            fvLastPos = { clientX: e.clientX, clientY: e.clientY };
+            fvUpdateMagnifier(fvLastPos);
+        });
+        fv.addEventListener('wheel', (e) => {
+            const infoBox = document.getElementById('fvInfoBox');
+            if (infoBox && infoBox.contains(e.target)) return; // 悬浮窗内滚轮用于滚动内容
+            if (!fvMagnifierEnabled) return;
+            e.preventDefault();
+            fvLastPos = { clientX: e.clientX, clientY: e.clientY };
+            fvMagnifierZoom = Math.max(1.5, Math.min(5.0, fvMagnifierZoom + (e.deltaY > 0 ? -0.2 : 0.2)));
+            fvUpdateMagnifier(fvLastPos);
+        }, { passive: false });
+        fv.addEventListener('contextmenu', (e) => {
+            const infoBox = document.getElementById('fvInfoBox');
+            if (infoBox && infoBox.contains(e.target)) { e.preventDefault(); return; } // 悬浮窗内右键不退出
+            e.preventDefault();
+            closeGalleryFullView(); // 右键退出全屏查看
+        });
+        const dlBtn = document.getElementById('fvDownloadBtn');
+        if (dlBtn) dlBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (fvCurrentEntry) {
+                downloadImage(fvCurrentEntry.url, fvCurrentEntry.filename || 'image.png');
+            }
+        });
+    })();
+
+    document.addEventListener('keydown', (e) => {
+        const fv = document.getElementById('galleryFullView');
+        if (fv && !fv.classList.contains('hidden') && e.key === 'Escape') closeGalleryFullView();
+    });
+
     function renderGallery() {
-        const grid = document.getElementById('galleryGrid');
+        const stage = document.getElementById('galleryOrbitStage');
         const empty = document.getElementById('galleryEmpty');
+        GO.stage = stage;
+        GO.canvas = document.getElementById('galleryOrbitCanvas');
+        goResizeCanvas();
 
         if (state.gallery.length === 0) {
-            grid.innerHTML = '';
+            goSpawn([]);
+            stage.style.display = 'none';
             empty.classList.remove('hidden');
             return;
         }
 
         empty.classList.add('hidden');
-        grid.innerHTML = state.gallery.map((item, i) =>
-            `<div class="group relative aspect-square rounded-xl overflow-hidden bg-slate-800/50 border border-slate-700/50 cursor-pointer" onclick="openImagePreview('${item.url}')">
-                <img src="${item.url}" alt="${item.filename}" loading="lazy" decoding="async" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-end opacity-0 group-hover:opacity-100">
-                    <div class="w-full p-2 flex gap-1">
-                        <button aria-label="下载图片" onclick="event.stopPropagation(); downloadImage('${item.url}', '${item.filename}')"
-                            class="flex-1 py-1.5 bg-blue-500/80 hover:bg-blue-500 rounded text-xs text-white transition-colors">
-                            <i class="fas fa-download"></i>
-                        </button>
-                        <button aria-label="删除图片" onclick="event.stopPropagation(); deleteGalleryItem(${i})"
-                            class="flex-1 py-1.5 bg-red-500/80 hover:bg-red-500 rounded text-xs text-white transition-colors">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>`
-        ).join('');
+        stage.style.display = '';
+        goSpawn(state.gallery.map((item, i) => Object.assign({}, item, { index: i })));
     }
 
     function updateGalleryCount() {
