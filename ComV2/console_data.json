@@ -12,5 +12,6 @@
   "k2_lora_stack": "[{\"name\":\"loras/Detailer-KREA2.safetensors\",\"strength\":0.8},{\"name\":\"loras/Krea_2_zidiusArt_Melancholy_v2.safetensors\",\"strength\":0.8}]",
   "custom_tags": "{\"pose\":[{\"cn\":\"狗趴\",\"en\":\"doggy style\"}]}",
   "k2_selected_clip": "qwen3vl_4b_fp8_scaled.safetensors",
-  "k2_selected_vae": "VAE/qwen_image_vae.safetensors"
+  "k2_selected_vae": "VAE/qwen_image_vae.safetensors",
+  "test": "hacked"
 }
