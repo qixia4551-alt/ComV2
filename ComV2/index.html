@@ -173,8 +173,33 @@
             body.sidebar-collapsed #sidebarCollapseBtn { display: none; }
             body.sidebar-collapsed #sidebarExpandBtn { display: flex; }
         }
-        /* 清空全部按钮固定在屏幕右下角 */
-        #galleryClearBtn { position: fixed; right: 24px; bottom: 24px; z-index: 30; }
+        /* 清空全部按钮：固定在屏幕右下角的圆形垃圾桶 */
+        #galleryClearBtn {
+            position: fixed; right: 24px; bottom: 24px; z-index: 30;
+            width: 52px; height: 52px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(239, 68, 68, 0.20); color: #f87171; font-size: 17px;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            transition: all 0.25s ease; cursor: pointer;
+        }
+        #galleryClearBtn:hover { background: rgba(239, 68, 68, 0.32); }
+        /* 拖拽图片悬停到垃圾桶上方时的高亮 */
+        #galleryClearBtn.drop-hover {
+            background: rgba(239, 68, 68, 0.55);
+            transform: scale(1.18);
+            box-shadow: 0 0 24px rgba(239, 68, 68, 0.7);
+        }
+        /* 最新生成的图片：发光边框 */
+        .g-item.g-new .g-clip {
+            border-color: rgba(0, 212, 255, 0.95);
+            animation: gNewPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes gNewPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.75), 0 0 26px rgba(0, 212, 255, 0.40), 0 4px 18px rgba(0, 0, 0, 0.5); }
+            50%      { box-shadow: 0 0 18px rgba(0, 212, 255, 1),    0 0 44px rgba(0, 212, 255, 0.65), 0 4px 18px rgba(0, 0, 0, 0.5); }
+        }
+        /* 拖拽进行中的全局光标 */
+        body.go-dragging, body.go-dragging * { cursor: grabbing !important; }
         /* 空状态提示叠加在轨道球区域居中显示 */
         #galleryEmpty { position: absolute; inset: 0; }
         #galleryEmpty:not(.hidden) { display: flex; }
@@ -1152,9 +1177,8 @@
                     <p class="text-sm mt-1">生成一些图像后会显示在这里</p>
                 </div>
 
-                <button id="galleryClearBtn" onclick="confirmClearGallery()"
-                    class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl transition-all btn-hover text-sm">
-                    <i class="fas fa-trash mr-2"></i>清空全部
+                <button id="galleryClearBtn" onclick="confirmClearGallery()" aria-label="清空全部" title="清空全部">
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
         </div>
@@ -4653,7 +4677,7 @@
         entries.forEach((entry, i) => { idxIn[i] = GO.planes[i % planeCount].count++; });
         entries.forEach((entry, i) => {
             const el = document.createElement('div');
-            el.className = 'g-item';
+            el.className = 'g-item' + (entry.index === 0 ? ' g-new' : '');
             el.innerHTML = '<div class="g-clip"><img src="' + entry.url + '" alt="" loading="lazy" decoding="async"></div>';
             const pl = GO.planes[i % planeCount];
             const it = {
@@ -4661,16 +4685,63 @@
                 u: pl.u, v: pl.v,
                 a0: pl.phase + (idxIn[i] / Math.max(1, pl.count)) * Math.PI * 2,
                 speed: pl.speed,
-                hovered: false,
+                hovered: false, dragging: false, dying: false,
+                dragOffX: 0, dragOffY: 0, downX: 0, downY: 0,
                 dx: 0, dy: 0, fx: null, fy: null, lx: null, ly: null,
                 curS: null, curO: null, lockS: null, lockO: null,
                 pres: null
             };
             el.addEventListener('mouseenter', () => { it.hovered = true; el.classList.add('hover'); });
-            el.addEventListener('mouseleave', () => { it.hovered = false; el.classList.remove('hover'); });
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openGalleryFullView(entry);
+            el.addEventListener('mouseleave', () => {
+                if (it.dragging) return;
+                it.hovered = false; el.classList.remove('hover');
+            });
+            // 左键按住拖拽：拖到右下角垃圾桶松开=删除；原地松开=丝滑回轨道；几乎未移动=点击打开全貌
+            el.addEventListener('mousedown', (e) => {
+                if (e.button !== 0) return;
+                e.preventDefault(); e.stopPropagation();
+                it.downX = e.clientX; it.downY = e.clientY;
+                const sr = GO.stage.getBoundingClientRect();
+                it.dragOffX = e.clientX - sr.left - (it.lx || 0);
+                it.dragOffY = e.clientY - sr.top - (it.ly || 0);
+                it.dragging = true; it.hovered = true; el.classList.add('hover');
+                document.body.classList.add('go-dragging');
+                const onMove = (ev) => {
+                    it.fx = ev.clientX - sr.left - it.dragOffX;
+                    it.fy = ev.clientY - sr.top - it.dragOffY;
+                    const btn = document.getElementById('galleryClearBtn');
+                    if (btn) {
+                        const br = btn.getBoundingClientRect();
+                        const over = ev.clientX >= br.left - 8 && ev.clientX <= br.right + 8 && ev.clientY >= br.top - 8 && ev.clientY <= br.bottom + 8;
+                        btn.classList.toggle('drop-hover', over);
+                    }
+                };
+                const onUp = (ev) => {
+                    window.removeEventListener('mousemove', onMove);
+                    window.removeEventListener('mouseup', onUp);
+                    document.body.classList.remove('go-dragging');
+                    const btn = document.getElementById('galleryClearBtn');
+                    let over = false;
+                    if (btn) {
+                        const br = btn.getBoundingClientRect();
+                        over = ev.clientX >= br.left - 8 && ev.clientX <= br.right + 8 && ev.clientY >= br.top - 8 && ev.clientY <= br.bottom + 8;
+                        btn.classList.remove('drop-hover');
+                    }
+                    it.dragging = false;
+                    const moved = Math.hypot(ev.clientX - it.downX, ev.clientY - it.downY);
+                    if (over) {
+                        // 丢进垃圾桶：由 goTick 驱动缩小淡出后删除
+                        it.dying = true; it.dieAt = performance.now();
+                        it.hovered = false; el.classList.remove('hover');
+                    } else {
+                        // 松手回轨道：清除冻结点，偏移量由 goTick 丝滑衰减归位
+                        it.fx = null; it.fy = null;
+                        it.hovered = false; el.classList.remove('hover');
+                        if (moved < 5) openGalleryFullView(entry);
+                    }
+                };
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onUp);
             });
             el.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
@@ -4732,6 +4803,7 @@
             }
         }
         // 图片沿各自轨道运行
+        const goDead = [];
         for (const it of GO.items) {
             const a = it.a0 + it.speed * GO.t;
             const ca = Math.cos(a), sa = Math.sin(a);
@@ -4746,8 +4818,14 @@
             const sx = cx + x1 * R * persp;
             const sy = cy + y2 * R * persp;
             const depth = (1 - z2) / 2;
-            // 悬停时冻结在原地（丝滑停下）
-            if (it.hovered) {
+            // 丢进垃圾桶后：0.28s 内缩小并淡出，结束后移除
+            let dieK = 1;
+            if (it.dying) {
+                dieK = 1 - Math.min(1, (now - (it.dieAt || now)) / 280);
+                if (dieK <= 0) { goDead.push(it); continue; }
+            }
+            // 悬停时冻结在原地（丝滑停下）；dying 时保持在松手位置不滑回
+            if (it.hovered || it.dying) {
                 if (it.fx == null) { it.fx = (it.lx == null ? sx : it.lx); it.fy = (it.ly == null ? sy : it.ly); }
                 it.dx = it.fx - sx; it.dy = it.fy - sy;
             } else {
@@ -4762,7 +4840,7 @@
             it.lx = X; it.ly = Y;
             const liveS = persp;
             const liveO = (0.3 + 0.7 * depth) * fade;
-            if (it.hovered) {
+            if (it.hovered || it.dying) {
                 if (it.lockS == null) { it.lockS = liveS; it.lockO = liveO; }
                 it.curS = it.lockS; it.curO = it.lockO;
             } else {
@@ -4772,9 +4850,12 @@
                 it.curO = (it.curO == null) ? liveO : it.curO + (liveO - it.curO) * k;
             }
             it.pres = (it.pres == null) ? 1 : it.pres + (1 - it.pres) * (1 - Math.exp(-dt / 220));
-            it.el.style.transform = 'translate(' + X + 'px,' + Y + 'px) translate(-50%,-50%) scale(' + (it.curS * Math.max(0, it.pres)).toFixed(3) + ')';
-            it.el.style.opacity = (it.curO * Math.max(0, it.pres)).toFixed(2);
-            it.el.style.zIndex = Math.round(depth * 100);
+            it.el.style.transform = 'translate(' + X + 'px,' + Y + 'px) translate(-50%,-50%) scale(' + (it.curS * Math.max(0, it.pres) * dieK).toFixed(3) + ')';
+            it.el.style.opacity = (it.curO * Math.max(0, it.pres) * dieK).toFixed(2);
+            it.el.style.zIndex = it.dragging ? 120 : Math.round(depth * 100);
+        }
+        if (goDead.length) {
+            goTrashDelete(goDead.map(d => d.index));
         }
     }
 
@@ -4980,6 +5061,15 @@
             showToast('Image deleted', 'info');
         };
         showConfirm('Delete Image', 'Are you sure you want to delete this image?');
+    }
+
+    // 拖拽丢入垃圾桶：直接删除，不再弹确认（拖拽动作本身即确认）
+    function goTrashDelete(indices) {
+        indices.slice().sort((a, b) => b - a).forEach(i => state.gallery.splice(i, 1));
+        saveGallery();
+        renderGallery();
+        updateGalleryCount();
+        showToast('Image deleted', 'info');
     }
 
     function confirmClearGallery() {
