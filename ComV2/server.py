@@ -912,14 +912,22 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             for name in (body.get("names") or []):
                 safe = _safe_gallery_filename(name)
                 if not safe:
+                    # 空文件名：记录为失败，让前端知道删除未成功
+                    failed.append({"name": name, "reason": "invalid filename"})
                     continue
                 p = os.path.join(gallery_dir(), safe)
                 try:
                     if os.path.isfile(p):
                         os.remove(p)
                         removed.append(safe)
-                except Exception:
-                    failed.append(safe)
+                    else:
+                        # 文件不存在：记录为失败
+                        failed.append({"name": safe, "reason": "file not found"})
+                except Exception as e:
+                    # 详细记录异常原因
+                    import logging
+                    logging.warning(f"Failed to delete gallery file {safe}: {e}")
+                    failed.append({"name": safe, "reason": str(e)})
             self._send_json({"success": True, "removed": removed, "failed": failed})
             return
 

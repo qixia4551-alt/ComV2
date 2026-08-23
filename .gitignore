@@ -1,25 +1,40 @@
-# Examples 1:
-
-# Example 2 (Project with artifacts):
-#Compiled and build artifacts
+```
+# Compiled and binary files
 *.pyc
 __pycache__/
-*.o
-*.obj
-dist/
-build/
-#Dependencies
-.venv/
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+
+# Dependencies
 venv/
-node_modules/
-#Logs and temp files
+.venv/
+.env
+.env.local
+*.env.*
+
+# Logs and temp files
 *.log
 *.tmp
 *.swp
-#Environment
-.env
-.env.local
-.env.*
-#Editors
+
+# Editors
 .vscode/
 .idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage/
+
+# Distribution artifacts
+dist/
+build/
+*.egg
+*.whl
+```

@@ -4863,7 +4863,19 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ names })
-        }).catch(() => {});
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.failed && data.failed.length > 0) {
+                console.warn('Some files failed to delete:', data.failed);
+                const failMsg = data.failed.map(f => `${f.name}: ${f.reason}`).join(', ');
+                showToast(`部分文件删除失败：${failMsg}`, 'error');
+            }
+        })
+        .catch(err => {
+            console.error('Failed to delete gallery files:', err);
+            showToast('删除文件时发生错误', 'error');
+        });
     }
 
     // ============================================================
@@ -5336,6 +5348,35 @@
         if (nxBtn) nxBtn.addEventListener('click', (e) => { e.stopPropagation(); fvStep(1); });
         const clBtn = document.getElementById('fvCloseBtn');
         if (clBtn) clBtn.addEventListener('click', (e) => { e.stopPropagation(); closeGalleryFullView(); });
+        const delBtn = document.getElementById('fvDeleteBtn');
+        if (delBtn) delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!state.isLoggedIn) { showToast('请先登录后再删除图片', 'error'); return; }
+            if (fvCurrentEntry) {
+                // 找到当前图片在 gallery 数组中的索引
+                const list = state.gallery || [];
+                const idx = list.findIndex(g => g.url === fvCurrentEntry.url);
+                if (idx >= 0) {
+                    deleteGalleryItem(idx);
+                } else {
+                    // 如果找不到，尝试用文件名匹配
+                    const fname = fvCurrentEntry.filename || fvCurrentEntry.savedName;
+                    if (fname) {
+                        const idx2 = list.findIndex(g => (g.filename || g.savedName) === fname);
+                        if (idx2 >= 0) {
+                            deleteGalleryItem(idx2);
+                        } else {
+                            showToast('未找到该图片', 'error');
+                            return;
+                        }
+                    } else {
+                        showToast('未找到该图片', 'error');
+                        return;
+                    }
+                }
+                closeGalleryFullView();
+            }
+        });
     })();
 
     // 「用当前配置生成」：把该图的模型/VAE/LoRA/参数/提示词回填到对应面板并立即生成
