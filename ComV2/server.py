@@ -419,36 +419,43 @@ def fetch_latest_commit():
     }
 
 
-def download_and_apply_update():
-    """Download the latest repo zip from GitHub and overwrite app files.
+def apply_zip_bytes(zip_bytes, latest=None):
+    """Overwrite app files from an in-memory zip archive.
 
+    Supports three archive layouts: GitHub repo zip (Root/ComV2/file),
+    folder zip (ComV2/file) and flat zip (file at archive root).
     Protected files (user data / local config) are never touched.
-    Returns (updated_files, skipped_files, latest_commit_info).
+    Returns (updated_files, skipped_files).
     """
     import io
     import zipfile
-
-    latest = fetch_latest_commit()
-    zip_url = (
-        f"https://codeload.github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
-        f"/zip/refs/heads/{UPDATE_BRANCH}"
-    )
-    req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
-    with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
-        zip_bytes = r.read()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     prefix = UPDATE_APP_SUBDIR + "/"
     updated, skipped = [], []
 
     with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
-        for name in zf.namelist():
-            if name.endswith("/") or "/" not in name:
+        bad = zf.testzip()
+        if bad is not None:
+            raise RuntimeError(f"压缩包已损坏（{bad}），更新中止")
+        names = [n for n in zf.namelist() if not n.endswith("/")]
+        # Detect archive layout: if any entry sits under a ComV2/ folder
+        # (repo zip or folder zip), only those entries are applied;
+        # otherwise treat it as a flat zip of app files.
+        def _stripped(n):
+            return n.split("/", 1)[1] if "/" in n else n
+        has_prefixed = any(
+            n.startswith(prefix) or _stripped(n).startswith(prefix) for n in names
+        )
+        for name in names:
+            if name.startswith(prefix):
+                rel = name[len(prefix):]
+            elif _stripped(name).startswith(prefix) and "/" in name:
+                rel = _stripped(name)[len(prefix):]
+            elif not has_prefixed and "/" not in name:
+                rel = name  # flat zip: files directly at archive root
+            else:
                 continue
-            inner = name.split("/", 1)[1]  # strip the zip's root folder
-            if not inner.startswith(prefix):
-                continue
-            rel = inner[len(prefix):]
             if not rel:
                 continue
             if "/" in rel or rel in UPDATE_PROTECTED_FILES:
@@ -462,10 +469,77 @@ def download_and_apply_update():
             updated.append(rel)
 
     if not updated:
-        raise RuntimeError(f"压缩包中未找到 {UPDATE_APP_SUBDIR}/ 下的应用文件，更新中止")
+        raise RuntimeError(
+            f"压缩包中未找到可替换的应用文件（{UPDATE_APP_SUBDIR}/ 下或顶层文件），更新中止"
+        )
+    return updated, skipped
 
+
+def download_and_apply_update():
+    """Download the latest repo zip from GitHub and overwrite app files.
+
+    Protected files (user data / local config) are never touched.
+    Returns (updated_files, skipped_files, latest_commit_info).
+    """
+    latest = fetch_latest_commit()
+    zip_url = (
+        f"https://codeload.github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
+        f"/zip/refs/heads/{UPDATE_BRANCH}"
+    )
+    req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
+    with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
+        zip_bytes = r.read()
+
+    updated, skipped = apply_zip_bytes(zip_bytes, latest)
     save_local_version(latest["sha"])
     return updated, skipped, latest
+
+
+# ------------------------------------------------------------
+# 图库本地文件夹：生成的图片下载并重命名保存到 ./图库，
+# 页面删除图片时联动删除该文件夹中的对应文件
+# ------------------------------------------------------------
+GALLERY_DIR_NAME = "图库"
+
+
+def gallery_dir():
+    d = os.path.join(os.path.dirname(os.path.abspath(__file__)), GALLERY_DIR_NAME)
+    os.makedirs(d, exist_ok=True)
+    return d
+
+
+def _safe_gallery_filename(name):
+    """Only allow plain file names inside the gallery dir (no traversal)."""
+    name = os.path.basename(name or "").strip()
+    name = name.replace("/", "_").replace("\\", "_")
+    return name or None
+
+
+def save_gallery_image(filename, subfolder, img_type, comfyui_url=None):
+    """Download one generated image from ComfyUI and save it renamed
+    into the local 图库 folder (auto-created). Returns saved file name."""
+    import datetime
+    # The frontend may send the relative same-origin proxy path (/comfy),
+    # which urllib cannot open — fall back to backend auto-detection.
+    if not comfyui_url or not comfyui_url.startswith(("http://", "https://")):
+        comfyui_url = None
+    base = (comfyui_url or resolve_comfy_url()).rstrip("/")
+    url = (base + "/view?filename=" + urllib.parse.quote(filename or "") +
+           "&subfolder=" + urllib.parse.quote(subfolder or "") +
+           "&type=" + urllib.parse.quote(img_type or "output"))
+    with urllib.request.urlopen(url, timeout=60) as r:
+        data = r.read()
+    ext = os.path.splitext(filename or "")[1] or ".png"
+    stem = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    target_dir = gallery_dir()
+    cand = stem + ext
+    n = 2
+    while os.path.exists(os.path.join(target_dir, cand)):
+        cand = f"{stem}_{n}{ext}"
+        n += 1
+    with open(os.path.join(target_dir, cand), "wb") as f:
+        f.write(data)
+    return cand
 
 
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
@@ -792,7 +866,62 @@ class ConsoleHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         query = urllib.parse.parse_qs(parsed.query)
+
+        # API: Apply update from a locally uploaded zip (raw binary body).
+        # Must run before the JSON body read, since the payload is binary.
+        if path == "/api/update/zip":
+            try:
+                length = int(self.headers.get("Content-Length", 0))
+                if length <= 0:
+                    self._send_error_json("没有收到压缩包数据", 400)
+                    return
+                if length > 300 * 1024 * 1024:
+                    self._send_error_json("压缩包过大（上限 300MB）", 413)
+                    return
+                zip_bytes = self.rfile.read(length)
+                updated, skipped = apply_zip_bytes(zip_bytes)
+                self._send_json({
+                    "success": True,
+                    "updated_files": updated,
+                    "skipped_files": skipped,
+                    "message": "压缩包更新完成，请刷新页面加载新版前端（如后端有更新需重启服务器）",
+                })
+            except Exception as e:
+                self._send_error_json(f"压缩包更新失败: {e}", 502)
+            return
+
         body = self._read_body()
+
+        # API: Save a generated image into the local 图库 folder (renamed).
+        if path == "/api/gallery/save":
+            try:
+                saved = save_gallery_image(
+                    body.get("filename", ""),
+                    body.get("subfolder", ""),
+                    body.get("type", "output"),
+                    comfyui_url=body.get("comfyui_url") or None,
+                )
+                self._send_json({"success": True, "saved_name": saved})
+            except Exception as e:
+                self._send_error_json(f"保存到图库文件夹失败: {e}", 502)
+            return
+
+        # API: Remove files from the local 图库 folder (linked delete).
+        if path == "/api/gallery/remove":
+            removed, failed = [], []
+            for name in (body.get("names") or []):
+                safe = _safe_gallery_filename(name)
+                if not safe:
+                    continue
+                p = os.path.join(gallery_dir(), safe)
+                try:
+                    if os.path.isfile(p):
+                        os.remove(p)
+                        removed.append(safe)
+                except Exception:
+                    failed.append(safe)
+            self._send_json({"success": True, "removed": removed, "failed": failed})
+            return
 
         # Generic ComfyUI passthrough proxy (POST), for remote / tunnel access.
         if path == "/comfy" or path.startswith("/comfy/"):
