@@ -1,1 +1,21 @@
-Nothing should be ignored based on the provided file changes. The only modified file is 'ComV2/server.py', which appears to be a source code file and should not be added to .gitignore.
+```
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+```
