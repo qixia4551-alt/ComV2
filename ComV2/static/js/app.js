@@ -962,9 +962,13 @@
             renderUiModeChoices();
         }
 
-        // 图库面板激活时启动球形轨道动画，离开时暂停
+        // 图库面板激活时启动球形轨道动画并渲染图库，离开时暂停
         if (typeof goSetActive === 'function') {
             goSetActive(panel === 'gallery');
+        }
+        // 切换到图库面板时才渲染图库球，避免初始化时加载图片导致卡顿
+        if (panel === 'gallery' && typeof renderGallery === 'function') {
+            renderGallery();
         }
     }
 
@@ -3073,7 +3077,8 @@
                 state.gallery = [];
             }
         }
-        renderGallery();
+        // 不在初始化时渲染图库，只在切换到图库面板时渲染
+        // renderGallery();
     }
 
     function saveGallery() {
