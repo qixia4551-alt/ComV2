@@ -846,6 +846,10 @@
             else host.insertBefore(stage, host.firstChild);
         }
         setTimeout(() => { if (typeof goResizeCanvas === 'function') goResizeCanvas(); }, 60);
+        // 切换到登录界面时，使用简化模式（不加载图片），避免卡顿
+        if (toLogin && typeof goSpawn === 'function' && GO.items && GO.items.length > 0) {
+            goSpawn(state.gallery.map((item, i) => Object.assign({}, item, { index: i })), true);
+        }
     }
 
     // ============================================================
@@ -3181,7 +3185,7 @@
         GO.canvas.height = Math.max(1, Math.round(r.height));
     }
 
-    function goSpawn(entries) {
+    function goSpawn(entries, skipImageLoad = false) {
         GO.items.forEach(it => it.el.remove());
         GO.items = [];
         const n = Math.max(1, entries.length);
@@ -3209,20 +3213,26 @@
             const h1 = Math.floor(Math.random() * 360);
             const h2 = (h1 + 70 + Math.floor(Math.random() * 140)) % 360;
             const h3 = (h2 + 50) % 360;
-            el.innerHTML = '<div class="g-clip" style="background: radial-gradient(circle at 32% 28%, hsl(' + h1 + ', 90%, 66%), hsl(' + h2 + ', 85%, 45%) 55%, hsl(' + h3 + ', 80%, 26%))">'
-                + '<img class="g-loading" src="' + entry.url + '" alt="" loading="lazy" decoding="async"></div>';
-            const gimg = el.querySelector('img');
-            gimg.addEventListener('load', () => {
-                gimg.classList.remove('g-loading');
-                if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
-            });
-            gimg.addEventListener('error', () => {
-                if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
-            }); // 加载失败保留渐变占位球，仅计入加载完成
-            if (gimg.complete) {
-                if (gimg.naturalWidth > 0) gimg.classList.remove('g-loading');
-            } else if (!bootState.hidden) {
-                bootState.pending++; gimg.dataset.bootCounted = '1'; bootStatus();
+            // skipImageLoad=true 时（登录界面），只创建空 div，不加载图片，避免卡顿
+            if (skipImageLoad) {
+                el.innerHTML = '<div class="g-clip" style="background: radial-gradient(circle at 32% 28%, hsl(' + h1 + ', 90%, 66%), hsl(' + h2 + ', 85%, 45%) 55%, hsl(' + h3 + ', 80%, 26%))">'
+                    + '<div class="g-placeholder"></div></div>';
+            } else {
+                el.innerHTML = '<div class="g-clip" style="background: radial-gradient(circle at 32% 28%, hsl(' + h1 + ', 90%, 66%), hsl(' + h2 + ', 85%, 45%) 55%, hsl(' + h3 + ', 80%, 26%))">'
+                    + '<img class="g-loading" src="' + entry.url + '" alt="" loading="lazy" decoding="async"></div>';
+                const gimg = el.querySelector('img');
+                gimg.addEventListener('load', () => {
+                    gimg.classList.remove('g-loading');
+                    if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
+                });
+                gimg.addEventListener('error', () => {
+                    if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
+                }); // 加载失败保留渐变占位球，仅计入加载完成
+                if (gimg.complete) {
+                    if (gimg.naturalWidth > 0) gimg.classList.remove('g-loading');
+                } else if (!bootState.hidden) {
+                    bootState.pending++; gimg.dataset.bootCounted = '1'; bootStatus();
+                }
             }
             const pl = GO.planes[i % planeCount];
             const it = {

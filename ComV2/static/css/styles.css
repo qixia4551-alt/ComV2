@@ -221,6 +221,12 @@
             box-shadow: 0 0 22px rgba(0, 212, 255, 0.35), 0 8px 24px rgba(0, 0, 0, 0.55);
         }
         .g-item.hover img { width: 178%; height: 178%; } /* 悬停时展示原矩形画面 */
+        /* 登录界面简化模式：占位球样式（不加载图片时使用） */
+        .g-placeholder {
+            position: absolute; inset: 0;
+            background: inherit;
+            border-radius: 50%;
+        }
         #galleryFullView {
             position: fixed; inset: 0; z-index: 50;
             background: rgba(2, 6, 18, 0.88);
