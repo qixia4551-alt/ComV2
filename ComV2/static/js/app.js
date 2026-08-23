@@ -3146,12 +3146,18 @@
     // 首屏加载门控：图库球图片全部加载完成（或超时兜底）后
     // 才淡出遮罩、露出登录页允许输入密码
     // ============================================================
-    const bootState = { pending: 0, done: 0, hidden: false };
+    const bootState = { pending: 0, done: 0, hidden: false, total: 0 };
 
     function bootStatus() {
         const el = document.getElementById('bootStatus');
-        if (el && bootState.pending > 0) {
-            el.textContent = '正在加载图库图片… ' + bootState.done + ' / ' + (bootState.done + bootState.pending);
+        if (el) {
+            if (bootState.pending > 0 || bootState.done > 0) {
+                const total = bootState.total || (bootState.done + bootState.pending);
+                const percent = total > 0 ? Math.round((bootState.done / total) * 100) : 0;
+                el.textContent = `正在加载图库图片… ${bootState.done} / ${total} (${percent}%)`;
+            } else {
+                el.textContent = '正在加载资源…';
+            }
         }
     }
 
