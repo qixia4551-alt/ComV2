@@ -368,6 +368,16 @@ UPDATE_PROTECTED_FILES = {
     "version.json",
 }
 
+# Protected directories (user data that should never be overwritten)
+UPDATE_PROTECTED_DIRS = {
+    "图库",  # User gallery directory
+}
+
+# Directories that SHOULD be updated (subdirectories of the app)
+UPDATE_INCLUDED_DIRS = {
+    "static",  # Static assets (css, js, html)
+}
+
 VERSION_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "version.json")
 
 
@@ -483,9 +493,19 @@ def apply_zip_bytes(zip_bytes, latest=None):
                 continue
             if not rel:
                 continue
-            if "/" in rel or rel in UPDATE_PROTECTED_FILES:
-                # Only top-level app files are updated; nested paths and
-                # protected user-data files are skipped.
+            
+            # Check if file is in a protected directory (like 图库)
+            rel_parts = rel.split("/")
+            is_protected_dir = any(part in UPDATE_PROTECTED_DIRS for part in rel_parts[:-1])
+            
+            # Check if file is in an included subdirectory (like static)
+            is_included_dir = any(rel.startswith(dir_name + "/") for dir_name in UPDATE_INCLUDED_DIRS)
+            
+            # Skip conditions:
+            # 1. Protected files (console_data.json, password.txt, etc.)
+            # 2. Protected directories (图库)
+            # 3. Nested paths that are NOT in included directories
+            if rel in UPDATE_PROTECTED_FILES or is_protected_dir or ("/" in rel and not is_included_dir):
                 skipped.append(rel)
                 continue
             target = os.path.join(base_dir, rel)
