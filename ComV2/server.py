@@ -350,7 +350,8 @@ def scan_models(models_dir):
 
 
 # ============================================================
-# Self-update from GitHub
+# Self-update from GitHub - REWRITTEN MECHANISM
+# Compares file hashes between local and remote to detect actual changes
 # ============================================================
 UPDATE_REPO_OWNER = "qixia4551-alt"
 UPDATE_REPO_NAME = "ComV2"
@@ -411,151 +412,333 @@ def save_local_version(commit):
         return False
 
 
-def fetch_latest_commit():
-    """Query the GitHub API for the latest commit on the update branch.
+def get_local_file_hash(filepath):
+    """Calculate SHA-256 hash of a local file."""
+    import hashlib
+    sha256 = hashlib.sha256()
+    try:
+        with open(filepath, "rb") as f:
+            for chunk in iter(lambda: f.read(8192), b""):
+                sha256.update(chunk)
+        return sha256.hexdigest()
+    except Exception:
+        return None
+
+
+def fetch_remote_tree():
+    """Fetch the complete file tree with SHA hashes from GitHub.
     
-    Tries GitHub API first, if it fails (e.g., network issues in China),
-    falls back to using ghproxy mirror.
+    Returns a dict: {relative_path: sha_hash}
+    Uses GitHub API first, falls back to ghproxy mirror.
     """
-    # Try GitHub API directly first
-    url = f"https://api.github.com/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/commits/{UPDATE_BRANCH}"
+    # First get the latest commit SHA
+    commit_info = fetch_latest_commit()
+    commit_sha = commit_info["sha"]
+    
+    # Fetch the tree recursively (with recursive=1)
+    url = f"https://api.github.com/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/git/trees/{commit_sha}?recursive=1"
     req = urllib.request.Request(url, headers={
         "User-Agent": "ComfyUI-Console-Updater",
         "Accept": "application/vnd.github+json",
     })
+    
     try:
         with urllib.request.urlopen(req, timeout=UPDATE_CHECK_TIMEOUT) as r:
             data = json.loads(r.read().decode("utf-8"))
-        commit = data.get("commit", {})
-        return {
-            "sha": data.get("sha", ""),
-            "message": commit.get("message", ""),
-            "date": commit.get("committer", {}).get("date", ""),
-            "url": data.get("html_url", ""),
-        }
     except Exception as e:
-        # If GitHub API fails, try using ghproxy mirror
+        # Try mirror
         try:
-            mirror_url = f"https://ghp.ci/api/v1/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/commits/{UPDATE_BRANCH}"
+            mirror_url = f"https://ghp.ci/api/v1/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/git/trees/{commit_sha}?recursive=1"
             req_mirror = urllib.request.Request(mirror_url, headers={
                 "User-Agent": "ComfyUI-Console-Updater",
                 "Accept": "application/vnd.github+json",
             })
             with urllib.request.urlopen(req_mirror, timeout=UPDATE_CHECK_TIMEOUT) as r:
                 data = json.loads(r.read().decode("utf-8"))
-            commit = data.get("commit", {})
-            return {
-                "sha": data.get("sha", ""),
-                "message": commit.get("message", ""),
-                "date": commit.get("committer", {}).get("date", ""),
-                "url": data.get("html_url", ""),
-            }
         except Exception as e2:
-            raise RuntimeError(f"检查更新失败：GitHub API 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}")
+            raise RuntimeError(f"获取远程文件列表失败：GitHub API 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}")
+    
+    # Build path -> sha mapping, filtering to only ComV2/ files
+    tree = {}
+    prefix = UPDATE_APP_SUBDIR + "/"
+    for item in data.get("tree", []):
+        if item.get("type") != "blob":  # Only files, not directories
+            continue
+        path = item.get("path", "")
+        sha = item.get("sha", "")
+        
+        # Check if file is under ComV2/ directory
+        if path.startswith(prefix):
+            rel_path = path[len(prefix):]
+            tree[rel_path] = sha
+        elif "/" not in path:
+            # Files at root level (if any)
+            tree[path] = sha
+    
+    return tree, commit_info
 
 
-def apply_zip_bytes(zip_bytes, latest=None):
-    """Overwrite app files from an in-memory zip archive.
+def compare_local_with_remote(remote_tree):
+    """Compare local files with remote tree.
+    
+    Returns:
+        - files_to_update: list of (relative_path, remote_sha) for files that need updating
+        - files_to_delete: list of relative_path for local files that no longer exist remotely
+        - up_to_date: bool indicating if everything is current
+    """
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    files_to_update = []
+    
+    # Check each remote file
+    for rel_path, remote_sha in remote_tree.items():
+        # Skip protected files
+        if rel_path in UPDATE_PROTECTED_FILES:
+            continue
+        
+        # Skip files in protected directories
+        rel_parts = rel_path.split("/")
+        is_protected_dir = any(part in UPDATE_PROTECTED_DIRS for part in rel_parts[:-1])
+        if is_protected_dir:
+            continue
+        
+        # Skip nested paths not in included directories
+        is_included_dir = any(rel_path.startswith(dir_name + "/") for dir_name in UPDATE_INCLUDED_DIRS)
+        if "/" in rel_path and not is_included_dir:
+            continue
+        
+        # Get local file hash
+        local_path = os.path.join(base_dir, rel_path)
+        if os.path.isfile(local_path):
+            local_sha = get_local_file_hash(local_path)
+            # Compare hashes
+            if local_sha != remote_sha:
+                files_to_update.append((rel_path, remote_sha))
+        else:
+            # File doesn't exist locally, needs to be added
+            files_to_update.append((rel_path, remote_sha))
+    
+    # Check for local files that no longer exist in remote
+    # (Only check files in the static directory and root level)
+    files_to_delete = []
+    for root, dirs, files in os.walk(base_dir):
+        # Skip protected directories
+        rel_root = os.path.relpath(root, base_dir)
+        if rel_root == ".":
+            rel_root = ""
+        
+        # Check if we're in a protected directory
+        if any(part in UPDATE_PROTECTED_DIRS for part in rel_root.split(os.sep)):
+            continue
+        
+        # Only check static directory and root level
+        if rel_root and not any(rel_root.startswith(dir_name) for dir_name in UPDATE_INCLUDED_DIRS):
+            continue
+        
+        for filename in files:
+            if filename in UPDATE_PROTECTED_FILES:
+                continue
+            if filename.endswith(".pyc") or filename == "__pycache__":
+                continue
+                
+            local_rel_path = os.path.join(rel_root, filename).replace("\\", "/")
+            if local_rel_path.startswith("./"):
+                local_rel_path = local_rel_path[2:]
+            
+            # Check if this file exists in remote tree
+            if local_rel_path not in remote_tree:
+                # This might be a user-created file, be conservative
+                # Only mark for deletion if it's in static/ directory
+                if local_rel_path.startswith("static/"):
+                    files_to_delete.append(local_rel_path)
+    
+    up_to_date = len(files_to_update) == 0
+    
+    return files_to_update, files_to_delete, up_to_date
 
-    Supports three archive layouts: GitHub repo zip (Root/ComV2/file),
-    folder zip (ComV2/file) and flat zip (file at archive root).
-    Protected files (user data / local config) are never touched.
-    Returns (updated_files, skipped_files).
+
+def download_and_apply_update_v2():
+    """Download and apply updates by comparing file hashes.
+    
+    This new mechanism:
+    1. Fetches the complete file tree from GitHub with SHA hashes
+    2. Compares local file hashes with remote hashes
+    3. Only downloads files that have actually changed
+    4. Provides accurate reporting of what was updated
+    
+    Returns dict with:
+        - success: bool
+        - commit: str (new commit SHA)
+        - updated_files: list of updated file paths
+        - deleted_files: list of deleted file paths
+        - skipped_files: list of skipped (protected) files
+        - message: str
+        - was_up_to_date: bool
     """
     import io
     import zipfile
-
+    
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    prefix = UPDATE_APP_SUBDIR + "/"
-    updated, skipped = [], []
-
-    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
-        bad = zf.testzip()
-        if bad is not None:
-            raise RuntimeError(f"压缩包已损坏（{bad}），更新中止")
-        names = [n for n in zf.namelist() if not n.endswith("/")]
-        # Detect archive layout: if any entry sits under a ComV2/ folder
-        # (repo zip or folder zip), only those entries are applied;
-        # otherwise treat it as a flat zip of app files.
-        def _stripped(n):
-            return n.split("/", 1)[1] if "/" in n else n
-        has_prefixed = any(
-            n.startswith(prefix) or _stripped(n).startswith(prefix) for n in names
-        )
-        for name in names:
-            if name.startswith(prefix):
-                rel = name[len(prefix):]
-            elif _stripped(name).startswith(prefix) and "/" in name:
-                rel = _stripped(name)[len(prefix):]
-            elif not has_prefixed and "/" not in name:
-                rel = name  # flat zip: files directly at archive root
-            else:
-                continue
-            if not rel:
-                continue
-            
-            # Check if file is in a protected directory (like 图库)
-            rel_parts = rel.split("/")
-            is_protected_dir = any(part in UPDATE_PROTECTED_DIRS for part in rel_parts[:-1])
-            
-            # Check if file is in an included subdirectory (like static)
-            is_included_dir = any(rel.startswith(dir_name + "/") for dir_name in UPDATE_INCLUDED_DIRS)
-            
-            # Skip conditions:
-            # 1. Protected files (console_data.json, password.txt, etc.)
-            # 2. Protected directories (图库)
-            # 3. Nested paths that are NOT in included directories
-            if rel in UPDATE_PROTECTED_FILES or is_protected_dir or ("/" in rel and not is_included_dir):
-                skipped.append(rel)
-                continue
-            target = os.path.join(base_dir, rel)
-            with zf.open(name) as src, open(target, "wb") as dst:
-                dst.write(src.read())
-            updated.append(rel)
-
-    if not updated:
-        raise RuntimeError(
-            f"压缩包中未找到可替换的应用文件（{UPDATE_APP_SUBDIR}/ 下或顶层文件），更新中止"
-        )
-    return updated, skipped
-
-
-def download_and_apply_update():
-    """Download the latest repo zip from GitHub and overwrite app files.
-
-    Protected files (user data / local config) are never touched.
-    Returns (updated_files, skipped_files, latest_commit_info).
     
-    Tries GitHub codeload first, if it fails (e.g., network issues in China),
-    falls back to using ghproxy mirror.
-    """
-    latest = fetch_latest_commit()
+    # Step 1: Fetch remote tree with hashes
+    print("[Update] Fetching remote file tree...")
+    try:
+        remote_tree, commit_info = fetch_remote_tree()
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"获取远程文件列表失败：{e}",
+            "was_up_to_date": False
+        }
     
-    # Try GitHub codeload first
+    # Step 2: Compare local with remote
+    print("[Update] Comparing local files with remote...")
+    files_to_update, files_to_delete, up_to_date = compare_local_with_remote(remote_tree)
+    
+    if up_to_date:
+        print("[Update] All files are up to date!")
+        return {
+            "success": True,
+            "commit": commit_info["sha"],
+            "updated_files": [],
+            "deleted_files": [],
+            "skipped_files": [],
+            "message": "已是最新版本，无需更新",
+            "was_up_to_date": True
+        }
+    
+    print(f"[Update] Found {len(files_to_update)} files to update")
+    print(f"[Update] Found {len(files_to_delete)} files to delete")
+    
+    # Step 3: Download the zip archive
+    print("[Update] Downloading latest code...")
+    latest = commit_info
     zip_url = (
         f"https://codeload.github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
         f"/zip/refs/heads/{UPDATE_BRANCH}"
     )
+    
     try:
         req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
         with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
             zip_bytes = r.read()
     except Exception as e:
-        # If GitHub codeload fails, try using ghproxy mirror
-        mirror_zip_url = (
-            f"https://ghp.ci/https://github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
-            f"/archive/refs/heads/{UPDATE_BRANCH}.zip"
-        )
+        # Try mirror
         try:
+            mirror_zip_url = (
+                f"https://ghp.ci/https://github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
+                f"/archive/refs/heads/{UPDATE_BRANCH}.zip"
+            )
             req_mirror = urllib.request.Request(mirror_zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
             with urllib.request.urlopen(req_mirror, timeout=UPDATE_ZIP_TIMEOUT) as r:
                 zip_bytes = r.read()
         except Exception as e2:
-            raise RuntimeError(f"下载更新失败：GitHub 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}")
-
-    updated, skipped = apply_zip_bytes(zip_bytes, latest)
+            return {
+                "success": False,
+                "error": f"下载更新失败：GitHub 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}",
+                "was_up_to_date": False
+            }
+    
+    # Step 4: Extract and apply only the files that need updating
+    print("[Update] Applying updates...")
+    updated_files = []
+    skipped_files = []
+    
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        bad = zf.testzip()
+        if bad is not None:
+            return {
+                "success": False,
+                "error": f"压缩包已损坏（{bad}），更新中止",
+                "was_up_to_date": False
+            }
+        
+        # Build a map of path -> zip_entry_name
+        path_to_zip = {}
+        prefix = UPDATE_APP_SUBDIR + "/"
+        for name in zf.namelist():
+            if name.endswith("/"):
+                continue
+            
+            def _stripped(n):
+                return n.split("/", 1)[1] if "/" in n else n
+            
+            if name.startswith(prefix):
+                rel = name[len(prefix):]
+            elif _stripped(name).startswith(prefix) and "/" in name:
+                rel = _stripped(name)[len(prefix):]
+            elif "/" not in name:
+                rel = name
+            else:
+                continue
+            
+            if rel:
+                path_to_zip[rel] = name
+        
+        # Update only files that need updating
+        for rel_path, remote_sha in files_to_update:
+            if rel_path in path_to_zip:
+                zip_entry = path_to_zip[rel_path]
+                target = os.path.join(base_dir, rel_path)
+                
+                # Ensure directory exists
+                target_dir = os.path.dirname(target)
+                if target_dir and not os.path.exists(target_dir):
+                    os.makedirs(target_dir, exist_ok=True)
+                
+                # Extract file
+                with zf.open(zip_entry) as src, open(target, "wb") as dst:
+                    dst.write(src.read())
+                
+                updated_files.append(rel_path)
+                print(f"  ✓ Updated: {rel_path}")
+            else:
+                skipped_files.append(rel_path)
+                print(f"  ⚠ Skipped (not in zip): {rel_path}")
+        
+        # Delete files that no longer exist in remote
+        for rel_path in files_to_delete:
+            target = os.path.join(base_dir, rel_path)
+            if os.path.isfile(target):
+                try:
+                    os.remove(target)
+                    print(f"  🗑 Deleted: {rel_path}")
+                except Exception as e:
+                    print(f"  ⚠ Failed to delete {rel_path}: {e}")
+    
+    # Step 5: Save version info
     save_local_version(latest["sha"])
-    return updated, skipped, latest
+    
+    message = f"✓ 更新成功！已更新 {len(updated_files)} 个文件"
+    if files_to_delete:
+        message += f"，删除 {len(files_to_delete)} 个文件"
+    message += "。请刷新页面加载新版前端（如后端有更新需重启服务器）"
+    
+    return {
+        "success": True,
+        "commit": latest["sha"],
+        "updated_files": updated_files,
+        "deleted_files": files_to_delete,
+        "skipped_files": skipped_files,
+        "message": message,
+        "was_up_to_date": False
+    }
+
+
+def download_and_apply_update():
+    """Legacy update function - now uses the new v2 mechanism.
+    
+    Kept for backward compatibility with existing API calls.
+    """
+    result = download_and_apply_update_v2()
+    
+    if result["success"]:
+        return (
+            result["updated_files"],
+            result["skipped_files"],
+            {"sha": result["commit"], "message": "", "date": "", "url": ""}
+        )
+    else:
+        raise RuntimeError(result.get("error", "更新失败"))
 
 
 # ------------------------------------------------------------
