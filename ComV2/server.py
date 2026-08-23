@@ -402,21 +402,46 @@ def save_local_version(commit):
 
 
 def fetch_latest_commit():
-    """Query the GitHub API for the latest commit on the update branch."""
+    """Query the GitHub API for the latest commit on the update branch.
+    
+    Tries GitHub API first, if it fails (e.g., network issues in China),
+    falls back to using ghproxy mirror.
+    """
+    # Try GitHub API directly first
     url = f"https://api.github.com/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/commits/{UPDATE_BRANCH}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "ComfyUI-Console-Updater",
         "Accept": "application/vnd.github+json",
     })
-    with urllib.request.urlopen(req, timeout=UPDATE_CHECK_TIMEOUT) as r:
-        data = json.loads(r.read().decode("utf-8"))
-    commit = data.get("commit", {})
-    return {
-        "sha": data.get("sha", ""),
-        "message": commit.get("message", ""),
-        "date": commit.get("committer", {}).get("date", ""),
-        "url": data.get("html_url", ""),
-    }
+    try:
+        with urllib.request.urlopen(req, timeout=UPDATE_CHECK_TIMEOUT) as r:
+            data = json.loads(r.read().decode("utf-8"))
+        commit = data.get("commit", {})
+        return {
+            "sha": data.get("sha", ""),
+            "message": commit.get("message", ""),
+            "date": commit.get("committer", {}).get("date", ""),
+            "url": data.get("html_url", ""),
+        }
+    except Exception as e:
+        # If GitHub API fails, try using ghproxy mirror
+        try:
+            mirror_url = f"https://ghp.ci/api/v1/repos/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}/commits/{UPDATE_BRANCH}"
+            req_mirror = urllib.request.Request(mirror_url, headers={
+                "User-Agent": "ComfyUI-Console-Updater",
+                "Accept": "application/vnd.github+json",
+            })
+            with urllib.request.urlopen(req_mirror, timeout=UPDATE_CHECK_TIMEOUT) as r:
+                data = json.loads(r.read().decode("utf-8"))
+            commit = data.get("commit", {})
+            return {
+                "sha": data.get("sha", ""),
+                "message": commit.get("message", ""),
+                "date": commit.get("committer", {}).get("date", ""),
+                "url": data.get("html_url", ""),
+            }
+        except Exception as e2:
+            raise RuntimeError(f"检查更新失败：GitHub API 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}")
 
 
 def apply_zip_bytes(zip_bytes, latest=None):
@@ -480,15 +505,33 @@ def download_and_apply_update():
 
     Protected files (user data / local config) are never touched.
     Returns (updated_files, skipped_files, latest_commit_info).
+    
+    Tries GitHub codeload first, if it fails (e.g., network issues in China),
+    falls back to using ghproxy mirror.
     """
     latest = fetch_latest_commit()
+    
+    # Try GitHub codeload first
     zip_url = (
         f"https://codeload.github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
         f"/zip/refs/heads/{UPDATE_BRANCH}"
     )
-    req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
-    with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
-        zip_bytes = r.read()
+    try:
+        req = urllib.request.Request(zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
+        with urllib.request.urlopen(req, timeout=UPDATE_ZIP_TIMEOUT) as r:
+            zip_bytes = r.read()
+    except Exception as e:
+        # If GitHub codeload fails, try using ghproxy mirror
+        mirror_zip_url = (
+            f"https://ghp.ci/https://github.com/{UPDATE_REPO_OWNER}/{UPDATE_REPO_NAME}"
+            f"/archive/refs/heads/{UPDATE_BRANCH}.zip"
+        )
+        try:
+            req_mirror = urllib.request.Request(mirror_zip_url, headers={"User-Agent": "ComfyUI-Console-Updater"})
+            with urllib.request.urlopen(req_mirror, timeout=UPDATE_ZIP_TIMEOUT) as r:
+                zip_bytes = r.read()
+        except Exception as e2:
+            raise RuntimeError(f"下载更新失败：GitHub 和镜像源均无法访问。原始错误：{e}，镜像源错误：{e2}")
 
     updated, skipped = apply_zip_bytes(zip_bytes, latest)
     save_local_version(latest["sha"])
