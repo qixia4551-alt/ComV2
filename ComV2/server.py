@@ -697,14 +697,45 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             return {}
 
     def _serve_file(self, filepath):
-        """Serve a static file."""
+        """Serve a static file. Supports thumbnail generation for gallery images."""
+        # Check if this is a gallery image request with thumbnail parameter
+        parsed = urllib.parse.urlparse(self.path)
+        query = urllib.parse.parse_qs(parsed.query)
+        is_thumb = query.get('thumb', ['0'])[0] == '1'
+        
+        # Check if the file is in the gallery directory
+        g_dir = gallery_dir()
+        is_gallery_image = filepath.startswith(g_dir + os.sep) or filepath == g_dir
+        
         try:
             with open(filepath, "rb") as f:
                 content = f.read()
         except (IOError, OSError):
             self.send_error(404, "File Not Found")
             return
-
+        
+        # If thumbnail requested and it's a gallery image, resize it
+        if is_thumb and is_gallery_image:
+            try:
+                import io
+                from PIL import Image
+                # Load image
+                img = Image.open(io.BytesIO(content))
+                # Resize to max 200x200 for thumbnail
+                img.thumbnail((200, 200), Image.Resampling.LANCZOS)
+                # Convert to JPEG for smaller size (or keep PNG if has alpha)
+                output = io.BytesIO()
+                if img.mode in ('RGBA', 'LA', 'P'):
+                    img.save(output, format='PNG', optimize=True)
+                    content_type = 'image/png'
+                else:
+                    img.save(output, format='JPEG', quality=75, optimize=True)
+                    content_type = 'image/jpeg'
+                content = output.getvalue()
+            except Exception as e:
+                # If thumbnail generation fails, serve original image
+                pass
+        
         content_type = mimetypes.guess_type(filepath)[0] or "application/octet-stream"
         self.send_response(200)
         self.send_header("Content-Type", content_type)

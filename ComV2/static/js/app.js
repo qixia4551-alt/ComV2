@@ -3213,10 +3213,25 @@
             const h1 = Math.floor(Math.random() * 360);
             const h2 = (h1 + 70 + Math.floor(Math.random() * 140)) % 360;
             const h3 = (h2 + 50) % 360;
-            // skipImageLoad=true 时（登录界面），只创建空 div，不加载图片，避免卡顿
+            // skipImageLoad=true 时（登录界面），使用低分辨率缩略图，避免卡顿
             if (skipImageLoad) {
+                // 构建缩略图 URL：添加 ?thumb=1 参数，后端会返回压缩后的图片
+                const thumbUrl = entry.url + (entry.url.includes('?') ? '&' : '?') + 'thumb=1';
                 el.innerHTML = '<div class="g-clip" style="background: radial-gradient(circle at 32% 28%, hsl(' + h1 + ', 90%, 66%), hsl(' + h2 + ', 85%, 45%) 55%, hsl(' + h3 + ', 80%, 26%))">'
-                    + '<div class="g-placeholder"></div></div>';
+                    + '<img class="g-loading" src="' + thumbUrl + '" alt="" loading="lazy" decoding="async"></div>';
+                const gimg = el.querySelector('img');
+                gimg.addEventListener('load', () => {
+                    gimg.classList.remove('g-loading');
+                    if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
+                });
+                gimg.addEventListener('error', () => {
+                    if (gimg.dataset.bootCounted) { delete gimg.dataset.bootCounted; bootDone(); }
+                });
+                if (gimg.complete) {
+                    if (gimg.naturalWidth > 0) gimg.classList.remove('g-loading');
+                } else if (!bootState.hidden) {
+                    bootState.pending++; gimg.dataset.bootCounted = '1'; bootStatus();
+                }
             } else {
                 el.innerHTML = '<div class="g-clip" style="background: radial-gradient(circle at 32% 28%, hsl(' + h1 + ', 90%, 66%), hsl(' + h2 + ', 85%, 45%) 55%, hsl(' + h3 + ', 80%, 26%))">'
                     + '<img class="g-loading" src="' + entry.url + '" alt="" loading="lazy" decoding="async"></div>';
