@@ -29,6 +29,21 @@ HMTL_BODY_PLACEHOLDER
     
     <!-- 模块脚本 -->
     <script type="module" src="/static/js/orbit.js"></script>
-    <script src="/static/js/app.js"></script>
+    <!-- 页面编码标识器（右下角） -->
+    <div id="pageEncoder" class="fixed bottom-2 right-2 z-[9999] bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-lg px-3 py-1.5 text-xs text-slate-400 font-mono select-none">
+        <span class="text-blue-400">PAGE:</span> <span id="pageCode">index_new.html</span> | 
+        <span class="text-cyan-400">VER:</span> <span id="pageVer">2.0</span>
+    </div>
+    <script>
+        (function() {
+            const path = window.location.pathname;
+            const pageName = path.split('/').pop() || 'index_new.html';
+            document.getElementById('pageCode').textContent = pageName;
+            fetch('/version.json')
+                .then(r => r.ok ? r.json() : null)
+                .then(v => { if(v && v.version) document.getElementById('pageVer').textContent = v.version; })
+                .catch(() => {});
+        })();
+    </script>
 </body>
 </html>
